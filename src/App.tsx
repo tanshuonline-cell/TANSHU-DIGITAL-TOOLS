@@ -223,7 +223,7 @@ return <div className={dark?'app dark':'app light'}>
     <div className="eyebrow">{tr('SEARCH RESULTS','सर्च रिज़ल्ट')}</div>
     <h2>{filtered.length} {tr('matching tools','मिलते-जुलते टूल')}</h2>
     {filtered.map((t) => (
-      <div className="tool-row" key={t[1]}>
+      <button className="tool-row tool-row-action" key={t[1]} onClick={() => openDirectoryTool(t)}>
         <div className="tool-icon">{createElement(t[4] as any, { size: 18 })}</div>
         <div className="tool-info"><b>{hi ? t[2] : t[1]}</b><small>{t[3]}</small></div>
         <span className="coming">{tr('IN DEVELOPMENT','निर्माणाधीन')}</span>
