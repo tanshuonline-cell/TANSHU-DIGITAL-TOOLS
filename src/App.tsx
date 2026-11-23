@@ -46,6 +46,11 @@ const toggleFav=(name:string)=>setFavorites(v=>v.includes(name)?v.filter(x=>x!==
 const soon=(name:string)=>{setRecent(v=>[name,...v.filter(x=>x!==name)].slice(0,5));window.alert(hi?name+' — यह टूल अगले चरण में उपलब्ध होगा।':' '+name+' — This tool will be enabled in a later phase.');};
 const side=[{id:'home',label:tr('Overview','ओवरव्यू'),icon:Home},{id:'maker',label:tr('Maker Tools','मेकर टूल्स'),icon:Sparkles},{id:'csc',label:tr('CSC Center','CSC सेंटर'),icon:Landmark},{id:'cyber',label:tr('Cyber Cafe','साइबर कैफे'),icon:Globe2},{id:'all',label:tr('All Categories','सभी कैटेगरी'),icon:Grid2X2}];
 const currentCat=categories.find(c=>c.id===section);
+const directoryTools = section==='favorites'
+  ? tools.filter(t=>favorites.includes(t[1]))
+  : section==='recent'
+    ? tools.filter(t=>recent.includes(t[1]))
+    : filtered.filter(t=>t[0]===section || section==='maker');
 return <div className={dark?'app dark':'app light'}>
 <aside className={'sidebar '+(mobile?'show':'')}><div className="brand"><div className="brandmark">T<span>.</span></div><div><b>TANSHU</b><strong>DIGITAL TOOLS</strong><small>ALL IN ONE WORKSPACE</small></div><button className="close-nav" onClick={()=>setMobile(false)}><X size={18}/></button></div>
 <div className="workspace-label">{tr('WORKSPACE','वर्कस्पेस')}</div><nav>{side.map(s=><button key={s.id} className={section===s.id?'nav-item active':'nav-item'} onClick={()=>go(s.id)}><s.icon size={18}/><span>{s.label}</span>{section===s.id&&<i/>}</button>)}</nav>
@@ -59,8 +64,40 @@ return <div className={dark?'app dark':'app light'}>
 <div className="quick-panels"><article className="feature-panel csc-panel" onClick={()=>go('csc')}><div className="feature-icon"><Landmark/></div><div><span>{tr('SERVICE WORKSPACE','सर्विस वर्कस्पेस')}</span><h3>CSC CENTER TOOLS</h3><p>{tr('Application prep, document resize, service desk and more.','एप्लीकेशन तैयारी, डॉक्यूमेंट रिसाइज़ और सर्विस डेस्क।')}</p><b>{tr('Open workspace','वर्कस्पेस खोलें')} <ArrowUpRight size={15}/></b></div><div className="panel-glow"/></article><article className="feature-panel cyber-panel" onClick={()=>go('cyber')}><div className="feature-icon"><Globe2/></div><div><span>{tr('BUSINESS WORKSPACE','बिज़नेस वर्कस्पेस')}</span><h3>CYBER CAFE TOOLS</h3><p>{tr('Customer jobs, typing, scan, print and billing workflows.','कस्टमर जॉब, टाइपिंग, स्कैन, प्रिंट और बिलिंग।')}</p><b>{tr('Open workspace','वर्कस्पेस खोलें')} <ArrowUpRight size={15}/></b></div><div className="panel-glow"/></article></div>
 </>:null}
 {(section==='all'||section==='home'||section==='csc'||section==='cyber')&&<><div className="section-head category-heading"><div><div className="eyebrow">{tr('BUILT AROUND YOUR WORK','आपके काम के अनुसार')}</div><h2>{tr('Explore categories','कैटेगरी एक्सप्लोर करें')}</h2><p>{tr('Everything organized. Find the right tool without the clutter.','हर टूल सही जगह पर—बिना किसी उलझन के।')}</p></div><span className="muted-count">15 {tr('CATEGORIES','कैटेगरी')}</span></div><div className="category-grid">{categories.filter(c=>(section==='csc'?c.id==='csc':section==='cyber'?c.id==='cyber':true)&&((c.en+' '+c.hi+' '+c.desc).toLowerCase().includes(query.toLowerCase()))).map(c=><button className="category-card" key={c.id} onClick={()=>go(c.id)}><div className={'category-icon '+c.id}><c.icon size={20}/></div><div className="category-copy"><b>{hi?c.hi:c.en}</b><small>{c.desc}</small></div><span className="category-count">{c.count}</span><ChevronRight className="cat-arrow" size={16}/></button>)}</div></>}
-{(currentCat||section==='favorites'||section==='recent')&&<><div className="section-head tools-heading"><div><div className="eyebrow">{tr('TOOL DIRECTORY','टूल डायरेक्टरी')}</div><h2>{section==='favorites'?tr('Your favorites','आपके पसंदीदा'):section==='recent'?tr('Recently used','हाल में इस्तेमाल'):tr('Available tools & workflows','उपलब्ध टूल्स और वर्कफ़्लो')}</h2><p>{tr('Tools are being added in planned phases.','टूल्स को चरणबद्ध तरीके से जोड़ा जा रहा है।')}</p></div></div><div className="tool-list">{(section==='favorites'?tools.filter(t=>favorites.includes(t[1])):section==='recent'?tools.filter(t=>recent.includes(t[1])):filtered.filter(t=>t[0]===section||section==='maker')).map(t=><div className="tool-row" key={t[1]}><div className="tool-icon">{createElement(t[4],{size:19})}</div><div className="tool-info"><b>{hi?t[2]:t[1]}</b><small>{t[3]}</small></div><span className="coming">{tr('COMING SOON','जल्द आ रहा है')}</span><button className="fav" onClick={()=>toggleFav(t[1])}><Star size={16} fill={favorites.includes(t[1])?'currentColor':'none'}/></button></div>)}</div></>}
-{query&&<div className="search-results"><div className="eyebrow">{tr('SEARCH RESULTS','सर्च रिज़ल्ट')}</div><h2>{filtered.length} {tr('matching tools','मिलते-जुलते टूल')}</h2>{filtered.map(t=><div className="tool-row" key={t[1]}><div className="tool-icon">{createElement(t[4],{size:18})}</div><div className="tool-info"><b>{hi?t[2]:t[1]}</b><small>{t[3]}</small></div><span className="coming">{tr('COMING SOON','जल्द आ रहा है')}</span></div>)}</div>}
+{(currentCat || section === 'favorites' || section === 'recent') && (
+  <>
+    <div className="section-head tools-heading">
+      <div>
+        <div className="eyebrow">{tr('TOOL DIRECTORY','टूल डायरेक्टरी')}</div>
+        <h2>{section === 'favorites' ? tr('Your favorites','आपके पसंदीदा') : section === 'recent' ? tr('Recently used','हाल में इस्तेमाल') : tr('Available tools & workflows','उपलब्ध टूल्स और वर्कफ़्लो')}</h2>
+        <p>{tr('Tools are being added in planned phases.','टूल्स को चरणबद्ध तरीके से जोड़ा जा रहा है।')}</p>
+      </div>
+    </div>
+    <div className="tool-list">
+      {directoryTools.map((t) => (
+        <div className="tool-row" key={t[1]}>
+          <div className="tool-icon">{createElement(t[4], { size: 19 })}</div>
+          <div className="tool-info"><b>{hi ? t[2] : t[1]}</b><small>{t[3]}</small></div>
+          <span className="coming">{tr('COMING SOON','जल्द आ रहा है')}</span>
+          <button className="fav" onClick={() => toggleFav(t[1])}><Star size={16} fill={favorites.includes(t[1]) ? 'currentColor' : 'none'} /></button>
+        </div>
+      ))}
+    </div>
+  </>
+)}
+{query.length > 0 && (
+  <div className="search-results">
+    <div className="eyebrow">{tr('SEARCH RESULTS','सर्च रिज़ल्ट')}</div>
+    <h2>{filtered.length} {tr('matching tools','मिलते-जुलते टूल')}</h2>
+    {filtered.map((t) => (
+      <div className="tool-row" key={t[1]}>
+        <div className="tool-icon">{createElement(t[4], { size: 18 })}</div>
+        <div className="tool-info"><b>{hi ? t[2] : t[1]}</b><small>{t[3]}</small></div>
+        <span className="coming">{tr('COMING SOON','जल्द आ रहा है')}</span>
+      </div>
+    ))}
+  </div>
+)}
 <footer><span>© 2026 <b>TANSHU DIGITAL TOOLS</b></span><span>{tr('ALL IN ONE DIGITAL WORKSPACE','हर डिजिटल काम, एक ही जगह।')}</span><span className="footer-safe"><ShieldCheck size={14}/> {tr('Privacy-conscious by design','प्राइवेसी का ध्यान')}</span></footer>
 </main></div><nav className="mobile-bottom">{[{id:'home',icon:Home,label:tr('Home','होम')},{id:'maker',icon:Sparkles,label:tr('Makers','मेकर')},{id:'all',icon:Grid2X2,label:tr('Explore','एक्सप्लोर')},{id:'favorites',icon:Star,label:tr('Saved','सेव्ड')}].map(n=><button key={n.id} className={section===n.id?'selected':''} onClick={()=>go(n.id)}><n.icon size={19}/><small>{n.label}</small></button>)}</nav></div>
 }
