@@ -394,3 +394,11 @@
   .record-form-page .desk-print-only{display:block!important;padding:12mm;color:#111;background:#fff;font:10pt Arial,sans-serif;page-break-after:always}
   .desk-print-only h2{font-size:17pt;text-align:center}.desk-print-only h3{font-size:13pt}.desk-print-only p{margin:12px 0;line-height:1.55}.desk-print-signatures{display:grid;grid-template-columns:1fr 1fr;gap:30mm;margin:30mm 0 15mm}.desk-print-signatures span{border-top:1px solid #222;padding-top:6px;text-align:center;font-size:9pt}
 }
+
+@media print{
+  .record-form-page .desk-service-hub{display:block!important;margin:0!important;padding:0!important;border:0!important;box-shadow:none!important;background:#fff!important}
+  .record-form-page .desk-service-hub>.desk-hub-head,.record-form-page .desk-service-hub>.desk-type-switch,.record-form-page .desk-service-hub>.desk-template-chips,.record-form-page .desk-service-hub>.desk-form-grid{display:none!important}
+  .record-form-page .desk-service-hub>.desk-print-only{display:block!important}
+  .desk-print-copy{display:block;min-height:250mm;padding:10mm 8mm;color:#111;background:#fff;font:10pt Arial,sans-serif;page-break-after:always;break-after:page}
+  .desk-print-copy:last-child{page-break-after:auto;break-after:auto}
+}
