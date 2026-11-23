@@ -682,3 +682,5 @@
 .resume-maker-finalized .resume-live-foot{display:flex!important;justify-content:center!important}
 .resume-maker-finalized .resume-live-foot button{display:none!important}
 .resume-maker-finalized .resume-preview-toolbar{position:sticky;top:0;z-index:100}
+
+@media print{.resume-preview-toolbar{display:none!important}}
