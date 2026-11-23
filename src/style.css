@@ -212,3 +212,24 @@
 .app.dark .suggestion-mark{background:#304d3a;color:#d8ebdc}
 .app.dark .suggestion-item em{background:#4b4027;color:#f5dfaa;border-color:#685b37}
 @media(max-width:760px){.search-suggestions{margin-top:-10px;max-height:52vh;padding:7px}.suggestion-item{padding:9px 7px}}
+
+
+/* Tool availability dialog and in-development detail view */
+.tool-row-action{width:100%;text-align:left;font:inherit;cursor:pointer}
+.tool-row-action:hover{filter:brightness(.985);transform:translateY(-1px)}
+.tool-open-hint{display:inline-flex;align-items:center;gap:5px;color:var(--gold,#b58a3a);font-size:11px;font-weight:800;white-space:nowrap}
+.tool-fav{display:inline-flex;align-items:center;justify-content:center;padding:7px;color:inherit;cursor:pointer}
+.tool-status-backdrop{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px;background:rgba(10,22,18,.48);backdrop-filter:blur(7px)}
+.tool-status-modal{width:min(100%,460px);padding:30px;border:1px solid rgba(181,138,58,.28);border-radius:24px;background:var(--surface,#fff);color:var(--text,#18231f);box-shadow:0 24px 80px rgba(0,0,0,.22)}
+.tool-status-modal h2,.tool-page-panel h2{margin:10px 0;font-size:24px;line-height:1.25;font-weight:850}
+.tool-status-modal p,.tool-page-panel p{color:var(--muted,#68736e);line-height:1.7;margin:10px 0}
+.tool-status-modal small{display:block;color:var(--muted,#68736e);line-height:1.55;margin-top:8px}
+.tool-status-icon{width:52px;height:52px;display:grid;place-items:center;border-radius:16px;margin-bottom:18px;color:#9a762e;background:rgba(181,138,58,.13)}
+.tool-status-primary{margin-top:22px;width:100%;min-height:48px;border:0;border-radius:13px;background:linear-gradient(110deg,#b58a3a,#d7b66d);color:#18231f;font-weight:850;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.tool-page-panel{position:fixed;inset:0;z-index:999;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:clamp(24px,7vw,90px);background:var(--surface,#fff);color:var(--text,#18231f)}
+.tool-page-panel>*{max-width:640px}
+.tool-page-back{display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--muted,#68736e);font-weight:750;cursor:pointer;margin-bottom:56px}
+.tool-page-back svg{transform:rotate(180deg)}
+.app.dark .tool-status-modal,.app.dark .tool-page-panel{background:#14251f;color:#f4f7f3}
+.app.dark .tool-status-modal p,.app.dark .tool-status-modal small,.app.dark .tool-page-panel p{color:#c2cec6}
+@media(max-width:640px){.tool-status-modal{padding:24px;border-radius:20px}.tool-page-back{margin-bottom:36px}}
