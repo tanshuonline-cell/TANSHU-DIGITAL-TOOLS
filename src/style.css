@@ -446,3 +446,32 @@
  .record-form-page .desk-form-fields input:not([type=file]),.record-form-page .desk-form-fields select,.record-form-page .desk-form-fields textarea,.record-form-page .record-step-content input:not([type=file]),.record-form-page .record-step-content select,.record-form-page .record-step-content textarea{min-height:50px;font-size:14px;border-radius:12px}
  .record-form-page .desk-form-fields label:not(.desk-consent),.record-form-page .record-step-content>label,.record-form-page .record-fields label{font-size:10px}
 }
+
+
+/* Sidebar direct access to the three record and online-form workspaces */
+.record-shortcut-nav{display:flex;flex-direction:column;gap:5px;margin:2px 0 14px}
+.record-shortcut-nav .nav-item{align-items:flex-start;min-height:42px;padding:10px 11px}
+.record-shortcut-nav .nav-item span{white-space:normal;line-height:1.35;font-size:10px;font-weight:850;letter-spacing:.025em}
+.record-form-page #recordform-csc,.record-form-page #recordform-online,.record-form-page #recordform-library{scroll-margin-top:24px}
+.record-form-page .desk-preview,.record-form-page .record-preview,.record-form-page .record-live-preview{
+ border:1px solid #c8d9cb!important;box-shadow:0 18px 38px rgba(20,57,35,.16),0 5px 12px rgba(20,57,35,.09),inset 0 1px 0 #fff!important;transform:translateY(-2px)
+}
+.record-form-page .desk-form-fields input:not([type=file]):not(:placeholder-shown),
+.record-form-page .desk-form-fields textarea:not(:placeholder-shown),
+.record-form-page .record-step-content input:not([type=file]):not(:placeholder-shown),
+.record-form-page .record-step-content textarea:not(:placeholder-shown){
+ transform:translateY(-2px);background:linear-gradient(180deg,#e7f1e9 0%,#f7fbf8 100%);
+ border-color:#8eaf95;box-shadow:inset 0 2px 4px rgba(24,65,40,.045),0 5px 11px rgba(27,75,45,.11),0 1px 0 #fff
+}
+.record-form-page .desk-form-fields select,.record-form-page .record-step-content select{cursor:pointer}
+.record-form-page .desk-form-fields select:has(option:checked),.record-form-page .record-step-content select:has(option:checked){
+ border-color:#9bbba1;box-shadow:inset 0 2px 4px rgba(24,65,40,.04),0 4px 10px rgba(27,75,45,.08)
+}
+.record-form-page .desk-form-fields input:focus,.record-form-page .desk-form-fields textarea:focus,.record-form-page .desk-form-fields select:focus,
+.record-form-page .record-step-content input:focus,.record-form-page .record-step-content textarea:focus,.record-form-page .record-step-content select:focus{transform:translateY(-2px)}
+.app.dark .record-form-page .desk-form-fields input:not([type=file]):not(:placeholder-shown),
+.app.dark .record-form-page .desk-form-fields textarea:not(:placeholder-shown),
+.app.dark .record-form-page .record-step-content input:not([type=file]):not(:placeholder-shown),
+.app.dark .record-form-page .record-step-content textarea:not(:placeholder-shown){background:linear-gradient(180deg,#20392a,#192c20);border-color:#72977a;box-shadow:inset 0 2px 4px rgba(0,0,0,.12),0 5px 12px rgba(0,0,0,.22)}
+.app.dark .record-form-page .desk-preview,.app.dark .record-form-page .record-preview,.app.dark .record-form-page .record-live-preview{border-color:#506d55!important;box-shadow:0 18px 38px rgba(0,0,0,.34),0 5px 12px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.06)!important}
+@media(max-width:760px){.record-shortcut-nav .nav-item span{font-size:9px}.record-shortcut-nav .nav-item{padding:9px 8px}}
