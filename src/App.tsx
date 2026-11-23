@@ -289,7 +289,7 @@ function ResumeMaker({hi,onBack}:{hi:boolean;onBack:()=>void}){
  const [customText,setCustomText]=useState<string>(savedSession?.customText??'');
  const templates=[['modern','MODERN SPLIT','Clean two-column'],['executive','EXECUTIVE','Premium leadership'],['classic','CLASSIC','Traditional formal'],['minimal','MINIMAL','Simple ATS-friendly'],['creative','CREATIVE','Distinctive accent'],['compact','COMPACT','Space-efficient'],['custom','CUSTOM DESIGN','Build your own look']];
  const labels=hi?{personal:'व्यक्तिगत जानकारी',profile:'प्रोफाइल',education:'शिक्षा',experience:'अनुभव',skills:'स्किल्स',extras:'अतिरिक्त जानकारी',design:'डिज़ाइन'}:{personal:'Personal Details',profile:'Profile',education:'Education',experience:'Experience',skills:'Skills',extras:'Additional Details',design:'Design & Export'};
- const update=(key:string,value:string)=>setPersonal(p=>({...p,[key]:value}));
+ const update=(key:string,value:string)=>setPersonal((p:any)=>({...p,[key]:value}));
  const input=(label:string,key:string,placeholder='',type='text')=><label className="resume-field"><span>{label}</span><input type={type} value={(personal as any)[key]} placeholder={placeholder} onChange={e=>update(key,e.target.value)}/></label>;
  const fileUrl=(e:any,setter:(v:string)=>void)=>{const file=e.target.files?.[0];if(file){const reader=new FileReader();reader.onload=()=>setter(String(reader.result||''));reader.readAsDataURL(file);}};
  const processSignatureImage=(src:string,removeWhite:boolean)=>new Promise<string>((resolve)=>{
