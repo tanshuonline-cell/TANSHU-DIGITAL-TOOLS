@@ -254,42 +254,93 @@ function DemoThumb({title}:{title:string}){
 
 
 function CertificateStudio({hi,onBack}:{hi:boolean;onBack:()=>void}){
- const key='tanshu-certificate-studio-draft-v1';
- const defaults={recipient:'',title:'CERTIFICATE OF ACHIEVEMENT',subtitle:'This certificate is proudly presented to',course:'',body:'In recognition of outstanding performance, dedication and successful completion.',issuer:'TANSHU DIGITAL TOOLS',date:new Date().toISOString().slice(0,10),place:'',certificateId:'',signer:'Authorized Signatory',designation:'Director',accent:'#1d5b45',template:'heritage',orientation:'landscape',font:'Georgia',logo:'',signature:''};
+ const key='tanshu-certificate-studio-draft-v2';
+ const defaults={title:'CERTIFICATE OF ACHIEVEMENT',subtitle:'This certificate is proudly presented to',recipient:'',course:'',body:'In recognition of outstanding performance, dedication and successful completion.',issuer:'TANSHU DIGITAL TOOLS',date:new Date().toISOString().slice(0,10),place:'',certificateId:'',signer:'Authorized Signatory',designation:'Director',accent:'#1d5b45',background:'#fffdf7',template:'heritage',orientation:'landscape',font:'Georgia',logo:'',signature:'',watermark:'',border:'double',titleSize:34,nameSize:38,certificateType:'Achievement'};
  const [v,setV]=useState<any>(()=>{try{return {...defaults,...JSON.parse(localStorage.getItem(key)||'{}')}}catch{return defaults}});
+ const [mode,setMode]=useState<'single'|'bulk'|'design'>('single');
  const [zoom,setZoom]=useState(70);
+ const [csvText,setCsvText]=useState('name,course,certificateId,date\nAarav Kumar,Web Design,TTD-001,2026-11-24\nAnanya Singh,Computer Basics,TTD-002,2026-11-24');
+ const [records,setRecords]=useState<any[]>([]);
+ const [bulkReady,setBulkReady]=useState(false);
+ const [message,setMessage]=useState('');
  useEffect(()=>{try{localStorage.setItem(key,JSON.stringify(v))}catch{}},[v]);
  const templates=[['heritage','HERITAGE','Ornamental • formal'],['modern','MODERN EDITORIAL','Clean • contemporary'],['prestige','PRESTIGE','Luxury • gold detail'],['academic','ACADEMIC','Institutional • classic'],['minimal','MINIMAL','Quiet • refined'],['creative','CREATIVE','Bold • expressive']];
- const upload=(field:string,file?:File)=>{if(!file)return;const reader=new FileReader();reader.onload=()=>set(field,String(reader.result||''));reader.readAsDataURL(file)};
  const set=(k:string,val:any)=>setV((p:any)=>({...p,[k]:val}));
- const dateLabel=v.date?new Date(v.date+'T00:00:00').toLocaleDateString(hi?'hi-IN':'en-IN',{day:'2-digit',month:'long',year:'numeric'}):'DATE';
+ const upload=(field:string,file?:File)=>{if(!file)return;const reader=new FileReader();reader.onload=()=>set(field,String(reader.result||''));reader.readAsDataURL(file)};
+ const dateLabel=(date:string)=>date?new Date(date+'T00:00:00').toLocaleDateString(hi?'hi-IN':'en-IN',{day:'2-digit',month:'long',year:'numeric'}):'DATE';
+ const parseCSV=(text:string)=>{
+  const rows:string[][]=[];let row:string[]=[],cell='',quoted=false;
+  for(let i=0;i<text.length;i++){const ch=text[i];if(ch==='"'&&quoted&&text[i+1]==='"'){cell+='"';i++;}else if(ch==='"'){quoted=!quoted;}else if(ch===','&&!quoted){row.push(cell.trim());cell='';}else if((ch==='\n'||ch==='\r')&&!quoted){if(ch==='\r'&&text[i+1]==='\n')i++;row.push(cell.trim());if(row.some(x=>x!==''))rows.push(row);row=[];cell='';}else cell+=ch;}
+  row.push(cell.trim());if(row.some(x=>x!==''))rows.push(row);
+  if(rows.length<2)return [];
+  const headers=rows[0].map(x=>x.toLowerCase().replace(/[^a-z0-9]/g,''));
+  const pick=(obj:any,keys:string[])=>{for(const k of keys){const i=headers.indexOf(k);if(i>=0&&obj[i])return obj[i];}return '';};
+  return rows.slice(1).map((r,i)=>({recipient:pick(r,['name','recipient','fullname','studentname'])||r[0]||'',course:pick(r,['course','program','achievement','event']),certificateId:pick(r,['certificateid','id','serial','serialnumber'])||'TTD-'+String(i+1).padStart(4,'0'),date:pick(r,['date','issuedate'])||v.date,place:pick(r,['place','city','location'])||v.place})).filter(x=>x.recipient);
+ };
+ const importCSV=(file?:File)=>{if(!file)return;const reader=new FileReader();reader.onload=()=>{setCsvText(String(reader.result||''));setMessage('CSV loaded. Click PREPARE CERTIFICATES to review the records.');};reader.readAsText(file);};
+ const prepareBulk=()=>{const parsed=parseCSV(csvText);setRecords(parsed);setBulkReady(parsed.length>0);setMessage(parsed.length?parsed.length+' certificates prepared. Review the sample, then print the batch.':'No valid recipient rows found. Check that the CSV has a name column and data rows.');};
+ const paper=(data:any,idx?:number)=><article key={idx??'single'} className={'certificate-paper '+v.template+(v.orientation==='portrait'?' portrait':'')+' cert-border-'+v.border} style={{'--cert-accent':v.accent,'--cert-bg':v.background,'--cert-title-size':v.titleSize+'px','--cert-name-size':v.nameSize+'px',fontFamily:v.font} as any}>
+  <div className="cert-inner">
+   {v.watermark&&<div className="cert-watermark">{v.watermark}</div>}
+   {v.logo&&<img className="cert-logo" src={v.logo}/>}
+   <div className="cert-kicker">{v.issuer||'ORGANIZATION NAME'}</div><div className="cert-rule"/>
+   <div className="cert-title">{v.title||'CERTIFICATE TITLE'}</div><div className="cert-subtitle">{v.subtitle||'This certificate is proudly presented to'}</div>
+   <div className={'cert-name '+(!data.recipient?'cert-sample':'')}>{data.recipient||'Recipient Name'}</div>
+   {data.course&&<div className="cert-course">{data.course}</div>}
+   <div className="cert-body">{v.body}</div><div className="cert-meta">{dateLabel(data.date||v.date)}{(data.place||v.place)?' · '+(data.place||v.place):''}</div>
+   <div className="cert-bottom"><div className="cert-sign">{v.signature&&<img src={v.signature}/>}<b>{v.signer||'Authorized Signatory'}</b><span>{v.designation}</span></div><div className="cert-sign"><b>{v.issuer||'Issuing Organization'}</b><span>OFFICIAL SEAL / AUTHORITY</span></div></div>
+   {(data.certificateId||v.certificateId)&&<div className="cert-id">CERTIFICATE ID · {data.certificateId||v.certificateId}</div>}
+  </div></article>;
  const print=()=>{document.title=(v.recipient||'Certificate')+'_Certificate';window.print()};
- const sample=!v.recipient.trim();
+ const printBulk=()=>{if(!records.length)return;document.title='TANSHU_BULK_CERTIFICATES_'+records.length;window.print()};
  return <div className="certificate-studio">
- <div className="certificate-studio-head"><div><div className="certificate-studio-kicker">TANSHU DIGITAL TOOLS · CREATIVE WORKSPACE</div><h1>{hi?'सर्टिफिकेट टेम्पलेट स्टूडियो':'Certificate Template Studio'}</h1><p>{hi?'प्रीमियम डिज़ाइन चुनें, विवरण भरें और लाइव प्रीव्यू से प्रिंट करें।':'Create distinctive, print-ready certificates with live editing and original layouts.'}</p></div><button className="certificate-studio-back" onClick={onBack}>← {hi?'वापस':'BACK TO TOOLS'}</button></div>
- <div className="certificate-studio-grid">
- <section className="certificate-studio-editor">
- <h3>01 · CHOOSE A DESIGN</h3><div className="certificate-studio-templates">{templates.map(([id,name,desc])=><button key={id} className={'certificate-studio-template '+(v.template===id?'active':'')} onClick={()=>set('template',id)}><b>{name}</b><small>{desc}</small></button>)}</div>
- <h3>02 · CERTIFICATE DETAILS</h3><div className="certificate-studio-fields">
- {[[ 'title','CERTIFICATE HEADING'],['subtitle','INTRODUCTION LINE'],['recipient','RECIPIENT FULL NAME'],['course','COURSE / ACHIEVEMENT'],['issuer','ISSUED BY / ORGANIZATION'],['date','ISSUE DATE'],['place','CITY / LOCATION'],['certificateId','CERTIFICATE ID']].map(([k,label])=><div className="certificate-studio-field" key={k}><label>{label}</label><input type={k==='date'?'date':'text'} value={v[k]} onChange={e=>set(k,e.target.value)} placeholder={label}/></div>)}
- <div className="certificate-studio-field wide"><label>BODY / CITATION</label><textarea value={v.body} onChange={e=>set('body',e.target.value)}/></div></div>
- <h3 className="cert-section-gap">03 · SIGNATURE & BRANDING</h3><div className="certificate-studio-fields">
- <div className="certificate-studio-field"><label>SIGNATORY NAME</label><input value={v.signer} onChange={e=>set('signer',e.target.value)}/></div><div className="certificate-studio-field"><label>DESIGNATION</label><input value={v.designation} onChange={e=>set('designation',e.target.value)}/></div>
- <div className="certificate-studio-field wide"><label>LOGO / ORGANIZATION MARK</label><div className="certificate-studio-upload"><label>UPLOAD LOGO<input type="file" accept="image/*" onChange={e=>upload('logo',e.target.files?.[0])}/></label>{v.logo&&<img src={v.logo}/>}</div></div>
- <div className="certificate-studio-field wide"><label>SIGNATURE IMAGE (OPTIONAL)</label><div className="certificate-studio-upload"><label>UPLOAD SIGNATURE<input type="file" accept="image/*" onChange={e=>upload('signature',e.target.files?.[0])}/></label>{v.signature&&<img src={v.signature}/>}</div></div>
- <div className="certificate-studio-field"><label>ACCENT COLOR</label><input className="certificate-studio-color" type="color" value={v.accent} onChange={e=>set('accent',e.target.value)}/></div>
- <div className="certificate-studio-field"><label>PAGE ORIENTATION</label><select value={v.orientation} onChange={e=>set('orientation',e.target.value)}><option value="landscape">A4 Landscape</option><option value="portrait">A4 Portrait</option></select></div>
- <div className="certificate-studio-field"><label>TYPEFACE</label><select value={v.font} onChange={e=>set('font',e.target.value)}><option>Georgia</option><option>Arial</option><option>Times New Roman</option><option>Verdana</option></select></div></div>
- <div className="certificate-studio-actions"><button className="certificate-studio-primary" onClick={print}>↓ SAVE / PRINT PDF</button><button className="certificate-studio-secondary" onClick={()=>setV(defaults)}>RESET FORM</button></div>
- <p className="certificate-studio-note">Draft auto-saves in this browser on this device. Choose “Save as PDF” in the print dialog. Use only certificates you are authorized to issue; this studio does not verify accreditation or credentials.</p>
- </section>
- <section className="certificate-studio-preview"><div className="certificate-studio-previewbar"><b>LIVE CERTIFICATE PREVIEW</b><div><button onClick={()=>setZoom(z=>Math.max(40,z-10))}>−</button> <button onClick={()=>setZoom(z=>Math.min(100,z+10))}>+</button> <button onClick={()=>setZoom(70)}>RESET VIEW</button></div></div>
- <div className="certificate-studio-stage"><div className={'certificate-paper '+v.template+(v.orientation==='portrait'?' portrait':'')} style={{'--cert-accent':v.accent,fontFamily:v.font,zoom:zoom/70} as any}><div className="cert-inner">
- {v.logo&&<img className="cert-logo" src={v.logo}/>}<div className="cert-kicker">{v.issuer||'ORGANIZATION NAME'}</div><div className="cert-rule"/><div className="cert-title">{v.title||'CERTIFICATE TITLE'}</div><div className="cert-subtitle">{v.subtitle||'This certificate is proudly presented to'}</div><div className={'cert-name '+(sample?'cert-sample':'')}>{v.recipient||'Recipient Name'}</div>{v.course&&<div className="cert-course">{v.course}</div>}<div className="cert-body">{v.body}</div><div className="cert-meta">{dateLabel}{v.place?' · '+v.place:''}</div><div className="cert-bottom"><div className="cert-sign">{v.signature&&<img src={v.signature}/>}<b>{v.signer||'Authorized Signatory'}</b><span>{v.designation}</span></div><div className="cert-sign"><b>{v.issuer||'Issuing Organization'}</b><span>OFFICIAL SEAL / AUTHORITY</span></div></div>{v.certificateId&&<div className="cert-id">CERTIFICATE ID · {v.certificateId}</div>}
- </div></div></div><p className="certificate-studio-note">Preview updates as you type. Print output is prepared for A4 {v.orientation}.</p></section>
- </div></div>;
+  <style>{'@page{size:A4 '+v.orientation+';margin:8mm}'}</style>
+  <div className="certificate-studio-head"><div><div className="certificate-studio-kicker">TANSHU DIGITAL TOOLS · CERTIFICATE WORKSPACE</div><h1>{hi?'सर्टिफिकेट क्रिएशन सूट':'CERTIFICATE CREATION SUITE'}</h1><p>{hi?'सिंगल सर्टिफिकेट, बल्क जनरेशन और अपना डिजाइन बनाएं।':'Create one certificate, generate batches from CSV, or build a fully customized original design.'}</p></div><button className="certificate-studio-back" onClick={onBack}>← {hi?'वापस':'BACK TO TOOLS'}</button></div>
+  <div className="certificate-mode-tabs"><button className={mode==='single'?'active':''} onClick={()=>setMode('single')}>01 · SINGLE CERTIFICATE</button><button className={mode==='bulk'?'active':''} onClick={()=>setMode('bulk')}>02 · BULK CERTIFICATES</button><button className={mode==='design'?'active':''} onClick={()=>setMode('design')}>03 · CUSTOM DESIGN STUDIO</button></div>
+  <div className="certificate-studio-grid">
+   <section className="certificate-studio-editor">
+    {mode==='bulk'?<>
+     <h3>01 · IMPORT RECIPIENT DATA</h3><p className="certificate-help">Upload a CSV file exported from Excel, or paste CSV rows below. Required column: name. Optional: course, certificateId, date, place.</p>
+     <div className="certificate-studio-upload"><label>UPLOAD EXCEL-EXPORTED CSV<input type="file" accept=".csv,text/csv" onChange={e=>importCSV(e.target.files?.[0])}/></label></div>
+     <textarea className="certificate-bulk-csv" value={csvText} onChange={e=>setCsvText(e.target.value)} placeholder="name,course,certificateId,date&#10;Aarav Kumar,Web Design,TTD-001,2026-11-24"/>
+     <button className="certificate-studio-primary" onClick={prepareBulk}>PREPARE CERTIFICATES</button>
+     <div className="certificate-bulk-status">{message||'Your data stays in this browser. Check every name and ID before printing.'}</div>
+     {records.length>0&&<><h3>02 · BATCH REVIEW ({records.length})</h3><div className="certificate-bulk-list">{records.slice(0,8).map((r,i)=><div key={i}><b>{r.recipient}</b><span>{r.course||'—'} · {r.certificateId}</span></div>)}{records.length>8&&<small>+ {records.length-8} more records</small>}</div><button className="certificate-studio-primary" onClick={printBulk}>PRINT / SAVE ALL {records.length} CERTIFICATES AS PDF</button></>}
+    </>:<>
+     <h3>01 · CHOOSE A DESIGN</h3><div className="certificate-studio-templates">{templates.map(([id,name,desc])=><button key={id} className={'certificate-studio-template '+(v.template===id?'active':'')} onClick={()=>set('template',id)}><b>{name}</b><small>{desc}</small></button>)}</div>
+     <h3>02 · {mode==='design'?'CUSTOMIZE YOUR DESIGN':'CERTIFICATE DETAILS'}</h3>
+     {mode==='design'&&<p className="certificate-help">Customize the original layout, typography, border, colors and watermark. Changes update the live preview instantly.</p>}
+     <div className="certificate-studio-fields">
+      {[[ 'title','CERTIFICATE HEADING'],['subtitle','INTRODUCTION LINE'],['recipient','RECIPIENT FULL NAME'],['course','COURSE / ACHIEVEMENT'],['issuer','ISSUED BY / ORGANIZATION'],['date','ISSUE DATE'],['place','CITY / LOCATION'],['certificateId','CERTIFICATE ID']].map(([k,label])=><div className="certificate-studio-field" key={k}><label>{label}</label><input type={k==='date'?'date':'text'} value={v[k]} onChange={e=>set(k,e.target.value)} placeholder={label}/></div>)}
+      <div className="certificate-studio-field wide"><label>BODY / CITATION</label><textarea value={v.body} onChange={e=>set('body',e.target.value)}/></div>
+      <div className="certificate-studio-field"><label>CERTIFICATE TYPE</label><select value={v.certificateType} onChange={e=>set('certificateType',e.target.value)}>{['Achievement','Course Completion','Participation','Appreciation','Experience','Training','Internship','Best Performer','Workshop','Sports','Volunteer','Custom'].map(x=><option key={x}>{x}</option>)}</select></div>
+      <div className="certificate-studio-field"><label>WATERMARK TEXT</label><input value={v.watermark} onChange={e=>set('watermark',e.target.value)} placeholder="Optional watermark"/></div>
+     </div>
+     <h3 className="cert-section-gap">03 · SIGNATURE & BRANDING</h3><div className="certificate-studio-fields">
+      <div className="certificate-studio-field"><label>SIGNATORY NAME</label><input value={v.signer} onChange={e=>set('signer',e.target.value)}/></div><div className="certificate-studio-field"><label>DESIGNATION</label><input value={v.designation} onChange={e=>set('designation',e.target.value)}/></div>
+      <div className="certificate-studio-field wide"><label>LOGO / ORGANIZATION MARK</label><div className="certificate-studio-upload"><label>UPLOAD LOGO<input type="file" accept="image/*" onChange={e=>upload('logo',e.target.files?.[0])}/></label>{v.logo&&<><img src={v.logo}/><button onClick={()=>set('logo','')}>REMOVE</button></>}</div></div>
+      <div className="certificate-studio-field wide"><label>SIGNATURE IMAGE (OPTIONAL)</label><div className="certificate-studio-upload"><label>UPLOAD SIGNATURE<input type="file" accept="image/*" onChange={e=>upload('signature',e.target.files?.[0])}/></label>{v.signature&&<><img src={v.signature}/><button onClick={()=>set('signature','')}>REMOVE</button></>}</div></div>
+      <div className="certificate-studio-field"><label>ACCENT COLOR</label><input className="certificate-studio-color" type="color" value={v.accent} onChange={e=>set('accent',e.target.value)}/></div>
+      <div className="certificate-studio-field"><label>PAPER BACKGROUND</label><input className="certificate-studio-color" type="color" value={v.background} onChange={e=>set('background',e.target.value)}/></div>
+      <div className="certificate-studio-field"><label>BORDER STYLE</label><select value={v.border} onChange={e=>set('border',e.target.value)}><option value="double">DOUBLE FRAME</option><option value="single">SINGLE FRAME</option><option value="minimal">MINIMAL LINE</option><option value="none">NO FRAME</option></select></div>
+      <div className="certificate-studio-field"><label>PAGE ORIENTATION</label><select value={v.orientation} onChange={e=>set('orientation',e.target.value)}><option value="landscape">A4 LANDSCAPE</option><option value="portrait">A4 PORTRAIT</option></select></div>
+      <div className="certificate-studio-field"><label>TYPEFACE</label><select value={v.font} onChange={e=>set('font',e.target.value)}><option>Georgia</option><option>Arial</option><option>Times New Roman</option><option>Verdana</option></select></div>
+      <div className="certificate-studio-field"><label>TITLE SIZE · {v.titleSize}px</label><input type="range" min="22" max="48" value={v.titleSize} onChange={e=>set('titleSize',Number(e.target.value))}/></div>
+      <div className="certificate-studio-field"><label>NAME SIZE · {v.nameSize}px</label><input type="range" min="26" max="58" value={v.nameSize} onChange={e=>set('nameSize',Number(e.target.value))}/></div>
+     </div>
+     <div className="certificate-studio-actions"><button className="certificate-studio-primary" onClick={print}>↓ SAVE / PRINT PDF</button><button className="certificate-studio-secondary" onClick={()=>setV(defaults)}>RESET DESIGN</button></div>
+    </>}
+    <p className="certificate-studio-note">Draft and uploaded images are saved locally in this browser on this device. Choose “Save as PDF” in the print dialog. Bulk import currently accepts CSV files exported from Excel. Use only certificates you are authorized to issue; this studio does not verify accreditation or credentials.</p>
+   </section>
+   <section className="certificate-studio-preview"><div className="certificate-studio-previewbar"><b>{mode==='bulk'?'BATCH SAMPLE PREVIEW':'LIVE CERTIFICATE PREVIEW'}</b><div><button onClick={()=>setZoom(z=>Math.max(40,z-10))}>−</button> <button onClick={()=>setZoom(z=>Math.min(110,z+10))}>+</button> <button onClick={()=>setZoom(70)}>RESET VIEW</button></div></div>
+    <div className="certificate-studio-stage" style={{'--cert-zoom':zoom/70} as any}><div style={{zoom:zoom/70}}>{paper(mode==='bulk'?(records[0]||{}):{recipient:v.recipient,course:v.course,date:v.date,place:v.place,certificateId:v.certificateId})}</div></div>
+    {mode==='bulk'&&records.length>0&&<p className="certificate-studio-note">Showing first record: {records[0].recipient}. The print command creates one certificate page for each of the {records.length} prepared rows.</p>}
+    <p className="certificate-studio-note">Preview updates as you edit. Print output is prepared for A4 {v.orientation}.</p>
+   </section>
+  </div>
+  {mode==='bulk'&&records.length>0&&<div className="certificate-bulk-print-only">{records.map((r,i)=>paper(r,i))}</div>}
+ </div>;
 }
-
 function ResumeMaker({hi,onBack}:{hi:boolean;onBack:()=>void}){
  const storageKey='tanshu-resume-maker-session-v1';
  const [savedSession]=useState<any>(()=>{try{const final=localStorage.getItem(storageKey+':final');if(final){const parsed=JSON.parse(final);if(parsed.expiresAt>Date.now())return parsed;localStorage.removeItem(storageKey+':final');}const draft=sessionStorage.getItem(storageKey+':draft');return draft?JSON.parse(draft):null;}catch{return null;}});
