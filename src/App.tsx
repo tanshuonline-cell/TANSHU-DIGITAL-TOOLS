@@ -289,7 +289,7 @@ function ResumeMaker({hi,onBack}:{hi:boolean;onBack:()=>void}){
  const input=(label:string,key:string,placeholder='',type='text')=><label className="resume-field"><span>{label}</span><input type={type} value={(personal as any)[key]} placeholder={placeholder} onChange={e=>update(key,e.target.value)}/></label>;
  const fileUrl=(e:any,setter:(v:string)=>void)=>{const file=e.target.files?.[0];if(file){setter(URL.createObjectURL(file));}};
  const processSignatureImage=(src:string,removeWhite:boolean)=>new Promise<string>((resolve)=>{
-  const img=new Image();
+  const img=document.createElement('img');
   img.onload=()=>{
    const scale=Math.min(1,1200/Math.max(img.naturalWidth,1),500/Math.max(img.naturalHeight,1));
    const w=Math.max(1,Math.round(img.naturalWidth*scale)),h=Math.max(1,Math.round(img.naturalHeight*scale));
