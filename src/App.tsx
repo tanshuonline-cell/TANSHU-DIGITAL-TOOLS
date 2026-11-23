@@ -57,7 +57,8 @@ const makers=[
 {en:'Mobile Camera Document Scanner',hi:'मोबाइल कैमरा डॉक्यूमेंट स्कैनर',sub:'Capture, crop and prepare clean document scans',icon:ScanLine,tag:'NEW'}
 ];
 const tools=[
-['photo','Stamp Size Photo Maker','स्टाम्प साइज फोटो मेकर','Ready-to-print photo sizing',Image],['photo','Photo Background Studio','फोटो बैकग्राउंड स्टूडियो','Prepare a clean photo background',Sun],
+['csc','Aadhaar Card Crop & Print','आधार कार्ड क्रॉप और प्रिंट','Arrange user-provided Aadhaar front and back for personal print',CreditCard],['csc','PAN Card Crop & Print','PAN कार्ड क्रॉप और प्रिंट','Prepare user-provided PAN card for wallet-size print',CreditCard],
+ ['photo','Stamp Size Photo Maker','स्टाम्प साइज फोटो मेकर','Ready-to-print photo sizing',Image],['photo','Photo Background Studio','फोटो बैकग्राउंड स्टूडियो','Prepare a clean photo background',Sun],
 ['pvc','Student ID Card Maker','स्टूडेंट ID कार्ड मेकर','Editable student card layout',CreditCard],['pvc','Employee ID Card Maker','एम्प्लॉयी ID कार्ड मेकर','Workplace identity card design',CreditCard],
 ['docs','Application & Letter Maker','आवेदन और पत्र मेकर','Draft clean application documents',FileText],['docs','Biodata Maker','बायोडाटा मेकर','Simple personal biodata layouts',FileText],
 ['pdf','Merge PDF','PDF मर्ज करें','Combine multiple PDF files',FolderOpen],['pdf','Compress PDF','PDF कंप्रेस करें','Reduce PDF file size',Zap],
