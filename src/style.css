@@ -402,3 +402,47 @@
   .desk-print-copy{display:block;min-height:250mm;padding:10mm 8mm;color:#111;background:#fff;font:10pt Arial,sans-serif;page-break-after:always;break-after:page}
   .desk-print-copy:last-child{page-break-after:auto;break-after:auto}
 }
+
+
+/* Premium form-entry treatment — scoped to ALL SOFT RECORD & FORM only */
+.record-form-page .record-form-intro h2{font-weight:950;letter-spacing:-.025em;text-shadow:0 2px 0 rgba(255,255,255,.55)}
+.record-form-page .desk-hub-head h3,.record-form-page .record-step-title h3,.record-form-page .record-catalog .section-head h3,.record-form-page .record-online h3{font-weight:900;letter-spacing:-.015em}
+.record-form-page .desk-hub-head>div>.eyebrow,.record-form-page .record-step-title>span{font-weight:950}
+.record-form-page .desk-form-main,.record-form-page .record-main-card{background:linear-gradient(160deg,#fff 0%,#f8fbf8 100%);border-color:#d4e1d6;box-shadow:0 12px 30px rgba(25,67,43,.08),inset 0 1px 0 #fff}
+.record-form-page .desk-form-fields label:not(.desk-consent),.record-form-page .record-step-content>label,.record-form-page .record-fields label{font-size:10px;font-weight:900;letter-spacing:.055em;color:#315b40}
+.record-form-page .desk-form-fields input:not([type=file]),.record-form-page .desk-form-fields select,.record-form-page .desk-form-fields textarea,
+.record-form-page .record-step-content input:not([type=file]),.record-form-page .record-step-content select,.record-form-page .record-step-content textarea{
+  min-height:48px;padding:12px 14px;border:1px solid #c7d8ca;border-radius:12px;
+  background:linear-gradient(180deg,#f0f6f1 0%,#fff 100%);color:#1c3425;
+  box-shadow:inset 0 2px 5px rgba(25,66,42,.075),0 2px 0 rgba(255,255,255,.9);
+  font-size:13px;font-weight:550;transition:border-color .18s ease,box-shadow .18s ease,background .18s ease
+}
+.record-form-page .desk-form-fields textarea,.record-form-page .record-step-content textarea{min-height:100px;line-height:1.55}
+.record-form-page .desk-form-fields input:not([type=file]):focus,.record-form-page .desk-form-fields select:focus,.record-form-page .desk-form-fields textarea:focus,
+.record-form-page .record-step-content input:not([type=file]):focus,.record-form-page .record-step-content select:focus,.record-form-page .record-step-content textarea:focus{
+  outline:none;border-color:#397b52;background:#fff;box-shadow:inset 0 2px 4px rgba(25,66,42,.045),0 0 0 3px rgba(57,123,82,.15),0 7px 16px rgba(25,67,43,.08)
+}
+.record-form-page .desk-form-fields input::placeholder,.record-form-page .desk-form-fields textarea::placeholder,.record-form-page .record-step-content input::placeholder,.record-form-page .record-step-content textarea::placeholder{color:#89998d;font-weight:450}
+.record-form-page .desk-form-fields input[type=file],.record-form-page .record-step-content input[type=file]{
+  min-height:48px;width:100%;padding:10px;border:1px dashed #8eae96;border-radius:12px;background:#eff6f0;color:#355d40;box-shadow:inset 0 2px 5px rgba(25,66,42,.06);font-size:11px
+}
+.record-form-page .desk-form-fields input[type=checkbox],.record-form-page .record-step-content input[type=checkbox]{width:18px;height:18px;accent-color:#246341;flex:none}
+.record-form-page .desk-form-fields>div,.record-form-page .record-fields>div{min-width:0}
+.record-form-page .desk-form-fields h4{font-size:18px;font-weight:950;color:#1d4b32}
+.record-form-page .desk-stepper button{padding:10px 7px;border-radius:10px;background:#f3f7f3;border:1px solid #e0e9e1}
+.record-form-page .desk-stepper button.active{background:#e5f1e7;border-color:#8caf94;color:#194a30}
+.record-form-page .desk-form-actions button{min-height:44px;font-weight:900;box-shadow:0 4px 12px rgba(25,67,43,.07)}
+.record-form-page .desk-preview{border-color:#cfdfd2;box-shadow:0 12px 30px rgba(25,67,43,.08)}
+.record-form-page .desk-preview h3{font-weight:950}
+.app.dark .record-form-page .desk-form-main,.app.dark .record-form-page .record-main-card{background:linear-gradient(160deg,#1a2b21,#14221a);border-color:#405b47;box-shadow:0 12px 28px rgba(0,0,0,.2)}
+.app.dark .record-form-page .desk-form-fields label:not(.desk-consent),.app.dark .record-form-page .record-step-content>label,.app.dark .record-form-page .record-fields label{color:#c4ddc9;font-weight:900}
+.app.dark .record-form-page .desk-form-fields input:not([type=file]),.app.dark .record-form-page .desk-form-fields select,.app.dark .record-form-page .desk-form-fields textarea,
+.app.dark .record-form-page .record-step-content input:not([type=file]),.app.dark .record-form-page .record-step-content select,.app.dark .record-form-page .record-step-content textarea{background:linear-gradient(180deg,#101d15,#17281d);border-color:#496651;color:#f4faf5;box-shadow:inset 0 2px 5px rgba(0,0,0,.28),0 2px 0 rgba(255,255,255,.025)}
+.app.dark .record-form-page .desk-form-fields input[type=file],.app.dark .record-form-page .record-step-content input[type=file]{background:#182b20;border-color:#56755d;color:#e0eee2}
+.app.dark .record-form-page .desk-form-fields h4{color:#e3f1e5}
+.app.dark .record-form-page .desk-stepper button{background:#1a2c21;border-color:#3a5341}
+.app.dark .record-form-page .desk-stepper button.active{background:#254a32;border-color:#73987a}
+@media(max-width:600px){
+ .record-form-page .desk-form-fields input:not([type=file]),.record-form-page .desk-form-fields select,.record-form-page .desk-form-fields textarea,.record-form-page .record-step-content input:not([type=file]),.record-form-page .record-step-content select,.record-form-page .record-step-content textarea{min-height:50px;font-size:14px;border-radius:12px}
+ .record-form-page .desk-form-fields label:not(.desk-consent),.record-form-page .record-step-content>label,.record-form-page .record-fields label{font-size:10px}
+}
