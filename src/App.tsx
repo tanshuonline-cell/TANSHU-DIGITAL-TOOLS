@@ -22,7 +22,8 @@ const categories=[
 { id:'image',en:'IMAGE EDITING & AI TOOLS',hi:'इमेज एडिटिंग और AI टूल्स',desc:'Background removal, cleanup, enhancement and crop',icon:Sparkles,count:16 },
 { id:'idprint',en:'GOVERNMENT ID CROP & PRINT',hi:'सरकारी ID क्रॉप और प्रिंट',desc:'Prepare user-provided cards for personal printing',icon:CreditCard,count:12 },
 { id:'forms',en:'FORMS, LETTERS & LOCAL UTILITIES',hi:'फॉर्म, पत्र और स्थानीय यूटिलिटी',desc:'Application templates, calculators and service helpers',icon:FileText,count:16 },
-{ id:'web',en:'WEB, SOCIAL & DIGITAL CREATOR TOOLS',hi:'वेब, सोशल और डिजिटल क्रिएटर टूल्स',desc:'QR, social creatives, thumbnails and web utilities',icon:Globe2,count:12 }
+{ id:'web',en:'WEB, SOCIAL & DIGITAL CREATOR TOOLS',hi:'वेब, सोशल और डिजिटल क्रिएटर टूल्स',desc:'QR, social creatives, thumbnails and web utilities',icon:Globe2,count:12 },
+{ id:'finance',en:'FINANCE & CALCULATORS',hi:'फाइनेंस और कैलकुलेटर',desc:'Salary, savings, tax, loan and everyday calculations',icon:Landmark,count:12 }
 ];
 const makers=[
 {en:'Passport Photo Maker',hi:'पासपोर्ट फोटो मेकर',sub:'Print-ready photo sizes',icon:Image,tag:'MOST USED'},
@@ -49,7 +50,11 @@ const makers=[
 {en:'Exact KB Photo Compressor',hi:'फोटो को तय KB में कंप्रेस करें',sub:'Target 20KB, 50KB, 100KB and custom sizes',icon:Zap,tag:'DAILY USE'},
 {en:'Photo Background Changer',hi:'फोटो बैकग्राउंड चेंजर',sub:'Set clean white, blue or custom backgrounds',icon:Sun,tag:''},
 {en:'Photo Enhancer & Upscaler',hi:'फोटो एन्हांसर और अपस्केलर',sub:'Improve clarity and enlarge low-resolution photos',icon:Sparkles,tag:''},
-{en:'Bulk Photo Cropper',hi:'बल्क फोटो क्रॉपर',sub:'Crop multiple images with consistent dimensions',icon:Grid2X2,tag:''}
+{en:'Bulk Photo Cropper',hi:'बल्क फोटो क्रॉपर',sub:'Crop multiple images with consistent dimensions',icon:Grid2X2,tag:''},
+{en:'Thumb Impression Resizer',hi:'अंगूठे का निशान रिसाइज़र',sub:'Clean and size thumb impressions for forms',icon:ScanLine,tag:'COUNTER USE'},
+{en:'Notebook Name Sticker Maker',hi:'कॉपी नाम स्टिकर मेकर',sub:'Create printable labels for school notebooks',icon:GraduationCap,tag:''},
+{en:'AI Passport Photo Studio',hi:'AI पासपोर्ट फोटो स्टूडियो',sub:'Prepare studio-style backgrounds and photo sheets',icon:Sparkles,tag:'NEW'},
+{en:'Mobile Camera Document Scanner',hi:'मोबाइल कैमरा डॉक्यूमेंट स्कैनर',sub:'Capture, crop and prepare clean document scans',icon:ScanLine,tag:'NEW'}
 ];
 const tools=[
 ['photo','Stamp Size Photo Maker','स्टाम्प साइज फोटो मेकर','Ready-to-print photo sizing',Image],['photo','Photo Background Studio','फोटो बैकग्राउंड स्टूडियो','Prepare a clean photo background',Sun],
@@ -126,7 +131,40 @@ const tools=[
 ['web','UPI QR Code Maker','UPI QR कोड मेकर','Create a QR from user-entered payment details',QrCode],
 ['web','Barcode & Product Label Maker','बारकोड और प्रोडक्ट लेबल मेकर','Create labels and standard barcodes',QrCode],
 ['web','Favicon & App Icon Generator','फेविकॉन और ऐप आइकन जनरेटर','Prepare icons in common sizes',Image],
-['web','Website Screenshot & Page to PDF','वेबसाइट स्क्रीनशॉट और PDF','Save accessible pages as print-ready PDFs',Globe2]
+['web','Website Screenshot & Page to PDF','वेबसाइट स्क्रीनशॉट और PDF','Save accessible pages as print-ready PDFs',Globe2],
+['business','Salary Slip Generator','सैलरी स्लिप जनरेटर','Prepare a clear monthly salary statement for authorised records',Briefcase],
+['typing','Cover Letter Builder','कवर लेटर बिल्डर','Create a role-specific job application letter',FileText],
+['education','Admit Card & Hall Ticket Organizer','एडमिट कार्ड और हॉल टिकट मैनेजर','Organize and print candidate admit-card details',GraduationCap],
+['education','Question Paper Builder','प्रश्न-पत्र निर्माता','Arrange questions, marks and sections into a printable paper',FileText],
+['education','CGPA & GPA Calculator','CGPA और GPA कैलकुलेटर','Convert grades and calculate semester averages',GraduationCap],
+['finance','Gold & Silver Rate Calculator','सोना और चाँदी कैलकुलेटर','Estimate metal value by weight, purity and entered rate',Landmark],
+['education','MPESB Exam Form & Document Helper','MPESB परीक्षा फॉर्म और डॉक्यूमेंट हेल्पर','Organize application details and supporting documents for MP exams',FileText],
+['photo','PAN Application Photo & Signature Presets','PAN आवेदन फोटो और सिग्नेचर प्रीसेट','Prepare photo and signature files to selected PAN form specifications',Image],
+['web','WhatsApp Media & Print Toolkit','व्हाट्सऐप मीडिया और प्रिंट टूलकिट','Prepare customer-shared images and documents for printing',Printer],
+['graphics','Notebook Name Sticker Designer','कॉपी नाम स्टिकर डिजाइनर','Create school notebook labels with name, class and subject',GraduationCap],
+['stamp','Stamp Paper Document Formatter','स्टाम्प पेपर डॉक्यूमेंट फॉर्मेटर','Format user-provided legal text for authorised stamp-paper use; does not issue e-stamps',FileText],
+['pvc','Multi ID Card Sheet Printer','मल्टी ID कार्ड शीट प्रिंटर','Arrange multiple authorised ID cards on one print sheet',CreditCard],
+['idprint','Farmer ID Front & Back Print Layout','किसान ID फ्रंट और बैक प्रिंट लेआउट','Arrange a user-provided farmer card for personal printing',CreditCard],
+['photo','Thumb Impression Resizer','अंगूठे का निशान रिसाइज़र','Crop, clean and resize thumb impressions for form uploads',ScanLine],
+['photo','AI Passport Photo Lab','AI पासपोर्ट फोटो लैब','Prepare portrait lighting, background and standard photo layouts',Sparkles],
+['docs','Agreement Format & Draft Builder','एग्रीमेंट फॉर्मेट और ड्राफ्ट बिल्डर','Create editable general agreement drafts for review',FileText],
+['docs','Bank Application Letter Maker','बैंक आवेदन पत्र मेकर','Prepare common bank request and service letters',FileText],
+['docs','AI Biodata Draft Assistant','AI बायोडाटा ड्राफ्ट असिस्टेंट','Turn supplied details into a polished biodata draft',Sparkles],
+['graphics','AI Invitation Card Studio','AI निमंत्रण कार्ड स्टूडियो','Create original invitation concepts for personal events',Sparkles],
+['graphics','AI Poster Concept Studio','AI पोस्टर कॉन्सेप्ट स्टूडियो','Generate original poster concepts and editable layouts',Sparkles],
+['print','Mobile Camera Document Scanner','मोबाइल कैमरा डॉक्यूमेंट स्कैनर','Capture pages, adjust corners and export clean scans',ScanLine],
+['pdf','ID Card to PDF Print Maker','ID कार्ड से PDF प्रिंट मेकर','Place authorised card images into a print-ready PDF',FileText],
+['business','CSC Service Rate List Maker','CSC सर्विस रेट लिस्ट मेकर','Create a clear service and price list for your own centre',Briefcase],
+['docs','Mini Document Album Builder','मिनी डॉक्यूमेंट एल्बम बिल्डर','Combine selected document images into an organized mini album',FolderOpen],
+['pvc','ID Card Album Cover Designer','ID कार्ड एल्बम कवर डिजाइनर','Design a cover page for customer ID-card print collections',CreditCard],
+['pvc','Epson PVC Card Print Setup','Epson PVC कार्ड प्रिंट सेटअप','Prepare CR80 card artwork and printer-alignment sheets',Printer],
+['print','Smart CSC Scan & Clean Studio','स्मार्ट CSC स्कैन और क्लीन स्टूडियो','Capture, deskew, clean and organize counter documents',ScanLine],
+['photo','Passport Photo Join & Sheet Composer','पासपोर्ट फोटो जॉइन और शीट कंपोज़र','Combine selected portraits into a standard print sheet',Image],
+['photo','AI Family Portrait Composer','AI फैमिली पोर्ट्रेट कंपोज़र','Create a family portrait composition from consented photos',Heart],
+['finance','Salary, Tax & Deduction Calculator','सैलरी, टैक्स और कटौती कैलकुलेटर','Estimate take-home pay from entered salary components',Landmark],
+['finance','Savings & Interest Calculator','बचत और ब्याज कैलकुलेटर','Estimate simple and compound interest over time',Landmark],
+['finance','Gold Purity & Making Charge Calculator','सोने की शुद्धता और मेकिंग चार्ज कैलकुलेटर','Estimate jewellery cost from purity, weight and charges',Landmark],
+['finance','Silver Purity & Value Calculator','चाँदी की शुद्धता और कीमत कैलकुलेटर','Estimate silver value from weight, purity and entered rate',Landmark]
 ] as const;
 export default function App(){
 const [lang,setLang]=useState<Lang>('en'); const [query,setQuery]=useState(''); const [section,setSection]=useState('home'); const [favorites,setFavorites]=useState<string[]>([]); const [recent,setRecent]=useState<string[]>([]); const [mobile,setMobile]=useState(false); const [dark,setDark]=useState(false); const [showLangMenu,setShowLangMenu]=useState(false);
@@ -157,7 +195,7 @@ return <div className={dark?'app dark':'app light'}>
 <div className="maker-grid">{makers.filter(m=>(m.en+' '+m.hi+' '+m.sub).toLowerCase().includes(query.toLowerCase())).map((m,i)=><article className={'maker-card maker-'+i} key={m.en} onClick={()=>soon(m.en)}><div className="maker-top"><div className="tool-icon"><m.icon size={20}/></div>{m.tag&&<span className="tag">{m.tag}</span>}<button className={'fav '+(favorites.includes(m.en)?'saved':'')} onClick={e=>{e.stopPropagation();toggleFav(m.en)}}><Star size={16} fill={favorites.includes(m.en)?'currentColor':'none'}/></button></div><h3>{tr(m.en,m.hi)}</h3><p>{m.sub}</p><div className="card-foot"><span>{tr('Explore maker','मेकर खोलें')}</span><span className="arrow"><ArrowUpRight size={16}/></span></div></article>)}</div>
 <div className="quick-panels"><article className="feature-panel csc-panel" onClick={()=>go('csc')}><div className="feature-icon"><Landmark/></div><div><span>{tr('SERVICE WORKSPACE','सर्विस वर्कस्पेस')}</span><h3>CSC CENTER TOOLS</h3><p>{tr('Application prep, document resize, service desk and more.','एप्लीकेशन तैयारी, डॉक्यूमेंट रिसाइज़ और सर्विस डेस्क।')}</p><b>{tr('Open workspace','वर्कस्पेस खोलें')} <ArrowUpRight size={15}/></b></div><div className="panel-glow"/><div className="scene-art csc-scene" aria-hidden="true"><div className="scene-window"><div className="scene-top"><i/><i/><i/></div><div className="scene-person"><span/><b/><i/></div><div className="scene-screen"><span/><span/><span/><strong>CSC</strong></div><div className="scene-paper"><i/><i/><i/><b/></div></div><div className="scene-caption">APPLICATION DESK <span>LIVE WORKFLOW</span></div></div></article><article className="feature-panel cyber-panel" onClick={()=>go('cyber')}><div className="feature-icon"><Globe2/></div><div><span>{tr('BUSINESS WORKSPACE','बिज़नेस वर्कस्पेस')}</span><h3>CYBER CAFE TOOLS</h3><p>{tr('Customer jobs, typing, scan, print and billing workflows.','कस्टमर जॉब, टाइपिंग, स्कैन, प्रिंट और बिलिंग।')}</p><b>{tr('Open workspace','वर्कस्पेस खोलें')} <ArrowUpRight size={15}/></b></div><div className="panel-glow"/><div className="scene-art cyber-scene" aria-hidden="true"><div className="scene-window"><div className="scene-top"><i/><i/><i/></div><div className="scene-monitor"><div className="monitor-screen"><span/><span/><span/><b>PRINT READY</b></div><i/></div><div className="scene-keyboard"/><div className="scene-writing"><div className="writing-lines"><i/><i/><i/><i/></div><span className="pencil"/></div></div><div className="scene-caption">CUSTOMER WORKSTATION <span>DESK READY</span></div></div></article></div>
 </>:null}
-{(section==='all'||section==='home'||section==='csc'||section==='cyber')&&<><div className="section-head category-heading"><div><div className="eyebrow">{tr('BUILT AROUND YOUR WORK','आपके काम के अनुसार')}</div><h2>{tr('Explore categories','कैटेगरी एक्सप्लोर करें')}</h2><p>{tr('Everything organized. Find the right tool without the clutter.','हर टूल सही जगह पर—बिना किसी उलझन के।')}</p></div><span className="muted-count">15 {tr('CATEGORIES','कैटेगरी')}</span></div><div className="category-grid">{categories.filter(c=>(section==='csc'?c.id==='csc':section==='cyber'?c.id==='cyber':true)&&((c.en+' '+c.hi+' '+c.desc).toLowerCase().includes(query.toLowerCase()))).map(c=><button className="category-card" key={c.id} onClick={()=>go(c.id)}><div className={'category-icon '+c.id}><c.icon size={20}/></div><div className="category-copy"><b>{hi?c.hi:c.en}</b><small>{c.desc}</small></div><span className="category-count">{c.count}</span><ChevronRight className="cat-arrow" size={16}/></button>)}</div></>}
+{(section==='all'||section==='home'||section==='csc'||section==='cyber')&&<><div className="section-head category-heading"><div><div className="eyebrow">{tr('BUILT AROUND YOUR WORK','आपके काम के अनुसार')}</div><h2>{tr('Explore categories','कैटेगरी एक्सप्लोर करें')}</h2><p>{tr('Everything organized. Find the right tool without the clutter.','हर टूल सही जगह पर—बिना किसी उलझन के।')}</p></div><span className="muted-count">{categories.length} {tr('CATEGORIES','कैटेगरी')}</span></div><div className="category-grid">{categories.filter(c=>(section==='csc'?c.id==='csc':section==='cyber'?c.id==='cyber':true)&&((c.en+' '+c.hi+' '+c.desc).toLowerCase().includes(query.toLowerCase()))).map(c=><button className="category-card" key={c.id} onClick={()=>go(c.id)}><div className={'category-icon '+c.id}><c.icon size={20}/></div><div className="category-copy"><b>{hi?c.hi:c.en}</b><small>{c.desc}</small></div><span className="category-count">{c.count}</span><ChevronRight className="cat-arrow" size={16}/></button>)}</div></>}
 {(currentCat || section === 'favorites' || section === 'recent') && (
   <>
     <div className="section-head tools-heading">
