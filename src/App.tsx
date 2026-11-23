@@ -253,27 +253,30 @@ function DemoThumb({title}:{title:string}){
 
 
 function ResumeMaker({hi,onBack}:{hi:boolean;onBack:()=>void}){
- const [tab,setTab]=useState('personal');
- const [template,setTemplate]=useState('modern');
- const [accent,setAccent]=useState('#185b43');
- const [font,setFont]=useState('Arial');
- const [fileName,setFileName]=useState('My_Resume');
- const [photo,setPhoto]=useState('');
- const [signature,setSignature]=useState('');
- const [signatureOriginal,setSignatureOriginal]=useState('');
- const [signatureWidth,setSignatureWidth]=useState(118);
- const [signatureHeight,setSignatureHeight]=useState(42);
- const [signatureAlign,setSignatureAlign]=useState('right');
- const [signatureTransparent,setSignatureTransparent]=useState(false);
- const [signatureOpacity,setSignatureOpacity]=useState(100);
+ const storageKey='tanshu-resume-maker-session-v1';
+ const [savedSession]=useState<any>(()=>{try{const final=localStorage.getItem(storageKey+':final');if(final){const parsed=JSON.parse(final);if(parsed.expiresAt>Date.now())return parsed;localStorage.removeItem(storageKey+':final');}const draft=sessionStorage.getItem(storageKey+':draft');return draft?JSON.parse(draft):null;}catch{return null;}});
+ const [resumeSubmitted,setResumeSubmitted]=useState<boolean>(!!savedSession?.submitted);
+ const [tab,setTab]=useState(savedSession?.tab??'personal');
+ const [template,setTemplate]=useState(savedSession?.template??'modern');
+ const [accent,setAccent]=useState(savedSession?.accent??'#185b43');
+ const [font,setFont]=useState(savedSession?.font??'Arial');
+ const [fileName,setFileName]=useState(savedSession?.fileName??'My_Resume');
+ const [photo,setPhoto]=useState(savedSession?.photo??'');
+ const [signature,setSignature]=useState(savedSession?.signature??'');
+ const [signatureOriginal,setSignatureOriginal]=useState(savedSession?.signatureOriginal??'');
+ const [signatureWidth,setSignatureWidth]=useState(savedSession?.signatureWidth??118);
+ const [signatureHeight,setSignatureHeight]=useState(savedSession?.signatureHeight??42);
+ const [signatureAlign,setSignatureAlign]=useState(savedSession?.signatureAlign??'right');
+ const [signatureTransparent,setSignatureTransparent]=useState(savedSession?.signatureTransparent??false);
+ const [signatureOpacity,setSignatureOpacity]=useState(savedSession?.signatureOpacity??100);
  const [fullPreview,setFullPreview]=useState(false);
  const [zoom,setZoom]=useState(100);
- const [showPhoto,setShowPhoto]=useState(true);
- const [showSignature,setShowSignature]=useState(false);
- const [showReferences,setShowReferences]=useState(false);
- const [personal,setPersonal]=useState({name:'',role:'',email:'',phone:'',city:'',address:'',linkedin:'',website:'',dob:'',nationality:'',marital:'',objective:'',summary:''});
- const [education,setEducation]=useState([{degree:'',school:'',year:'',score:'',detail:''}]);
- const [experience,setExperience]=useState([{title:'',company:'',from:'',to:'',location:'',detail:''}]);
+ const [showPhoto,setShowPhoto]=useState(savedSession?.showPhoto??true);
+ const [showSignature,setShowSignature]=useState(savedSession?.showSignature??false);
+ const [showReferences,setShowReferences]=useState(savedSession?.showReferences??false);
+ const [personal,setPersonal]=useState(savedSession?.personal??{name:'',role:'',email:'',phone:'',city:'',address:'',linkedin:'',website:'',dob:'',nationality:'',marital:'',objective:'',summary:''});
+ const [education,setEducation]=useState(savedSession?.education??[{degree:'',school:'',year:'',score:'',detail:''}]);
+ const [experience,setExperience]=useState(savedSession?.experience??[{title:'',company:'',from:'',to:'',location:'',detail:''}]);
  const [skills,setSkills]=useState('');
  const [languages,setLanguages]=useState('');
  const [projects,setProjects]=useState('');
@@ -287,7 +290,7 @@ function ResumeMaker({hi,onBack}:{hi:boolean;onBack:()=>void}){
  const labels=hi?{personal:'व्यक्तिगत जानकारी',profile:'प्रोफाइल',education:'शिक्षा',experience:'अनुभव',skills:'स्किल्स',extras:'अतिरिक्त जानकारी',design:'डिज़ाइन'}:{personal:'Personal Details',profile:'Profile',education:'Education',experience:'Experience',skills:'Skills',extras:'Additional Details',design:'Design & Export'};
  const update=(key:string,value:string)=>setPersonal(p=>({...p,[key]:value}));
  const input=(label:string,key:string,placeholder='',type='text')=><label className="resume-field"><span>{label}</span><input type={type} value={(personal as any)[key]} placeholder={placeholder} onChange={e=>update(key,e.target.value)}/></label>;
- const fileUrl=(e:any,setter:(v:string)=>void)=>{const file=e.target.files?.[0];if(file){setter(URL.createObjectURL(file));}};
+ const fileUrl=(e:any,setter:(v:string)=>void)=>{const file=e.target.files?.[0];if(file){const reader=new FileReader();reader.onload=()=>setter(String(reader.result||''));reader.readAsDataURL(file);}};
  const processSignatureImage=(src:string,removeWhite:boolean)=>new Promise<string>((resolve)=>{
   const img=document.createElement('img');
   img.onload=()=>{
@@ -309,7 +312,13 @@ function ResumeMaker({hi,onBack}:{hi:boolean;onBack:()=>void}){
  const uploadSignature=(e:any)=>{const file=e.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=async()=>{const src=String(reader.result||'');setSignatureOriginal(src);setSignature(await processSignatureImage(src,signatureTransparent));};reader.readAsDataURL(file);};
  const toggleSignatureTransparency=async(enabled:boolean)=>{setSignatureTransparent(enabled);if(signatureOriginal)setSignature(await processSignatureImage(signatureOriginal,enabled));};
 
- const ready=personal.name.trim().length>1;
+
+ useEffect(()=>{
+  const snapshot={tab,template,accent,font,fileName,photo,signature,signatureOriginal,signatureWidth,signatureHeight,signatureAlign,signatureTransparent,signatureOpacity,showPhoto,showSignature,showReferences,personal,education,experience,skills,languages,projects,certificates,achievements,hobbies,references,customTitle,customText,submitted:resumeSubmitted,expiresAt:resumeSubmitted?Date.now()+6*60*60*1000:undefined};
+  try{if(resumeSubmitted){localStorage.setItem(storageKey+':final',JSON.stringify(snapshot));sessionStorage.removeItem(storageKey+':draft');}else{sessionStorage.setItem(storageKey+':draft',JSON.stringify(snapshot));}}catch(e){console.warn('Resume autosave unavailable',e);}
+ },[tab,template,accent,font,fileName,photo,signature,signatureOriginal,signatureWidth,signatureHeight,signatureAlign,signatureTransparent,signatureOpacity,showPhoto,showSignature,showReferences,personal,education,experience,skills,languages,projects,certificates,achievements,hobbies,references,customTitle,customText,resumeSubmitted]);
+ const closeResumeSession=()=>{try{sessionStorage.removeItem(storageKey+':draft');localStorage.removeItem(storageKey+':final');}catch{}onBack();};
+\n const ready=personal.name.trim().length>1;
  const skillsList=skills.split(',').map(x=>x.trim()).filter(Boolean);
  const initials=personal.name.trim().split(/\s+/).slice(0,2).map(x=>x[0]||'').join('').toUpperCase();
  const resumePage=<article className={'resume-paper resume-'+template} style={{'--resume-accent':accent,'--resume-font':font} as any}>
@@ -342,10 +351,10 @@ function ResumeMaker({hi,onBack}:{hi:boolean;onBack:()=>void}){
  </article>;
  const setEdu=(i:number,k:string,v:string)=>setEducation(a=>a.map((x,n)=>n===i?({...x,[k]:v}):x));
  const setExp=(i:number,k:string,v:string)=>setExperience(a=>a.map((x,n)=>n===i?({...x,[k]:v}):x));
- const exportPdf=()=>{const old=document.title;document.title=(fileName.trim()||'My_Resume').replace(/[\\/:*?"<>|]/g,'_');window.print();window.setTimeout(()=>{document.title=old;},1800);};
- return <div className={'resume-maker'+(fullPreview?' resume-is-fullscreen':'')}>
-  {fullPreview&&<div className="resume-preview-toolbar"><b>RESUME EDITOR + LIVE PREVIEW</b><div><span>ZOOM</span><button onClick={()=>setZoom(z=>Math.max(30,z-10))}>−</button><span>{zoom}%</span><button onClick={()=>setZoom(z=>Math.min(200,z+10))}>＋</button><button onClick={()=>setZoom(100)}>RESET</button><button onClick={()=>setFullPreview(false)}>CLOSE ✕</button><button onClick={exportPdf}>SAVE / PRINT</button></div></div>}
-  <div className="resume-maker-top"><button onClick={onBack}>‹ {hi?'वापस':'BACK'}</button><div><span>PREMIUM CAREER STUDIO</span><h2>{hi?'प्रोफेशनल रिज्यूमे मेकर':'PROFESSIONAL RESUME MAKER'}</h2><small>{hi?'अपना डिज़ाइन चुनें · जानकारी भरें · प्रीव्यू जाँचें':'Choose a design · Add your details · Review before export'}</small></div><b>01 / 01</b></div>
+ const exportPdf=()=>{setResumeSubmitted(true);const old=document.title;document.title=(fileName.trim()||'My_Resume').replace(/[\\/:*?"<>|]/g,'_');window.print();window.setTimeout(()=>{document.title=old;},1800);};
+ return <div className={'resume-maker'+(fullPreview?' resume-is-fullscreen':'')+(resumeSubmitted?' resume-maker-finalized':'')}>
+  {(fullPreview||resumeSubmitted)&&<div className="resume-preview-toolbar"><b>RESUME EDITOR + LIVE PREVIEW</b><div><span>ZOOM</span><button onClick={()=>setZoom(z=>Math.max(30,z-10))}>−</button><span>{zoom}%</span><button onClick={()=>setZoom(z=>Math.min(200,z+10))}>＋</button><button onClick={()=>setZoom(100)}>RESET</button>{!resumeSubmitted&&<button onClick={()=>setFullPreview(false)}>CLOSE ✕</button>}<button onClick={closeResumeSession}>CLOSE RESUME ✕</button><button onClick={exportPdf}>SAVE / PRINT</button></div></div>}
+  <div className="resume-maker-top"><button onClick={closeResumeSession}>‹ {hi?'बंद करें':'CLOSE'}</button><div><span>PREMIUM CAREER STUDIO</span><h2>{hi?'प्रोफेशनल रिज्यूमे मेकर':'PROFESSIONAL RESUME MAKER'}</h2><small>{hi?'अपना डिज़ाइन चुनें · जानकारी भरें · प्रीव्यू जाँचें':'Choose a design · Add your details · Review before export'}</small></div><b>01 / 01</b></div>
   <div className={'resume-maker-grid'+(fullPreview?' resume-fullscreen-grid':'')}>
    <section className="resume-editor">
     <div className="resume-tabs">{Object.entries(labels).map(([k,v])=><button key={k} className={tab===k?'active':''} onClick={()=>setTab(k)}>{v}</button>)}</div>
@@ -371,7 +380,7 @@ function ResumeMaker({hi,onBack}:{hi:boolean;onBack:()=>void}){
     {tab==='design'&&<div className="resume-form-section"><h3>CHOOSE YOUR RESUME DESIGN</h3><p>Preview each style on the right. Your information stays in the editor when you switch designs.</p><div className="resume-template-grid">{templates.map(([id,name,desc])=><button key={id} className={template===id?'selected':''} onClick={()=>setTemplate(id)}><span className={'resume-template-swatch swatch-'+id}><i/><i/><i/></span><b>{name}</b><small>{desc}</small></button>)}</div><div className="resume-design-controls"><label>ACCENT COLOUR <input type="color" value={accent} onChange={e=>setAccent(e.target.value)}/></label><label>FONT STYLE <select value={font} onChange={e=>setFont(e.target.value)}><option>Arial</option><option>Georgia</option><option>Verdana</option><option>Tahoma</option></select></label><label className="resume-check"><input type="checkbox" checked={showPhoto} onChange={e=>setShowPhoto(e.target.checked)}/> Show profile photo</label></div><label className="resume-field"><span>PDF FILE NAME</span><input value={fileName} onChange={e=>setFileName(e.target.value)} placeholder="My_Resume"/></label><div className="resume-export-actions"><button onClick={()=>setFullPreview(true)}>FULL PREVIEW & ZOOM</button><button onClick={exportPdf}>SAVE & DOWNLOAD PDF ↗</button></div><small className="resume-hint">PDF export opens your browser's print dialog. Choose “Save as PDF” to download, or select your printer.</small></div>}
     <div className="resume-step-actions"><button disabled={tab==='personal'} onClick={()=>setTab(Object.keys(labels)[Math.max(0,Object.keys(labels).indexOf(tab)-1)])}>← PREVIOUS</button><button onClick={()=>setTab(Object.keys(labels)[Math.min(6,Object.keys(labels).indexOf(tab)+1)])}>{tab==='design'?'REVIEW DESIGN':'NEXT SECTION →'}</button></div>
    </section>
-   <aside className="resume-live-side"><div className="resume-live-head"><div><span>LIVE DOCUMENT</span><b>INSTANT PREVIEW</b></div><button onClick={()=>setFullPreview(true)}>⤢</button></div><div className={'resume-mini-wrap'+(fullPreview?' resume-full-preview-wrap':'')}><div className={fullPreview?'resume-full-preview-paper':'resume-mini-paper'} style={fullPreview?{width:zoom+'%',maxWidth:'none'}:undefined}>{resumePage}</div></div><div className="resume-live-foot"><span>{ready?'● DETAILS ADDED':'○ ADD YOUR NAME TO BEGIN'}</span><button onClick={()=>setFullPreview(true)}>OPEN FULL PREVIEW</button></div><div className="resume-privacy-note">🔒 Your details and uploaded images stay in this browser session. Download your PDF before closing.</div></aside>
+   <aside className="resume-live-side"><div className="resume-live-head"><div><span>LIVE DOCUMENT</span><b>INSTANT PREVIEW</b></div><button onClick={()=>setFullPreview(true)}>⤢</button></div><div className={'resume-mini-wrap'+(fullPreview?' resume-full-preview-wrap':'')}><div className={fullPreview?'resume-full-preview-paper':'resume-mini-paper'} style={fullPreview?{width:zoom+'%',maxWidth:'none'}:undefined}>{resumePage}</div></div><div className="resume-live-foot"><span>{ready?'● DETAILS ADDED':'○ ADD YOUR NAME TO BEGIN'}</span><button onClick={()=>setFullPreview(true)}>OPEN FULL PREVIEW</button></div><div className="resume-privacy-note">🔒 {resumeSubmitted?'Submitted resume is saved on this device for 6 hours. Use CLOSE RESUME to remove it.':'Your draft is automatically saved in this tab until you close the Resume Maker.'}</div></aside>
   </div>
  </div>;
 }
