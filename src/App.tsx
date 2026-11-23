@@ -322,7 +322,7 @@ function ResumeMaker({hi,onBack}:{hi:boolean;onBack:()=>void}){
 
  const ready=personal.name.trim().length>1;
  const skillsList=skills.split(',').map(x=>x.trim()).filter(Boolean);
- const initials=personal.name.trim().split(/\s+/).slice(0,2).map(x=>x[0]||'').join('').toUpperCase();
+ const initials=personal.name.trim().split(/\s+/).slice(0,2).map((x:string)=>x[0]||'').join('').toUpperCase();
  const resumePage=<article className={'resume-paper resume-'+template} style={{'--resume-accent':accent,'--resume-font':font} as any}>
   <header className="resume-paper-head">
    {showPhoto&&photo&&<img className="resume-photo" src={photo} alt="Profile"/>}
