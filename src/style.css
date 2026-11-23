@@ -512,9 +512,9 @@
 .record-form-page.wizard-library .record-feature-strip,
 .record-form-page.wizard-library .record-layout,
 .record-form-page.wizard-library .record-online{display:none!important}
-.record-form-page.wizard-library .record-catalog{display:block!important}
+.record-form-page.wizard-library:not(.wizard-phase-record):not(.wizard-submitted) .record-catalog{display:block!important}
 .record-form-page.wizard-online .desk-service-hub,
 .record-form-page.wizard-online .record-feature-strip,
 .record-form-page.wizard-online .record-layout,
 .record-form-page.wizard-online .record-catalog{display:none!important}
-.record-form-page.wizard-online .record-online{display:block!important}
+.record-form-page.wizard-online:not(.wizard-phase-record):not(.wizard-submitted) .record-online{display:block!important}
