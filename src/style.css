@@ -671,3 +671,14 @@
  .resume-signature img{max-width:100%!important;max-height:24mm!important;object-fit:contain!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}
  .resume-signature-controls{display:none!important}
 }
+
+/* Resume Maker session persistence: finalized preview only; scoped, no global design changes. */
+.resume-maker-finalized .resume-editor,.resume-maker-finalized .resume-maker-top{display:none!important}
+.resume-maker-finalized .resume-maker-grid{display:block!important;grid-template-columns:minmax(0,1fr)!important}
+.resume-maker-finalized .resume-live-side{position:static!important;width:100%!important;max-width:100%!important;max-height:none!important}
+.resume-maker-finalized .resume-live-head{display:none!important}
+.resume-maker-finalized .resume-mini-wrap{max-height:none!important;min-height:0!important;overflow:auto!important;padding:22px!important}
+.resume-maker-finalized .resume-mini-paper{width:min(100%,794px)!important;max-width:794px!important;margin:0 auto!important;transform:none!important}
+.resume-maker-finalized .resume-live-foot{display:flex!important;justify-content:center!important}
+.resume-maker-finalized .resume-live-foot button{display:none!important}
+.resume-maker-finalized .resume-preview-toolbar{position:sticky;top:0;z-index:100}
