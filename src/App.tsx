@@ -317,7 +317,7 @@ function ResumeMaker({hi,onBack}:{hi:boolean;onBack:()=>void}){
  useEffect(()=>{
   const snapshot={tab,template,accent,font,fileName,photo,signature,signatureOriginal,signatureWidth,signatureHeight,signatureAlign,signatureTransparent,signatureOpacity,showPhoto,showSignature,showReferences,personal,education,experience,skills,languages,projects,certificates,achievements,hobbies,references,customTitle,customText,submitted:resumeSubmitted,expiresAt:resumeSubmitted?(submittedExpiresAt||Date.now()+6*60*60*1000):undefined};
   try{if(resumeSubmitted){localStorage.setItem(storageKey+':final',JSON.stringify(snapshot));sessionStorage.removeItem(storageKey+':draft');}else{sessionStorage.setItem(storageKey+':draft',JSON.stringify(snapshot));}}catch(e){console.warn('Resume autosave unavailable',e);}
- },[tab,template,accent,font,fileName,photo,signature,signatureOriginal,signatureWidth,signatureHeight,signatureAlign,signatureTransparent,signatureOpacity,showPhoto,showSignature,showReferences,personal,education,experience,skills,languages,projects,certificates,achievements,hobbies,references,customTitle,customText,resumeSubmitted]);
+ },[tab,template,accent,font,fileName,photo,signature,signatureOriginal,signatureWidth,signatureHeight,signatureAlign,signatureTransparent,signatureOpacity,showPhoto,showSignature,showReferences,personal,education,experience,skills,languages,projects,certificates,achievements,hobbies,references,customTitle,customText,resumeSubmitted,submittedExpiresAt]);
  const closeResumeSession=()=>{try{sessionStorage.removeItem(storageKey+':draft');localStorage.removeItem(storageKey+':final');}catch{}onBack();};
 \n const ready=personal.name.trim().length>1;
  const skillsList=skills.split(',').map(x=>x.trim()).filter(Boolean);
