@@ -518,3 +518,35 @@
 .record-form-page.wizard-online .record-layout,
 .record-form-page.wizard-online .record-catalog{display:none!important}
 .record-form-page.wizard-online:not(.wizard-phase-record):not(.wizard-submitted) .record-online{display:block!important}
+
+/* Strict isolation: only the selected form surface is visible at a time. */
+.record-form-page:not(.wizard-library):not(.wizard-online) .record-catalog,
+.record-form-page:not(.wizard-library):not(.wizard-online) .record-online{display:none!important}
+.record-form-page.wizard-phase-record .desk-service-hub,
+.record-form-page.wizard-phase-record .record-feature-strip,
+.record-form-page.wizard-phase-record .record-catalog,
+.record-form-page.wizard-phase-record .record-online{display:none!important}
+.record-form-page.wizard-phase-record .record-layout{display:grid!important}
+.record-form-page.wizard-phase-record .record-print-sheet{display:none!important}
+.record-form-page.wizard-submitted .desk-service-hub,
+.record-form-page.wizard-submitted .record-feature-strip,
+.record-form-page.wizard-submitted .record-layout,
+.record-form-page.wizard-submitted .record-catalog,
+.record-form-page.wizard-submitted .record-online{display:none!important}
+.record-form-page.wizard-submitted .record-print-sheet{display:block!important}
+.record-form-page.wizard-library .desk-service-hub,
+.record-form-page.wizard-library .desk-form-grid,
+.record-form-page.wizard-library .record-feature-strip,
+.record-form-page.wizard-library .record-layout,
+.record-form-page.wizard-library .record-online{display:none!important}
+.record-form-page.wizard-library .record-catalog{display:block!important}
+.record-form-page.wizard-online .desk-service-hub,
+.record-form-page.wizard-online .desk-form-grid,
+.record-form-page.wizard-online .record-feature-strip,
+.record-form-page.wizard-online .record-layout,
+.record-form-page.wizard-online .record-catalog{display:none!important}
+.record-form-page.wizard-online .record-online{display:block!important}
+@media print{
+ .record-form-page.wizard-submitted .record-print-sheet{display:block!important}
+ .record-form-page.wizard-submitted .record-print-copy{break-inside:avoid;page-break-inside:avoid}
+}
