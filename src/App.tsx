@@ -263,6 +263,8 @@ function CertificateStudio({hi,onBack}:{hi:boolean;onBack:()=>void}){
  const [records,setRecords]=useState<any[]>([]);
  const [bulkReady,setBulkReady]=useState(false);
  const [message,setMessage]=useState('');
+ const singleComplete=!!(v.title?.trim()&&v.recipient?.trim()&&v.issuer?.trim());
+ const bulkComplete=bulkReady&&records.length>0;
  useEffect(()=>{try{localStorage.setItem(key,JSON.stringify(v))}catch{}},[v]);
  const templates=[['heritage','HERITAGE','Ornamental • formal'],['modern','MODERN EDITORIAL','Clean • contemporary'],['prestige','PRESTIGE','Luxury • gold detail'],['academic','ACADEMIC','Institutional • classic'],['minimal','MINIMAL','Quiet • refined'],['creative','CREATIVE','Bold • expressive']];
  const set=(k:string,val:any)=>setV((p:any)=>({...p,[k]:val}));
@@ -295,8 +297,8 @@ function CertificateStudio({hi,onBack}:{hi:boolean;onBack:()=>void}){
  const printBulk=()=>{if(!records.length)return;document.title='TANSHU_BULK_CERTIFICATES_'+records.length;window.print()};
  return <div className={"certificate-studio mode-"+mode}>
   <style>{'@page{size:A4 '+v.orientation+';margin:8mm}'}</style>
-  <div className="certificate-studio-head"><div><div className="certificate-studio-kicker">TANSHU DIGITAL TOOLS · CERTIFICATE WORKSPACE</div><h1>{hi?'सर्टिफिकेट क्रिएशन सूट':'CERTIFICATE CREATION SUITE'}</h1><p>{hi?'सिंगल सर्टिफिकेट, बल्क जनरेशन और अपना डिजाइन बनाएं।':'Create one certificate, generate batches from CSV, or build a fully customized original design.'}</p></div><button className="certificate-studio-back" onClick={onBack}>← {hi?'वापस':'BACK TO TOOLS'}</button></div>
-  <div className="certificate-mode-tabs"><button className={mode==='single'?'active':''} onClick={()=>setMode('single')}>01 · SINGLE CERTIFICATE</button><button className={mode==='bulk'?'active':''} onClick={()=>setMode('bulk')}>02 · BULK CERTIFICATES</button><button className={mode==='design'?'active':''} onClick={()=>setMode('design')}>03 · CUSTOM DESIGN STUDIO</button></div>
+  <div className="certificate-studio-head"><div className="certificate-studio-heading"><div className="certificate-studio-kicker">TANSHU DIGITAL TOOLS · CERTIFICATE WORKSPACE</div><div className="certificate-studio-title">{hi?'सर्टिफिकेट स्टूडियो':'CERTIFICATE STUDIO'}</div></div><button className="certificate-studio-back" onClick={onBack}>← {hi?'वापस':'BACK TO TOOLS'}</button></div>
+  <div className="certificate-mode-tabs" aria-label="Certificate workflow steps"><button className={mode==='single'?'active':''} onClick={()=>setMode('single')}><span className="certificate-step-mark">{singleComplete?'✓':'01'}</span><span>SINGLE CERTIFICATE</span><small>{singleComplete?'COMPLETED':'DETAILS & CONTENT'}</small></button><button className={mode==='bulk'?'active':''} onClick={()=>setMode('bulk')}><span className="certificate-step-mark">{bulkComplete?'✓':'02'}</span><span>BULK CERTIFICATES</span><small>{bulkComplete?'COMPLETED':'OPTIONAL · CSV LIST'}</small></button><button className={mode==='design'?'active':''} onClick={()=>setMode('design')}><span className="certificate-step-mark">03</span><span>CUSTOM DESIGN STUDIO</span><small>{mode==='design'?'CURRENT STEP':'FINAL DESIGN & EXPORT'}</small></button></div>
   <div className="certificate-studio-grid">
    <section className="certificate-studio-editor">
     {mode==='bulk'?<>
