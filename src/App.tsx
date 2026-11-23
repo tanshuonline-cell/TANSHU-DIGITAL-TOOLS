@@ -256,6 +256,7 @@ function ResumeMaker({hi,onBack}:{hi:boolean;onBack:()=>void}){
  const storageKey='tanshu-resume-maker-session-v1';
  const [savedSession]=useState<any>(()=>{try{const final=localStorage.getItem(storageKey+':final');if(final){const parsed=JSON.parse(final);if(parsed.expiresAt>Date.now())return parsed;localStorage.removeItem(storageKey+':final');}const draft=sessionStorage.getItem(storageKey+':draft');return draft?JSON.parse(draft):null;}catch{return null;}});
  const [resumeSubmitted,setResumeSubmitted]=useState<boolean>(!!savedSession?.submitted);
+ const [submittedExpiresAt,setSubmittedExpiresAt]=useState<number>(savedSession?.expiresAt??0);
  const [tab,setTab]=useState(savedSession?.tab??'personal');
  const [template,setTemplate]=useState(savedSession?.template??'modern');
  const [accent,setAccent]=useState(savedSession?.accent??'#185b43');
@@ -277,15 +278,15 @@ function ResumeMaker({hi,onBack}:{hi:boolean;onBack:()=>void}){
  const [personal,setPersonal]=useState(savedSession?.personal??{name:'',role:'',email:'',phone:'',city:'',address:'',linkedin:'',website:'',dob:'',nationality:'',marital:'',objective:'',summary:''});
  const [education,setEducation]=useState(savedSession?.education??[{degree:'',school:'',year:'',score:'',detail:''}]);
  const [experience,setExperience]=useState(savedSession?.experience??[{title:'',company:'',from:'',to:'',location:'',detail:''}]);
- const [skills,setSkills]=useState('');
- const [languages,setLanguages]=useState('');
- const [projects,setProjects]=useState('');
- const [certificates,setCertificates]=useState('');
- const [achievements,setAchievements]=useState('');
- const [hobbies,setHobbies]=useState('');
- const [references,setReferences]=useState('');
- const [customTitle,setCustomTitle]=useState('Professional Profile');
- const [customText,setCustomText]=useState('');
+ const [skills,setSkills]=useState(savedSession?.skills??'');
+ const [languages,setLanguages]=useState(savedSession?.languages??'');
+ const [projects,setProjects]=useState(savedSession?.projects??'');
+ const [certificates,setCertificates]=useState(savedSession?.certificates??'');
+ const [achievements,setAchievements]=useState(savedSession?.achievements??'');
+ const [hobbies,setHobbies]=useState(savedSession?.hobbies??'');
+ const [references,setReferences]=useState(savedSession?.references??'');
+ const [customTitle,setCustomTitle]=useState(savedSession?.customTitle??'Professional Profile');
+ const [customText,setCustomText]=useState(savedSession?.customText??'');
  const templates=[['modern','MODERN SPLIT','Clean two-column'],['executive','EXECUTIVE','Premium leadership'],['classic','CLASSIC','Traditional formal'],['minimal','MINIMAL','Simple ATS-friendly'],['creative','CREATIVE','Distinctive accent'],['compact','COMPACT','Space-efficient'],['custom','CUSTOM DESIGN','Build your own look']];
  const labels=hi?{personal:'व्यक्तिगत जानकारी',profile:'प्रोफाइल',education:'शिक्षा',experience:'अनुभव',skills:'स्किल्स',extras:'अतिरिक्त जानकारी',design:'डिज़ाइन'}:{personal:'Personal Details',profile:'Profile',education:'Education',experience:'Experience',skills:'Skills',extras:'Additional Details',design:'Design & Export'};
  const update=(key:string,value:string)=>setPersonal(p=>({...p,[key]:value}));
@@ -314,7 +315,7 @@ function ResumeMaker({hi,onBack}:{hi:boolean;onBack:()=>void}){
 
 
  useEffect(()=>{
-  const snapshot={tab,template,accent,font,fileName,photo,signature,signatureOriginal,signatureWidth,signatureHeight,signatureAlign,signatureTransparent,signatureOpacity,showPhoto,showSignature,showReferences,personal,education,experience,skills,languages,projects,certificates,achievements,hobbies,references,customTitle,customText,submitted:resumeSubmitted,expiresAt:resumeSubmitted?Date.now()+6*60*60*1000:undefined};
+  const snapshot={tab,template,accent,font,fileName,photo,signature,signatureOriginal,signatureWidth,signatureHeight,signatureAlign,signatureTransparent,signatureOpacity,showPhoto,showSignature,showReferences,personal,education,experience,skills,languages,projects,certificates,achievements,hobbies,references,customTitle,customText,submitted:resumeSubmitted,expiresAt:resumeSubmitted?(submittedExpiresAt||Date.now()+6*60*60*1000):undefined};
   try{if(resumeSubmitted){localStorage.setItem(storageKey+':final',JSON.stringify(snapshot));sessionStorage.removeItem(storageKey+':draft');}else{sessionStorage.setItem(storageKey+':draft',JSON.stringify(snapshot));}}catch(e){console.warn('Resume autosave unavailable',e);}
  },[tab,template,accent,font,fileName,photo,signature,signatureOriginal,signatureWidth,signatureHeight,signatureAlign,signatureTransparent,signatureOpacity,showPhoto,showSignature,showReferences,personal,education,experience,skills,languages,projects,certificates,achievements,hobbies,references,customTitle,customText,resumeSubmitted]);
  const closeResumeSession=()=>{try{sessionStorage.removeItem(storageKey+':draft');localStorage.removeItem(storageKey+':final');}catch{}onBack();};
@@ -351,7 +352,7 @@ function ResumeMaker({hi,onBack}:{hi:boolean;onBack:()=>void}){
  </article>;
  const setEdu=(i:number,k:string,v:string)=>setEducation(a=>a.map((x,n)=>n===i?({...x,[k]:v}):x));
  const setExp=(i:number,k:string,v:string)=>setExperience(a=>a.map((x,n)=>n===i?({...x,[k]:v}):x));
- const exportPdf=()=>{setResumeSubmitted(true);const old=document.title;document.title=(fileName.trim()||'My_Resume').replace(/[\\/:*?"<>|]/g,'_');window.print();window.setTimeout(()=>{document.title=old;},1800);};
+ const exportPdf=()=>{if(!resumeSubmitted)setSubmittedExpiresAt(Date.now()+6*60*60*1000);setResumeSubmitted(true);const old=document.title;document.title=(fileName.trim()||'My_Resume').replace(/[\\/:*?"<>|]/g,'_');window.print();window.setTimeout(()=>{document.title=old;},1800);};
  return <div className={'resume-maker'+(fullPreview?' resume-is-fullscreen':'')+(resumeSubmitted?' resume-maker-finalized':'')}>
   {(fullPreview||resumeSubmitted)&&<div className="resume-preview-toolbar"><b>RESUME EDITOR + LIVE PREVIEW</b><div><span>ZOOM</span><button onClick={()=>setZoom(z=>Math.max(30,z-10))}>−</button><span>{zoom}%</span><button onClick={()=>setZoom(z=>Math.min(200,z+10))}>＋</button><button onClick={()=>setZoom(100)}>RESET</button>{!resumeSubmitted&&<button onClick={()=>setFullPreview(false)}>CLOSE ✕</button>}<button onClick={closeResumeSession}>CLOSE RESUME ✕</button><button onClick={exportPdf}>SAVE / PRINT</button></div></div>}
   <div className="resume-maker-top"><button onClick={closeResumeSession}>‹ {hi?'बंद करें':'CLOSE'}</button><div><span>PREMIUM CAREER STUDIO</span><h2>{hi?'प्रोफेशनल रिज्यूमे मेकर':'PROFESSIONAL RESUME MAKER'}</h2><small>{hi?'अपना डिज़ाइन चुनें · जानकारी भरें · प्रीव्यू जाँचें':'Choose a design · Add your details · Review before export'}</small></div><b>01 / 01</b></div>
