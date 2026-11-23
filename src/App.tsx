@@ -76,7 +76,7 @@ return <div className={dark?'app dark':'app light'}>
     <div className="tool-list">
       {directoryTools.map((t) => (
         <div className="tool-row" key={t[1]}>
-          <div className="tool-icon">{createElement(t[4], { size: 19 })}</div>
+          <div className="tool-icon">{createElement(t[4] as any, { size: 19 })}</div>
           <div className="tool-info"><b>{hi ? t[2] : t[1]}</b><small>{t[3]}</small></div>
           <span className="coming">{tr('COMING SOON','जल्द आ रहा है')}</span>
           <button className="fav" onClick={() => toggleFav(t[1])}><Star size={16} fill={favorites.includes(t[1]) ? 'currentColor' : 'none'} /></button>
@@ -91,7 +91,7 @@ return <div className={dark?'app dark':'app light'}>
     <h2>{filtered.length} {tr('matching tools','मिलते-जुलते टूल')}</h2>
     {filtered.map((t) => (
       <div className="tool-row" key={t[1]}>
-        <div className="tool-icon">{createElement(t[4], { size: 18 })}</div>
+        <div className="tool-icon">{createElement(t[4] as any, { size: 18 })}</div>
         <div className="tool-info"><b>{hi ? t[2] : t[1]}</b><small>{t[3]}</small></div>
         <span className="coming">{tr('COMING SOON','जल्द आ रहा है')}</span>
       </div>
