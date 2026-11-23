@@ -207,12 +207,13 @@ return <div className={dark?'app dark':'app light'}>
     </div>
     <div className="tool-list">
       {directoryTools.map((t) => (
-        <div className="tool-row" key={t[1]}>
+        <button className="tool-row tool-row-action" key={t[1]} onClick={() => openDirectoryTool(t)}>
           <div className="tool-icon">{createElement(t[4] as any, { size: 19 })}</div>
           <div className="tool-info"><b>{hi ? t[2] : t[1]}</b><small>{t[3]}</small></div>
           <span className="coming">{tr('COMING SOON','जल्द आ रहा है')}</span>
-          <button className="fav" onClick={() => toggleFav(t[1])}><Star size={16} fill={favorites.includes(t[1]) ? 'currentColor' : 'none'} /></button>
-        </div>
+          <span className="tool-open-hint">{tr('OPEN TOOL','टूल खोलें')} <ArrowUpRight size={15}/></span>
+          <span className="tool-fav" onClick={(e) => {e.stopPropagation();toggleFav(t[1]);}}><Star size={16} fill={favorites.includes(t[1]) ? 'currentColor' : 'none'} /></span>
+        </button>
       ))}
     </div>
   </>
@@ -225,11 +226,12 @@ return <div className={dark?'app dark':'app light'}>
       <div className="tool-row" key={t[1]}>
         <div className="tool-icon">{createElement(t[4] as any, { size: 18 })}</div>
         <div className="tool-info"><b>{hi ? t[2] : t[1]}</b><small>{t[3]}</small></div>
-        <span className="coming">{tr('COMING SOON','जल्द आ रहा है')}</span>
-      </div>
+        <span className="coming">{tr('IN DEVELOPMENT','निर्माणाधीन')}</span>
+        <span className="tool-open-hint">{tr('OPEN TOOL','टूल खोलें')} <ArrowUpRight size={15}/></span>
+      </button>
     ))}
   </div>
 )}
-<footer><span>© 2026 <b>TANSHU DIGITAL TOOLS</b></span><span>{tr('ALL IN ONE DIGITAL WORKSPACE','हर डिजिटल काम, एक ही जगह।')}</span><span className="footer-safe"><ShieldCheck size={14}/> {tr('Privacy-conscious by design','प्राइवेसी का ध्यान')}</span></footer>
+{pendingTool&&<div className="tool-status-backdrop" role="presentation"><section className="tool-status-modal" role="dialog" aria-modal="true" aria-labelledby="tool-status-title"><div className="tool-status-icon"><Clock3 size={24}/></div><div className="eyebrow">{tr('TOOL STATUS','टूल की स्थिति')}</div><h2 id="tool-status-title">{hi?pendingTool.hiName:pendingTool.name}</h2><p>{hi?'यह टूल अभी पूरी तरह तैयार नहीं है। हमारी टीम इस पर काम कर रही है। तैयार होते ही इसे यहीं उपलब्ध कराया जाएगा।':'This tool is not fully ready yet. We are working on it and will make it available here as soon as it is complete.'}</p>{pendingTool.desc&&<small>{pendingTool.desc}</small>}<button className="tool-status-primary" onClick={()=>{setOpenedTool(pendingTool);setPendingTool(null);}}>{tr('OK, CONTINUE','ठीक है, आगे बढ़ें')} <ArrowUpRight size={16}/></button></section></div>}{openedTool&&<div className="tool-page-panel"><button className="tool-page-back" onClick={()=>setOpenedTool(null)}><ChevronRight size={16}/> {tr('BACK TO TOOLS','टूल्स पर वापस')}</button><div className="tool-status-icon"><Clock3 size={24}/></div><div className="eyebrow">{tr('IN DEVELOPMENT','निर्माणाधीन')}</div><h2>{hi?openedTool.hiName:openedTool.name}</h2><p>{hi?'यह टूल अभी निर्माणाधीन है। इस पर काम पूरा होने के बाद इसका पूरा फीचर इसी जगह उपलब्ध होगा।':'This tool is currently in development. Its complete features will appear here once the work is finished.'}</p><span className="coming">{tr('COMING SOON','जल्द आ रहा है')}</span></div>}<footer><span>© 2026 <b>TANSHU DIGITAL TOOLS</b></span><span>{tr('ALL IN ONE DIGITAL WORKSPACE','हर डिजिटल काम, एक ही जगह।')}</span><span className="footer-safe"><ShieldCheck size={14}/> {tr('Privacy-conscious by design','प्राइवेसी का ध्यान')}</span></footer>
 </main></div><nav className="mobile-bottom">{[{id:'home',icon:Home,label:tr('Home','होम')},{id:'maker',icon:Sparkles,label:tr('Makers','मेकर')},{id:'all',icon:Grid2X2,label:tr('Explore','एक्सप्लोर')},{id:'favorites',icon:Star,label:tr('Saved','सेव्ड')}].map(n=><button key={n.id} className={section===n.id?'selected':''} onClick={()=>go(n.id)}><n.icon size={19}/><small>{n.label}</small></button>)}</nav></div>
 }
