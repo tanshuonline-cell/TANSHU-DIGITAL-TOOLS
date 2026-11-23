@@ -354,3 +354,26 @@
 @media(max-width:900px){.record-layout{grid-template-columns:1fr}.record-preview-card{position:static}.record-catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.record-online-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.record-form-intro{padding:18px;display:block}.record-demo-tag{display:inline-block;margin-top:13px}.record-feature-strip{grid-template-columns:1fr;gap:8px}.record-feature-strip>div{padding:11px 13px}.record-main-card{padding:13px}.record-stepper{gap:2px}.record-stepper button{flex-direction:column;justify-content:center;gap:4px;padding:7px 2px}.record-stepper button small{font-size:8px;text-align:center}.record-fields{grid-template-columns:1fr}.record-fields .wide{grid-column:auto}.record-choice-grid,.record-catalog-grid,.record-online-grid{grid-template-columns:1fr 1fr}.record-actions button{flex:1;padding:0 8px;font-size:9px}.record-preview-card{padding:14px}}
 @media print{body *{visibility:hidden!important}.record-form-page,.record-form-page *{visibility:visible!important}.record-form-page{position:absolute;left:0;top:0;width:100%;margin:0!important;padding:0!important}.record-form-intro,.record-feature-strip,.record-stepper,.record-actions,.record-catalog,.record-online{display:none!important}.record-layout{display:block}.record-main-card,.record-preview-card{box-shadow:none;border:1px solid #bbb;break-inside:avoid}.record-preview-card{margin-top:12px;position:static}.record-step-content{display:block!important}.record-step-content input,.record-step-content select,.record-step-content textarea{border:0!important;background:white!important;color:#111!important}.record-privacy-note{color:#333!important;background:white!important}}
+
+.record-print-sheet{display:none}
+@media print{
+  .record-form-page .record-layout,.record-form-page .record-catalog,.record-form-page .record-online,.record-form-page .record-form-intro,.record-form-page .record-feature-strip{display:none!important}
+  .record-form-page .record-print-sheet{display:block!important}
+  .record-print-copy{display:block;min-height:260mm;padding:10mm 8mm;color:#111;background:#fff;font-family:Arial,sans-serif;page-break-after:always;break-after:page}
+  .record-print-copy:last-child{page-break-after:auto;break-after:auto}
+  .record-print-copy header{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #222;padding-bottom:8px}
+  .record-print-copy h1{margin:0;font-size:18pt;letter-spacing:.02em}.record-print-copy header b{font-size:8pt;letter-spacing:.12em}
+  .record-print-copy header strong{font-size:10pt;border:1px solid #333;padding:7px 12px}
+  .record-print-meta{display:flex;justify-content:space-between;margin:10px 0;font-size:8pt}
+  .record-print-shop{padding:9px;border:1px solid #888;font-size:8pt}
+  .record-print-copy h3{margin:14px 0 7px;padding-bottom:4px;border-bottom:1px solid #aaa;font-size:9pt;letter-spacing:.08em}
+  .record-print-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 15px;margin:9px 0;font-size:9pt}
+  .record-print-grid b{font-weight:700}
+  .record-print-photo{height:25mm;margin:10px 0;border:1px dashed #777;display:flex;align-items:center;justify-content:center;font-size:8pt;color:#555}
+  .record-print-description{min-height:30mm;padding:9px;border:1px solid #aaa;font-size:9pt;white-space:pre-wrap}
+  .record-print-terms{font-size:8pt;line-height:1.6}
+  .record-print-signatures{display:grid;grid-template-columns:1fr 1fr;gap:25mm;margin:18mm 5mm 10mm}
+  .record-print-signatures>div{border-top:1px solid #333;padding-top:5px;text-align:center;font-size:8pt}
+  .record-print-signatures small{color:#555}
+  .record-print-copy footer{margin-top:14px;padding-top:6px;border-top:1px solid #aaa;font-size:7pt;color:#444}
+}
