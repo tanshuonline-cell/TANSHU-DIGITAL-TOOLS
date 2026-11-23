@@ -263,3 +263,16 @@
 .category-count{flex:0 0 auto}
 @media(max-width:760px){.mobile-nav-scrim{display:block;position:fixed;inset:0;z-index:59;border:0;background:#07140dcc;backdrop-filter:blur(2px)}.sidebar{z-index:60}.page-back-button{padding:7px 8px;margin-right:5px}.page-back-button span{font-size:9px}.crumb{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.topbar{gap:6px}.tool-row{display:flex;flex-wrap:wrap;padding:12px!important;min-height:unset}.tool-info{flex-basis:calc(100% - 54px);order:1}.tool-row .tool-icon{order:0}.tool-row .coming{order:2;margin-left:43px}.tool-row .tool-open-hint{order:3}.tool-row .tool-fav{order:4;margin-left:auto}.category-card{gap:9px;padding:12px!important}.category-copy b{font-size:11px;line-height:1.35}.category-copy small{font-size:9px}.category-count{font-size:10px}.maker-card h3{font-size:13px;line-height:1.35}.intro-brand{font-size:16px;letter-spacing:.09em}.intro-tagline{font-size:8px;letter-spacing:.16em}}
 @media(prefers-reduced-motion:reduce){.intro-splash,.intro-logo,.intro-brand,.intro-tagline,.intro-loader i{animation-duration:.01ms!important;animation-delay:0ms!important}}
+
+
+/* HERO LIFT — tighter lower edge and a clearer step down to search */
+.app.light .welcome-row.hero-panel{
+  border-bottom-color:#cbd8ce;
+  box-shadow:0 1px 0 #ffffff inset,0 2px 0 #d9e4dc,0 12px 17px -10px rgba(13,43,27,.48),0 22px 24px -19px rgba(13,43,27,.42);
+  transform:translateY(-1px);
+}
+.app.light .search-wrap{margin-top:39px}
+@media(max-width:760px){
+  .app.light .welcome-row.hero-panel{box-shadow:0 1px 0 #ffffff inset,0 2px 0 #d9e4dc,0 10px 15px -9px rgba(13,43,27,.42),0 18px 20px -17px rgba(13,43,27,.38)}
+  .app.light .search-wrap{margin-top:32px}
+}
