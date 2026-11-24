@@ -1578,3 +1578,12 @@
 .pdf-editor-root .pdf-text-hit{z-index:3!important}
 .pdf-editor-root .pdf-preview-actions button:disabled{opacity:.35!important;cursor:not-allowed!important}
 @media(max-width:700px){.pdf-editor-root .pdf-inline-edit{left:12px!important;right:12px;bottom:12px;top:auto;width:auto!important;max-width:none!important;max-height:38vh!important}}
+
+
+/* PDF editor: pending replacements never cover the source page before Save */
+.pdf-editor-root .pdf-pending-list{display:grid;gap:7px;margin-top:4px}
+.pdf-editor-root .pdf-pending-item{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:9px 10px;border:1px solid #d8e7dc;border-radius:10px;background:#f6faf7}
+.pdf-editor-root .pdf-pending-item>div{display:grid;gap:4px;min-width:0}
+.pdf-editor-root .pdf-pending-item b{font-size:9px;letter-spacing:.05em;color:#276244}
+.pdf-editor-root .pdf-pending-item small{font-size:10px;line-height:1.4;color:#566c5d;overflow-wrap:anywhere}
+.pdf-editor-root .pdf-pending-item>button{width:28px;height:28px;border:1px solid #d9e5dc;border-radius:8px;background:#fff;color:#9b4539;font-size:18px;line-height:1;cursor:pointer}
