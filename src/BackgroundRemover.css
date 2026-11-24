@@ -56,3 +56,29 @@
  .bg-right{min-height:360px}
  .bg-preview-stage{height:310px;min-height:250px}
 }
+
+/* Mobile touch scrolling: allow the tool page itself to receive vertical swipes.
+   The app shell can be a fixed-height overlay, so make that containing panel scrollable too. */
+@media(max-width:900px){
+ .tool-page-panel:has(.bg-remover){
+  min-height:0;
+  height:100dvh;
+  max-height:100dvh;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:contain;
+  touch-action:pan-y;
+ }
+ .bg-remover{
+  height:auto!important;
+  min-height:100dvh;
+  max-height:none;
+  overflow:visible!important;
+  touch-action:pan-y;
+  -webkit-overflow-scrolling:touch;
+ }
+ .bg-main,.bg-workspace,.bg-left,.bg-right{
+  touch-action:pan-y;
+ }
+}
