@@ -13,7 +13,8 @@ export default function NewPVCCard({hi=false,onBack}:{hi?:boolean;onBack:()=>voi
  const active=side==='front'?front:back,setActive=side==='front'?F:B;
  const t=(a:string,b:string)=>hi?b:a;
  const canvas=useRef<HTMLCanvasElement>(null);
- const cropDrag=useRef<{mode:'move'|'nw'|'ne'|'sw'|'se';px:number;py:number;x:number;y:number;w:number;h:number}|null>(null);\n const cropDraw=useRef<{x:number;y:number}|null>(null);
+ const cropDrag=useRef<{mode:'move'|'nw'|'ne'|'sw'|'se';px:number;py:number;x:number;y:number;w:number;h:number}|null>(null);
+ const cropDraw=useRef<{x:number;y:number}|null>(null);
  const paperW=paper==='portrait'?210:297,paperH=paper==='portrait'?297:210;
  const cols=Math.max(1,Math.floor((paperW-2*margin+gap)/(w+gap))),rows=Math.max(1,Math.floor((paperH-2*margin+gap)/(h+gap))),per=cols*rows,shown=Math.min(copies,per);
  const load=async(file:File,target:'front'|'back')=>{
