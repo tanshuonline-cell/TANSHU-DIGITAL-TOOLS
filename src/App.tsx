@@ -256,16 +256,24 @@ function DemoThumb({title}:{title:string}){
 function CertificateStudio({hi,onBack}:{hi:boolean;onBack:()=>void}){
  const key='tanshu-certificate-studio-draft-v2';
  const defaults={title:'CERTIFICATE OF ACHIEVEMENT',subtitle:'This certificate is proudly presented to',recipient:'',course:'',body:'In recognition of outstanding performance, dedication and successful completion.',issuer:'TANSHU DIGITAL TOOLS',date:new Date().toISOString().slice(0,10),place:'',certificateId:'',signer:'Authorized Signatory',designation:'Director',accent:'#1d5b45',background:'#fffdf7',template:'heritage',orientation:'landscape',font:'Georgia',logo:'',signature:'',watermark:'',border:'double',titleSize:34,nameSize:38,certificateType:'Achievement'};
- const [v,setV]=useState<any>(()=>{try{return {...defaults,...JSON.parse(localStorage.getItem(key)||'{}')}}catch{return defaults}});
- const [mode,setMode]=useState<'single'|'bulk'|'design'>('single');
- const [zoom,setZoom]=useState(70);
- const [csvText,setCsvText]=useState('name,course,certificateId,date\nAarav Kumar,Web Design,TTD-001,2026-11-24\nAnanya Singh,Computer Basics,TTD-002,2026-11-24');
- const [records,setRecords]=useState<any[]>([]);
- const [bulkReady,setBulkReady]=useState(false);
- const [message,setMessage]=useState('');
+ const defaultCSV='name,course,certificateId,date\nAarav Kumar,Web Design,TTD-001,2026-11-24\nAnanya Singh,Computer Basics,TTD-002,2026-11-24';
+ const [savedDraft]=useState<any>(()=>{try{const d=JSON.parse(localStorage.getItem(key)||'null');return d&&d.version===3?d:null}catch{return null}});
+ const [v,setV]=useState<any>(()=>savedDraft?.v?{...defaults,...savedDraft.v}:defaults);
+ const [mode,setMode]=useState<'single'|'bulk'|'design'>(savedDraft?.mode||'single');
+ const [zoom,setZoom]=useState(savedDraft?.zoom||70);
+ const [csvText,setCsvText]=useState(savedDraft?.csvText||defaultCSV);
+ const [records,setRecords]=useState<any[]>(savedDraft?.records||[]);
+ const [bulkReady,setBulkReady]=useState(!!savedDraft?.bulkReady);
+ const [message,setMessage]=useState(savedDraft?.message||'');
+ const [showDraftChoice,setShowDraftChoice]=useState(!!savedDraft?.hasWork);
+ const [showBackPrompt,setShowBackPrompt]=useState(false);
  const singleComplete=!!(v.title?.trim()&&v.recipient?.trim()&&v.issuer?.trim());
  const bulkComplete=bulkReady&&records.length>0;
- useEffect(()=>{try{localStorage.setItem(key,JSON.stringify(v))}catch{}},[v]);
+ const hasWork=!!(v.recipient?.trim()||v.course?.trim()||v.certificateId?.trim()||v.place?.trim()||v.logo||v.signature||v.watermark?.trim()||v.title!==defaults.title||v.body!==defaults.body||v.issuer!==defaults.issuer||v.accent!==defaults.accent||v.background!==defaults.background||v.template!==defaults.template||mode!=='single'||records.length||csvText!==defaultCSV);
+ useEffect(()=>{try{localStorage.setItem(key,JSON.stringify({version:3,v,mode,zoom,csvText,records,bulkReady,message,hasWork,savedAt:Date.now()}))}catch(e){console.warn('Certificate draft could not be saved in this browser',e)}},[v,mode,zoom,csvText,records,bulkReady,message,hasWork]);
+ const saveDraftAndBack=()=>{try{localStorage.setItem(key,JSON.stringify({version:3,v,mode,zoom,csvText,records,bulkReady,message,hasWork:true,savedAt:Date.now()}))}catch{}setShowBackPrompt(false);onBack()};
+ const discardDraftAndBack=()=>{try{localStorage.removeItem(key)}catch{}setShowBackPrompt(false);onBack()};
+ const startNewDraft=()=>{try{localStorage.removeItem(key)}catch{}setV(defaults);setMode('single');setZoom(70);setCsvText(defaultCSV);setRecords([]);setBulkReady(false);setMessage('');setShowDraftChoice(false)};
  const templates=[['heritage','HERITAGE','Ornamental • formal'],['modern','MODERN EDITORIAL','Clean • contemporary'],['prestige','PRESTIGE','Luxury • gold detail'],['academic','ACADEMIC','Institutional • classic'],['minimal','MINIMAL','Quiet • refined'],['creative','CREATIVE','Bold • expressive']];
  const set=(k:string,val:any)=>setV((p:any)=>({...p,[k]:val}));
  const upload=(field:string,file?:File)=>{if(!file)return;const reader=new FileReader();reader.onload=()=>set(field,String(reader.result||''));reader.readAsDataURL(file)};
@@ -296,9 +304,9 @@ function CertificateStudio({hi,onBack}:{hi:boolean;onBack:()=>void}){
  const print=()=>{document.title=(v.recipient||'Certificate')+'_Certificate';window.print()};
  const printBulk=()=>{if(!records.length)return;document.title='TANSHU_BULK_CERTIFICATES_'+records.length;window.print()};
  return <div className={"certificate-studio mode-"+mode}>
-  <button type="button" className="certificate-studio-back-float" onClick={onBack} aria-label={hi?'टूल्स पर वापस जाएँ':'Back to tools'}><span aria-hidden="true">←</span><span>{hi?'वापस':'BACK'}</span></button>
+  <button type="button" className="certificate-studio-back-float" onClick={()=>setShowBackPrompt(true)} aria-label={hi?'टूल्स पर वापस जाएँ':'Back to tools'}><span aria-hidden="true">←</span><span>{hi?'वापस':'BACK'}</span></button>
   <style>{'@page{size:A4 '+v.orientation+';margin:8mm}'}</style>
-  <div className="certificate-studio-head"><div className="certificate-studio-heading"><div className="certificate-studio-kicker">TANSHU DIGITAL TOOLS · CERTIFICATE WORKSPACE</div><div className="certificate-studio-title">{hi?'सर्टिफिकेट स्टूडियो':'CERTIFICATE STUDIO'}</div></div><button className="certificate-studio-back" onClick={onBack}>← {hi?'वापस':'BACK TO TOOLS'}</button></div>
+  <div className="certificate-studio-head"><div className="certificate-studio-heading"><div className="certificate-studio-kicker">TANSHU DIGITAL TOOLS · CERTIFICATE WORKSPACE</div><div className="certificate-studio-title">{hi?'सर्टिफिकेट स्टूडियो':'CERTIFICATE STUDIO'}</div></div><button className="certificate-studio-back" onClick={()=>setShowBackPrompt(true)}>← {hi?'वापस':'BACK TO TOOLS'}</button></div>
   <div className="certificate-mode-tabs" aria-label="Certificate workflow steps"><button className={mode==='single'?'active':''} onClick={()=>setMode('single')}><span className="certificate-step-mark">{singleComplete?'✓':'01'}</span><span>SINGLE CERTIFICATE</span><small>{singleComplete?'COMPLETED':'DETAILS & CONTENT'}</small></button><button className={mode==='bulk'?'active':''} onClick={()=>setMode('bulk')}><span className="certificate-step-mark">{bulkComplete?'✓':'02'}</span><span>BULK CERTIFICATES</span><small>{bulkComplete?'COMPLETED':'OPTIONAL · CSV LIST'}</small></button><button className={mode==='design'?'active':''} onClick={()=>setMode('design')}><span className="certificate-step-mark">03</span><span>CUSTOM DESIGN STUDIO</span><small>{mode==='design'?'CURRENT STEP':'FINAL DESIGN & EXPORT'}</small></button></div>
   <div className="certificate-studio-grid">
    <section className="certificate-studio-editor">
@@ -342,6 +350,8 @@ function CertificateStudio({hi,onBack}:{hi:boolean;onBack:()=>void}){
    </section>
   </div>
   {mode==='bulk'&&records.length>0&&<div className="certificate-bulk-print-only">{records.map((r,i)=>paper(r,i))}</div>}
+ {showDraftChoice&&<div className="certificate-draft-overlay"><section className="certificate-draft-dialog"><div className="certificate-draft-mark">✓</div><div className="certificate-studio-kicker">SAVED WORKSPACE</div><h2>{hi?'आपका पिछला ड्राफ्ट मिला':'YOUR SAVED DRAFT IS HERE'}</h2><p>{hi?'आप पिछला काम वहीं से जारी रख सकते हैं या नया सर्टिफिकेट शुरू कर सकते हैं।':'Continue where you left off, or start a completely new certificate. Your saved draft will remain available until you replace or discard it.'}</p><button className="certificate-studio-primary" onClick={()=>setShowDraftChoice(false)}>{hi?'ड्राफ्ट जारी रखें':'CONTINUE SAVED DRAFT'}</button><button className="certificate-studio-secondary" onClick={startNewDraft}>{hi?'नया शुरू करें':'START NEW'}</button></section></div>}
+ {showBackPrompt&&<div className="certificate-draft-overlay"><section className="certificate-draft-dialog"><div className="certificate-studio-kicker">LEAVE CERTIFICATE STUDIO</div><h2>{hi?'बाहर जाने से पहले ड्राफ्ट सेव करें?':'SAVE YOUR WORK BEFORE LEAVING?'}</h2><p>{hi?'प्रिंट करना जरूरी नहीं है। ड्राफ्ट सेव करके आप दूसरे टूल पर जा सकते हैं।':'Printing is optional. Save your draft and return to the tools directory, or discard this work.'}</p><button className="certificate-studio-primary" onClick={saveDraftAndBack}>{hi?'ड्राफ्ट सेव करें और वापस जाएँ':'SAVE DRAFT & BACK TO TOOLS'}</button><button className="certificate-studio-secondary" onClick={discardDraftAndBack}>{hi?'ड्राफ्ट हटाएँ और वापस जाएँ':'DISCARD DRAFT & BACK'}</button><button className="certificate-draft-cancel" onClick={()=>setShowBackPrompt(false)}>{hi?'यहीं रहें':'CANCEL · STAY HERE'}</button></section></div>}
  </div>;
 }
 function ResumeMaker({hi,onBack}:{hi:boolean;onBack:()=>void}){
