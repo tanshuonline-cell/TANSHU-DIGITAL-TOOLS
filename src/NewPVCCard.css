@@ -18,3 +18,20 @@
 
 /* PDF page crop selector: select either side from a single uploaded PDF. */
 .np-pdfcrop{border:1px solid #b8c9e6!important;background:#f8faff!important}.np-crop-target{display:flex;gap:8px;margin:10px 0}.np-crop-target button{flex:1;border:1px solid #d6deea;background:#fff;border-radius:8px;padding:8px;font-size:11px;font-weight:700;color:#344256}.np-crop-target button.chosen{border-color:#5279c5;background:#eaf1ff;color:#3158a8}.np-crop-image{position:relative;width:100%;overflow:hidden;background:#e8edf4;border-radius:8px;margin:10px 0}.np-crop-image img{display:block;width:100%;height:auto}.np-crop-rect{position:absolute;border:2px solid #e33d3d;background:#e33d3d18;box-shadow:0 0 0 9999px #17203355;pointer-events:none}.np-applycrop{width:100%;border:0;border-radius:9px;padding:11px;background:#2857ad;color:white;font-weight:800;margin-top:8px;cursor:pointer}.np-pdfcrop .np-reset{width:100%;justify-content:center}
+
+/* Large interactive crop workspace with touch and mouse corner handles. */
+.np-open-crop{width:100%;border:0;border-radius:9px;padding:12px;background:#2857ad;color:#fff;font-weight:800;cursor:pointer;margin:8px 0}
+.np-crop-hint{display:block;color:#68788e;font-size:11px;margin:4px 0 10px}
+.np-crop-modal{position:fixed;inset:0;z-index:99999;background:#101827;display:flex;flex-direction:column;padding:clamp(10px,2vw,24px);color:#fff}
+.np-crop-modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex:0 0 auto;padding:4px 2px 14px}
+.np-crop-modal-head b,.np-crop-modal-head small{display:block}.np-crop-modal-head b{font-size:17px}.np-crop-modal-head small{font-size:11px;color:#b8c6d9;margin-top:4px}
+.np-crop-modal-head button{width:42px;height:42px;border:1px solid #536176;background:#263449;color:white;border-radius:10px;font-size:27px;cursor:pointer}
+.np-crop-stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:auto;touch-action:pan-x pan-y}
+.np-crop-image-large{position:relative;display:inline-block;line-height:0;max-width:96vw;max-height:calc(100vh - 170px);flex:0 0 auto}
+.np-crop-image-large>img{display:block;max-width:min(96vw,1500px);max-height:calc(100vh - 170px);width:auto;height:auto;object-fit:contain;user-select:none;-webkit-user-drag:none}
+.np-crop-rect-large{position:absolute;box-sizing:border-box;border:3px solid #ff3b30;background:#ff3b3020;box-shadow:0 0 0 9999px #050b16a8;touch-action:none;cursor:move;line-height:normal;min-width:18px;min-height:18px}
+.np-crop-drag-label{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#111c;color:#fff;border-radius:5px;padding:5px 8px;font-size:11px;white-space:nowrap;pointer-events:none}
+.np-crop-handle{position:absolute;width:22px;height:22px;border:3px solid #fff;background:#e73535;border-radius:50%;box-shadow:0 1px 8px #0009;touch-action:none;z-index:2}
+.np-crop-handle.nw{left:-12px;top:-12px;cursor:nwse-resize}.np-crop-handle.ne{right:-12px;top:-12px;cursor:nesw-resize}.np-crop-handle.sw{left:-12px;bottom:-12px;cursor:nesw-resize}.np-crop-handle.se{right:-12px;bottom:-12px;cursor:nwse-resize}
+.np-crop-modal-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex:0 0 auto;padding:14px 2px 2px}.np-crop-modal-foot span{font-size:12px;color:#c2cede}.np-crop-modal-foot button{border:0;border-radius:10px;background:#21a36b;color:#fff;padding:13px 22px;font-weight:900;font-size:14px;cursor:pointer}
+@media(max-width:600px){.np-crop-modal{padding:10px}.np-crop-image-large>img{max-width:96vw;max-height:calc(100vh - 190px)}.np-crop-modal-foot{align-items:stretch;flex-direction:column}.np-crop-modal-foot button{width:100%}.np-crop-modal-foot span{text-align:center}}
