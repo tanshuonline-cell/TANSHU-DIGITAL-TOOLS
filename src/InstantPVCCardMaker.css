@@ -34,3 +34,9 @@
  .ipvc-preview .ipvc-scroll{min-height:62vh}
  .ipvc-preview .ipvc-source-canvas{max-height:58vh}
 }
+
+/* Fine red crop guide with unobtrusive corner grips */
+.ipvc-crop{border:1px solid #ef4444!important;box-shadow:0 0 0 9999px #10253b22!important;cursor:move}
+.ipvc-crop:after{content:'';position:absolute;left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;background:#ef4444;box-shadow:calc(100% + 0px) 0 0 #ef4444,0 calc(100% + 0px) 0 #ef4444,calc(100% + 0px) calc(100% + 0px) 0 #ef4444;border:0}
+.ipvc-crop.draft{border:1px solid #ef4444!important;border-style:solid!important;box-shadow:0 0 0 9999px #10253b12!important}
+.ipvc-stage{user-select:none;-webkit-user-select:none}
