@@ -40,13 +40,14 @@ export default function NewPVCCard({hi=false,onBack}:{hi?:boolean;onBack:()=>voi
     x.fillStyle='#111827';x.font=(4*scale)+'px sans-serif';x.fillText(slot.which==='front'?'SLOT 1 · FRONT':'SLOT 2 · BACK',xx,Math.max(4*scale,yy-2*scale));
    }return;
   }
-  const cellW=w*scale,cellH=h*scale,g=gap*scale,m=margin*scale,handleH=(media==='easy'?easyHandleLength*scale:0),handleW=easyHandleWidth*scale,layoutH=cellH+handleH;
+  const cellW=w*scale,cellH=h*scale,g=gap*scale,m=margin*scale,handleH=(media==='easy'?easyHandleLength*scale:0),handleW=easyHandleWidth*scale,layoutH=cellH,layoutW=cellW+handleH;
   const paired=target==='both';
-  const pairW=paired?cellW*2+g:cellW;
+  const pairW=media==='easy'?layoutW:paired?cellW*2+g:cellW;
   const pairCols=Math.max(1,Math.floor((c.width-2*m+g)/(pairW+g)));
   const pairRows=Math.max(1,Math.floor((c.height-2*m+g)/(layoutH+g)));
   const count=media==='easy'?1:Math.min(copies,pairCols*pairRows);
   const targets:('front'|'back')[]=paired?['front','back']:[target];
+  const traceOutline=(xx:number,yy:number,ww:number,hh:number)=>{if(media==='easy'){const r=corner==='rounded'?Math.min(radius*scale,ww/2,hh/2):0,y1=yy+(hh-handleW)/2,y2=y1+handleW;x.moveTo(xx+r,yy);x.lineTo(xx+ww-r,yy);if(r)x.quadraticCurveTo(xx+ww,yy,xx+ww,yy+r);else x.lineTo(xx+ww,yy);x.lineTo(xx+ww,y1);x.lineTo(xx+ww+handleH,y1);x.lineTo(xx+ww+handleH,y2);x.lineTo(xx+ww,y2);x.lineTo(xx+ww,yy+hh-r);if(r)x.quadraticCurveTo(xx+ww,yy+hh,xx+ww-r,yy+hh);else x.lineTo(xx+ww,yy+hh);x.lineTo(xx+r,yy+hh);if(r)x.quadraticCurveTo(xx,yy+hh,xx,yy+hh-r);else x.lineTo(xx,yy+hh);x.lineTo(xx,yy+r);if(r)x.quadraticCurveTo(xx,yy,xx+r,yy);else x.lineTo(xx,yy);return;}const r=corner==='rounded'?Math.min(radius*scale,ww/2,hh/2):0;if(r>0&&typeof (x as any).roundRect==='function')(x as any).roundRect(xx,yy,ww,hh,r);else x.rect(xx,yy,ww,hh);};
   for(let i=0;i<count;i++){
    const col=i%pairCols,row=Math.floor(i/pairCols),pairX=m+col*(pairW+g)+offsetX*scale,yy=m+row*(layoutH+g)+offsetY*scale,bodyY=yy;
    for(let j=0;j<targets.length;j++){
@@ -56,8 +57,8 @@ export default function NewPVCCard({hi=false,onBack}:{hi?:boolean;onBack:()=>voi
     x.fillStyle=baseColor==='none'?'#ffffff':baseColor;x.fillRect(xx,bodyY,cellW,cellH);
     if(data.src){const im=new window.Image();im.src=data.src;await new Promise(r=>{im.onload=r;im.onerror=r});const rot=data.rotation*Math.PI/180;x.translate(xx+cellW/2,bodyY+cellH/2);x.rotate(rot);const fit=data.fit==='cover'?Math.max(cellW/im.width,cellH/im.height):Math.min(cellW/im.width,cellH/im.height);const dw=im.width*fit*data.zoom,dh=im.height*fit*data.zoom;x.drawImage(im,-dw/2+data.x*cellW/100,-dh/2+data.y*cellH/100,dw,dh);x.translate(-(xx+cellW/2),-(yy+cellH/2));}
     x.restore();
-    if(border){x.save();x.strokeStyle=borderColor;x.lineWidth=borderWidth*scale;if(media==='easy'){x.beginPath();if(corner==='rounded'&&typeof (x as any).roundRect==='function')(x as any).roundRect(xx,bodyY,cellW,cellH,radius*scale);else x.rect(xx,bodyY,cellW,cellH);x.rect(xx+(cellW-handleW)/2,bodyY+cellH,handleW,handleH);x.stroke();}else if(corner==='rounded'&&typeof (x as any).roundRect==='function')(x as any).roundRect(xx,bodyY,cellW,cellH,radius*scale);else x.strokeRect(xx,bodyY,cellW,cellH);x.restore();}
-    if(guides){x.strokeStyle='#8993a3';x.lineWidth=1.5;x.setLineDash([8,5]);if(media==='easy'){x.beginPath();if(corner==='rounded'&&typeof (x as any).roundRect==='function')(x as any).roundRect(xx,bodyY,cellW,cellH,radius*scale);else x.rect(xx,bodyY,cellW,cellH);x.rect(xx+(cellW-handleW)/2,bodyY+cellH,handleW,handleH);x.stroke();}else x.strokeRect(xx,bodyY,cellW,cellH);x.setLineDash([]);}
+    if(border){x.save();x.strokeStyle=borderColor;x.lineWidth=borderWidth*scale;x.beginPath();traceOutline(xx,bodyY,cellW,cellH);x.stroke();x.restore();}
+    if(guides){x.save();x.strokeStyle='#8993a3';x.lineWidth=1.5;x.setLineDash([8,5]);x.beginPath();traceOutline(xx,bodyY,cellW,cellH);x.stroke();x.setLineDash([]);x.restore();}
    }
   }
  };
