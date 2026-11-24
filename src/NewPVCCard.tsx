@@ -1,3 +1,4 @@
+// Card profile settings are implemented in NewPVCCardSettings.tsx
 import {useEffect,useMemo,useRef,useState} from 'react';
 import {createPortal} from 'react-dom';
 import {ArrowLeft,Upload,FileText,Image as ImageIcon,RotateCcw,Minus,Plus,Download,Printer,Check,RefreshCw,MoveHorizontal,MoveVertical} from 'lucide-react';
