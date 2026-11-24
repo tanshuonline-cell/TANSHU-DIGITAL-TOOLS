@@ -1449,3 +1449,76 @@
   .pdf-editor-root .pdf-editor-layout{width:100%!important;max-width:none!important}
   .pdf-editor-root .pdf-page-view{height:72vh!important;min-height:460px!important}
 }
+
+
+/* PDF EDITOR — full-screen balanced workspace (desktop + mobile) */
+.tool-page-panel.document-tool-panel:has(>.pdf-editor-root){
+  position:fixed!important;inset:0!important;z-index:1400!important;
+  display:flex!important;align-items:stretch!important;justify-content:stretch!important;
+  width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;
+  margin:0!important;padding:0!important;overflow:hidden!important;border-radius:0!important;
+}
+.tool-page-panel.document-tool-panel:has(>.pdf-editor-root)>.pdf-editor-root{
+  display:flex!important;flex:1 1 auto!important;align-self:stretch!important;
+  width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;
+  max-width:none!important;max-height:none!important;overflow:hidden!important;
+}
+.pdf-editor-root>.pdf-editor-header{flex:0 0 auto!important;min-width:0!important}
+.pdf-editor-root>.pdf-editor-layout{
+  display:grid!important;grid-template-columns:minmax(390px,42%) minmax(0,58%)!important;
+  gap:16px!important;flex:1 1 0!important;min-width:0!important;min-height:0!important;
+  width:100%!important;max-width:none!important;overflow:hidden!important;padding:16px!important;
+}
+.pdf-editor-root .pdf-editor-tools{
+  width:100%!important;max-width:none!important;min-width:0!important;min-height:0!important;
+  max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain!important;
+  padding:clamp(18px,2vw,30px)!important;border-radius:16px!important;
+}
+.pdf-editor-root .pdf-control-group textarea{min-height:88px!important;font-size:14px!important}
+.pdf-editor-root .pdf-control-group input:not([type=range]){min-height:44px!important;font-size:14px!important}
+.pdf-editor-root .pdf-page-view{
+  display:flex!important;flex:1 1 auto!important;width:100%!important;max-width:none!important;
+  min-width:0!important;min-height:0!important;height:auto!important;overflow:hidden!important;
+}
+.pdf-editor-root .pdf-canvas-scroller{
+  flex:1 1 auto!important;width:100%!important;min-width:0!important;min-height:0!important;
+  overflow:auto!important;justify-content:center!important;align-items:flex-start!important;
+}
+.pdf-editor-root .pdf-canvas-wrap{margin:0 auto 24px!important}
+.pdf-editor-root>.pdf-editor-footer{flex:0 0 auto!important}
+@media(max-width:900px){
+  .tool-page-panel.document-tool-panel:has(>.pdf-editor-root){
+    position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;
+    overflow:hidden!important;
+  }
+  .tool-page-panel.document-tool-panel:has(>.pdf-editor-root)>.pdf-editor-root{
+    height:100dvh!important;min-height:0!important;overflow-y:auto!important;
+  }
+  .pdf-editor-root>.pdf-editor-layout{
+    display:flex!important;flex-direction:column!important;flex:0 0 auto!important;
+    width:100%!important;max-width:none!important;min-height:0!important;overflow:visible!important;
+    padding:12px!important;gap:12px!important;
+  }
+  .pdf-editor-root .pdf-editor-tools{
+    flex:0 0 auto!important;width:100%!important;max-height:none!important;overflow:visible!important;
+    padding:18px!important;
+  }
+  .pdf-editor-root .pdf-page-view{
+    flex:0 0 auto!important;width:100%!important;height:78dvh!important;min-height:540px!important;
+  }
+  .pdf-editor-root .pdf-page-toolbar{flex-wrap:wrap!important}
+  .pdf-editor-root .pdf-canvas-scroller{min-height:0!important}
+}
+@media(max-width:560px){
+  .pdf-editor-root>.pdf-editor-header{
+    display:grid!important;grid-template-columns:1fr!important;gap:10px!important;padding:12px!important;
+  }
+  .pdf-editor-root .pdf-editor-header>button{justify-self:start!important}
+  .pdf-editor-root .pdf-open-button{grid-column:auto!important;justify-content:center!important;width:100%!important}
+  .pdf-editor-root>.pdf-editor-layout{padding:9px!important;gap:10px!important}
+  .pdf-editor-root .pdf-editor-tools{padding:15px!important}
+  .pdf-editor-root .pdf-page-view{height:72dvh!important;min-height:460px!important}
+  .pdf-editor-root .pdf-page-toolbar{align-items:flex-start!important}
+  .pdf-editor-root .pdf-page-toolbar b{max-width:70%;line-height:1.5}
+  .pdf-editor-root .pdf-editor-footer{padding:10px 14px!important;flex-direction:column!important}
+}
