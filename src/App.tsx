@@ -81,7 +81,19 @@ const makers=[
 {en:'Agreement & Affidavit Draft Maker',hi:'एग्रीमेंट और शपथपत्र ड्राफ्ट मेकर',sub:'Prepare structured drafts for careful review before signing',icon:FileText,tag:''},
 {en:'Bulk Certificate Maker',hi:'बल्क सर्टिफिकेट मेकर',sub:'Import a recipient CSV and prepare a batch of certificates',icon:GraduationCap,tag:''},
 {en:'PDF Page Organizer',hi:'PDF पेज ऑर्गनाइज़र',sub:'Rotate, reorder or remove PDF pages',icon:FolderOpen,tag:''},
-{en:'PDF Text & Annotation Tools',hi:'PDF टेक्स्ट और एनोटेशन टूल्स',sub:'Select text blocks and add replacement or additional text',icon:FileText,tag:''}
+{en:'PDF Text & Annotation Tools',hi:'PDF टेक्स्ट और एनोटेशन टूल्स',sub:'Select text blocks and add replacement or additional text',icon:FileText,tag:''},
+{en:'PDF Merge & Split',hi:'PDF मर्ज और स्प्लिट',sub:'Combine multiple PDF files or split selected pages',icon:FolderOpen,tag:'IN DEVELOPMENT'},
+{en:'PDF Compress & Resize',hi:'PDF कंप्रेस और रिसाइज़',sub:'Reduce PDF file size for online forms and sharing',icon:Zap,tag:'IN DEVELOPMENT'},
+{en:'Image to PDF Maker',hi:'इमेज से PDF मेकर',sub:'Convert JPG and PNG scans into a PDF document',icon:Image,tag:'IN DEVELOPMENT'},
+{en:'PDF Page Numbers & Watermark',hi:'PDF पेज नंबर और वॉटरमार्क',sub:'Add page numbers, labels and watermarks to your PDF',icon:FileText,tag:'IN DEVELOPMENT'},
+{en:'PDF Form Filler',hi:'PDF फॉर्म फिलर',sub:'Type into supported PDF form fields and prepare a copy',icon:FileText,tag:'IN DEVELOPMENT'},
+{en:'Hindi PDF Editor',hi:'हिंदी PDF एडिटर',sub:'Hindi PDF editing workspace with Devanagari text support',icon:FileText,tag:'IN DEVELOPMENT'},
+{en:'English PDF Editor',hi:'इंग्लिश PDF एडिटर',sub:'English PDF text, annotation and page editing workspace',icon:FileText,tag:'IN DEVELOPMENT'},
+{en:'Bank Letter Maker',hi:'बैंक लेटर मेकर',sub:'Create a structured bank application with a live page preview',icon:Landmark,tag:''},
+{en:'Leave Application Maker',hi:'छुट्टी आवेदन मेकर',sub:'Prepare a professional leave request letter',icon:FileText,tag:''},
+{en:'Affidavit Draft Maker',hi:'शपथपत्र ड्राफ्ट मेकर',sub:'Prepare an affidavit draft for legal review and execution',icon:FileText,tag:''},
+{en:'Biodata Maker',hi:'बायोडाटा मेकर',sub:'Create a personal biodata with a clean printable layout',icon:FileText,tag:''},
+{en:'Letterhead Designer',hi:'लेटरहेड डिजाइनर',sub:'Create a branded business letterhead and document header',icon:FileText,tag:''}
 ];
 const tools=[
 ['csc','Aadhaar Card Crop & Print','आधार कार्ड क्रॉप और प्रिंट','Arrange user-provided Aadhaar front and back for personal print',CreditCard],['csc','PAN Card Crop & Print','PAN कार्ड क्रॉप और प्रिंट','Prepare user-provided PAN card for wallet-size print',CreditCard],
@@ -417,7 +429,7 @@ function DocumentStudio({hi,onBack}:{hi:boolean;onBack:()=>void}){
   <div className="doc-paper-content">{v.title&&<h1>{v.title}</h1>}{v.subtitle&&<h2>{v.subtitle}</h2>}{v.date&&<div className="doc-date">{new Date(v.date+'T00:00:00').toLocaleDateString(hi?'hi-IN':'en-IN',{day:'2-digit',month:'long',year:'numeric'})}</div>}{v.recipient&&<div className="doc-recipient"><b>{tr('TO','प्रति')}</b><br/>{v.recipient}</div>}{v.subject&&<div className="doc-subject"><b>{tr('SUBJECT','विषय')}:</b> {v.subject}</div>}<div className="doc-body" dangerouslySetInnerHTML={{__html:richBodyHtml(v.body)}}/><div className="doc-signature-area">{v.signature&&<img src={v.signature} alt="Signature"/>}<b>{v.sender||'Your Name'}</b><span>{v.role}</span></div></div>
   {v.showFooter&&<footer className="doc-paper-footer"><span>{v.footer||'Prepared with care · Please verify all details before signing or submission'}</span><small>{v.reference?'REFERENCE · '+v.reference:''}</small></footer>}
  </article>;
- if(view==='certificate')return <div className="document-studio certificate-mode"><div className="document-studio-certificate"><CertificateStudio hi={hi} onBack={()=>setView('hub')}/></div></div>;
+ if(view==='certificate')return <div className="document-studio certificate-mode"><header className="document-studio-top certificate-mode-top"><button className="document-back" onClick={()=>setView('hub')}>← {tr('ALL DOCUMENT TOOLS','सभी डॉक्यूमेंट टूल्स')}</button><div><span>TANSHU DIGITAL TOOLS · PROFESSIONAL WORKSPACE</span><h1>{tr('DOCUMENT & CERTIFICATE STUDIO','डॉक्यूमेंट और सर्टिफिकेट स्टूडियो')}</h1><p>{tr('Create, customize and preview certificates in a dedicated workspace.','सर्टिफिकेट को बनाएँ, कस्टमाइज़ करें और प्रीव्यू देखें।')}</p></div><div className="document-secure">LOCAL DRAFT · PRIVATE</div></header><div className="document-studio-certificate"><CertificateStudio hi={hi} onBack={()=>setView('hub')}/></div></div>;
  return <div className="document-studio">
   <style>{'@page{size:'+v.pageSize+' '+v.orientation+';margin:0}'}</style>
   <header className="document-studio-top"><button className="document-back" onClick={view==='editor'?()=>setView('hub'):onBack}>← {view==='editor'?tr('ALL DOCUMENT TOOLS','सभी डॉक्यूमेंट टूल्स'):tr('BACK TO TOOLS','टूल्स पर वापस')}</button><div><span>TANSHU DIGITAL TOOLS · PROFESSIONAL WORKSPACE</span><h1>{tr('DOCUMENT & CERTIFICATE STUDIO','डॉक्यूमेंट और सर्टिफिकेट स्टूडियो')}</h1><p>{tr('Create polished documents, personalize every detail and prepare print-ready files.','प्रोफेशनल डॉक्यूमेंट बनाएँ, हर विवरण बदलें और प्रिंट के लिए तैयार करें।')}</p></div><div className="document-secure">LOCAL DRAFTS · PRIVATE</div></header>
