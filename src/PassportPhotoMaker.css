@@ -294,3 +294,20 @@
  .ipm-photo-size-inline{width:100%}
  .ipm-photo-size-inline input{max-width:none}
 }
+
+/* Print sheet controls refinement */
+.ipm-print-size-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:end;gap:9px}
+.ipm-print-size-row>.ipm-field,.ipm-print-size-row>.ipm-photo-size-inline{min-width:0;width:100%}
+.ipm-photo-size-inline{display:flex;flex-direction:column;align-items:stretch;gap:5px;padding:0;border:0;background:transparent}
+.ipm-photo-size-inline>span{flex:none;font-size:11px;font-weight:700;line-height:1.3;color:var(--ipm-text,#25323a)}
+.ipm-photo-size-inline select{width:100%;min-width:0;min-height:40px;padding:8px 24px 8px 8px;border:1px solid var(--ipm-border,#dbe3e8);border-radius:9px;background:#fff;color:var(--ipm-text,#25323a);font-size:10px;font-weight:600}
+.ipm-print-actions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important;align-items:stretch}
+.ipm-print-actions button{min-width:0;min-height:42px;display:flex;align-items:center;justify-content:center;gap:5px;padding:8px 6px!important;white-space:normal;line-height:1.25;font-size:9px!important;text-align:center}
+.ipm-sheet-zoom{display:flex;align-items:center;justify-content:flex-end;gap:7px;margin:0 0 9px;padding:0 2px;color:#718078;font-size:10px}
+.ipm-sheet-zoom span{margin-right:auto;font-weight:700}
+.ipm-sheet-zoom button{min-width:30px;height:29px;padding:0 8px;border:1px solid #dce5df;border-radius:7px;background:#f8faf8;color:#315d43;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.ipm-sheet-zoom b{min-width:42px;text-align:center;font-size:10px;color:#344d3c}
+.ipm-sheet-scroll{max-height:76vh;overflow:auto;overscroll-behavior:contain;touch-action:pan-y}
+.ipm-sheet-scroll>.ipm-paper{flex:none}
+@media(max-width:900px){.ipm-print-actions{grid-template-columns:repeat(3,minmax(0,1fr))!important}.ipm-print-actions button{font-size:9px!important;padding:8px 5px!important}.ipm-sheet-scroll{max-height:54vh!important}}
+@media(max-width:520px){.ipm-print-size-row{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px}.ipm-photo-size-inline select{font-size:9px;padding-left:6px}.ipm-print-actions{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important}.ipm-print-actions button{font-size:8px!important;padding:7px 4px!important}.ipm-sheet-zoom{gap:5px}}
