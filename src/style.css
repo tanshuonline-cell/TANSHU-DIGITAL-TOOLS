@@ -1522,3 +1522,37 @@
   .pdf-editor-root .pdf-page-toolbar b{max-width:70%;line-height:1.5}
   .pdf-editor-root .pdf-editor-footer{padding:10px 14px!important;flex-direction:column!important}
 }
+
+
+/* PDF editor: grouped text selection, inline preview editing and queued overlays */
+.pdf-editor-root .pdf-preview-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pdf-editor-root .pdf-preview-actions button,
+.pdf-editor-root .pdf-inline-edit button{
+  border:1px solid #b9cbbb;background:#edf5ef;color:#174d35;border-radius:9px;
+  padding:8px 12px;font-weight:800;font-size:11px;letter-spacing:.02em;cursor:pointer
+}
+.pdf-editor-root .pdf-preview-actions button:disabled,
+.pdf-editor-root .pdf-inline-edit button:disabled{opacity:.45;cursor:not-allowed}
+.pdf-editor-root .pdf-canvas-wrap{position:relative!important}
+.pdf-editor-root .pdf-text-hit{z-index:3!important;border:1px solid transparent!important;background:transparent!important}
+.pdf-editor-root .pdf-text-hit:hover,
+.pdf-editor-root .pdf-text-hit.selected{border:1px solid #16a36a!important;background:rgba(28,180,112,.13)!important}
+.pdf-editor-root .pdf-queued-preview{
+  position:absolute;z-index:2;box-sizing:border-box;overflow:hidden;white-space:pre-wrap;
+  background:#fff!important;color:#17221b!important;border:1px solid rgba(22,130,82,.55);
+  font:500 12px/1.25 Arial,sans-serif;padding:1px 2px;pointer-events:none;
+}
+.pdf-editor-root .pdf-inline-edit{
+  position:absolute;z-index:8;width:min(290px,calc(100% - 12px));display:grid;gap:7px;
+  padding:10px;background:#fff;border:1px solid #b7cdbd;border-radius:12px;
+  box-shadow:0 12px 34px rgba(13,42,27,.22);color:#183b29
+}
+.pdf-editor-root .pdf-inline-edit b{font-size:10px;letter-spacing:.06em}
+.pdf-editor-root .pdf-inline-edit textarea{
+  width:100%;min-height:74px;resize:vertical;border:1px solid #d2ded5;border-radius:8px;
+  padding:8px;color:#18251d;background:#fbfdfb;font:500 13px/1.45 inherit
+}
+@media(max-width:560px){
+ .pdf-editor-root .pdf-preview-actions{width:100%}
+ .pdf-editor-root .pdf-preview-actions button{font-size:10px;padding:7px 9px}
+}
