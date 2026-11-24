@@ -311,3 +311,21 @@
 .ipm-sheet-scroll>.ipm-paper{flex:none}
 @media(max-width:900px){.ipm-print-actions{grid-template-columns:repeat(3,minmax(0,1fr))!important}.ipm-print-actions button{font-size:9px!important;padding:8px 5px!important}.ipm-sheet-scroll{max-height:54vh!important}}
 @media(max-width:520px){.ipm-print-size-row{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px}.ipm-photo-size-inline select{font-size:9px;padding-left:6px}.ipm-print-actions{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important}.ipm-print-actions button{font-size:8px!important;padding:7px 4px!important}.ipm-sheet-zoom{gap:5px}}
+
+/* Dedicated print/download output controls */
+.ipm-output-actions{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+.ipm-output-actions button{min-height:44px;display:flex;align-items:center;justify-content:center;gap:7px}
+.ipm-single-toggle{display:flex;align-items:center;gap:8px;width:max-content;max-width:100%;margin:10px auto;padding:8px 12px;border:1px solid #d8e5dc;border-radius:9px;background:#f7fbf8;color:#315b42;font-size:11px;font-weight:700;cursor:pointer}
+.ipm-single-toggle input{width:15px;height:15px;accent-color:#23834e}
+.ipm-single-photo-preview{min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:22px;overflow:auto}
+.ipm-single-photo-preview img{display:block;max-height:65vh;object-fit:contain;border:1px solid #dbe2de;box-shadow:0 5px 18px #1c352018}
+.ipm-single-photo-preview small{font-size:10px;color:#738078;text-align:center}
+.ipm-download-backdrop{position:fixed;inset:0;z-index:1200;background:#101b18a8;display:flex;align-items:center;justify-content:center;padding:18px}
+.ipm-download-dialog{width:min(100%,390px);display:flex;flex-direction:column;gap:13px;padding:20px;border:1px solid #dce7df;border-radius:15px;background:#fff;box-shadow:0 20px 70px #071a1640;color:#24372c}
+.ipm-download-title{display:flex;align-items:center;justify-content:space-between;font-size:15px}
+.ipm-download-title button{width:30px;height:30px;border:0;border-radius:8px;background:#f1f5f2;font-size:22px;cursor:pointer}
+.ipm-download-dialog>label{display:flex;flex-direction:column;gap:6px;font-size:11px;font-weight:700}
+.ipm-download-dialog select{width:100%;min-height:42px;padding:8px 10px;border:1px solid #dbe4dd;border-radius:8px;background:#fff;color:#263b2e;font-size:12px}
+.ipm-download-dialog>small{font-size:10px;line-height:1.5;color:#748178}
+.ipm-download-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.ipm-download-buttons button{min-height:42px;display:flex;align-items:center;justify-content:center;gap:6px}
