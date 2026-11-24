@@ -42,8 +42,6 @@ const makers=[
 {en:'Photo & Signature Resizer',hi:'फोटो और सिग्नेचर रिसाइज़र',sub:'Prepare form-ready photo and signature',icon:Image,tag:'MOST USED'},
 {en:'JPG to PDF Maker',hi:'JPG से PDF मेकर',sub:'Combine photos and scans into PDF',icon:FileText,tag:'POPULAR'},
 {en:'PDF Compress & Resize',hi:'PDF कंप्रेस और रिसाइज़',sub:'Reduce size for online applications',icon:Zap,tag:'POPULAR'},
-{en:'Hindi PDF Editor',hi:'हिंदी PDF एडिटर',sub:'Edit PDF text and pages with Hindi typing and Devanagari font support',icon:FileText,tag:'NEW'},
-{en:'English PDF Editor',hi:'इंग्लिश PDF एडिटर',sub:'Edit PDF text, fonts, pages and layout in English',icon:FileText,tag:'NEW'},
 {en:'PDF Merge & Split',hi:'PDF मर्ज और स्प्लिट',sub:'Combine or separate document pages',icon:FolderOpen,tag:''},
 {en:'A4 Multiple Photo Sheet',hi:'A4 मल्टीपल फोटो शीट',sub:'Arrange several photos for one print',icon:Printer,tag:''},
 {en:'Scan to PDF Maker',hi:'स्कैन से PDF मेकर',sub:'Prepare scanned pages for sharing',icon:ScanLine,tag:''},
