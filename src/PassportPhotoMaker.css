@@ -123,3 +123,96 @@
  .ipm-preview-panel>.ipm-preview-bg{overflow:auto;display:flex;align-items:center;justify-content:center}
 }
 @media(max-width:520px){.ipm-preview-zoom{padding:7px 10px 0}.ipm-preview-zoom button{height:30px;min-width:32px}}
+
+/* Workspace v3: lock the host page; each work column owns its scroll area */
+.ipm{
+ position:fixed!important;inset:0!important;z-index:1000!important;
+ width:100vw!important;height:100vh!important;height:100dvh!important;
+ max-width:100vw!important;display:flex!important;flex-direction:column!important;
+ overflow:hidden!important;overscroll-behavior:none!important;background:#f6f8f7;
+}
+.ipm-head{flex:0 0 auto!important}
+.ipm-wrap{
+ flex:1 1 auto!important;min-height:0!important;height:auto!important;
+ max-height:none!important;display:flex!important;flex-direction:column!important;
+ overflow:hidden!important;padding-top:clamp(10px,1.6vh,20px)!important;
+ padding-bottom:12px!important;
+}
+.ipm-intro,.ipm-steps{flex:0 0 auto!important}
+.ipm-intro{margin-bottom:10px!important}
+.ipm-steps{margin-bottom:12px!important}
+.ipm-grid,.ipm-sheet-grid{
+ flex:1 1 0!important;min-height:0!important;height:100%!important;
+ max-height:none!important;align-items:stretch!important;overflow:hidden!important;
+}
+.ipm-control-panel,.ipm-preview-panel,.ipm-controls,.ipm-sheet-panel{
+ min-height:0!important;height:100%!important;max-height:none!important;
+ overflow-y:auto!important;overflow-x:hidden!important;
+ overscroll-behavior-y:contain!important;overscroll-behavior-x:none!important;
+ -webkit-overflow-scrolling:touch!important;scrollbar-gutter:stable;
+ touch-action:pan-y!important;scrollbar-width:thin;
+}
+.ipm-control-panel,.ipm-controls{padding-bottom:24px!important}
+.ipm-preview-panel{position:relative!important;top:auto!important;align-self:stretch!important;padding:0!important}
+.ipm-preview-panel>.ipm-preview-bg{
+ flex:1 0 auto!important;min-height:360px!important;max-height:none!important;
+ overflow:auto!important;overscroll-behavior:contain!important;
+ display:flex!important;align-items:center!important;justify-content:center!important;
+}
+.ipm-preview-panel .ipm-photo{flex:none!important;transform:scale(var(--ipm-preview-zoom,1));transform-origin:center}
+.ipm-crop-stage{min-height:clamp(260px,38vh,440px)!important}
+.ipm-step-actions{position:sticky!important;bottom:0!important;margin-top:20px!important}
+.ipm-sheet-grid>.ipm-controls,.ipm-sheet-grid>.ipm-sheet-panel{height:100%!important;min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+.ipm-sheet-scroll{max-height:none!important;min-height:0!important;overflow:auto!important;overscroll-behavior:contain!important}
+.ipm-controls>.ipm-title:first-child,.ipm-control-panel>.ipm-title:first-child,
+.ipm-preview-panel>.ipm-title:first-child{
+ margin:-21px -21px 18px!important;padding:17px 21px!important;
+ border-radius:14px 14px 0 0!important;
+ background:linear-gradient(112deg,#183e2d 0%,#286348 58%,#b18a48 150%)!important;
+ color:#fff!important;min-height:68px;justify-content:center;
+}
+.ipm-controls>.ipm-title:first-child b,.ipm-control-panel>.ipm-title:first-child b,
+.ipm-preview-panel>.ipm-title:first-child b{color:#fff!important;font-size:15px!important;line-height:1.35!important}
+.ipm-controls>.ipm-title:first-child small,.ipm-control-panel>.ipm-title:first-child small,
+.ipm-preview-panel>.ipm-title:first-child small{color:#e6d9bd!important;font-size:10px!important;line-height:1.5!important}
+.ipm-sheet-head{
+ margin:-21px -21px 16px!important;padding:17px 21px!important;
+ border-radius:14px 14px 0 0!important;
+ background:linear-gradient(112deg,#183e2d 0%,#286348 58%,#b18a48 150%)!important;
+ color:#fff!important;min-height:68px;
+}
+.ipm-sheet-head b{color:#fff!important;font-size:14px!important;line-height:1.4}
+.ipm-sheet-head small,.ipm-sheet-head>span{color:#e6d9bd!important;line-height:1.5}
+@media(max-width:900px){
+ .ipm-head{flex:0 0 auto!important}
+ .ipm-wrap{padding:8px 10px 10px!important}
+ .ipm-intro{margin-bottom:7px!important}
+ .ipm-intro h1{font-size:clamp(19px,4vw,25px)!important}
+ .ipm-steps{margin-bottom:8px!important;padding:5px!important}
+ .ipm-steps button{min-width:112px!important;padding:7px 9px!important}
+ .ipm-grid,.ipm-sheet-grid{
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:8px!important;
+ }
+ .ipm-control-panel,.ipm-controls,.ipm-sheet-panel,.ipm-preview-panel{
+  width:100%!important;max-height:none!important;height:100%!important;
+  overflow-y:auto!important;padding:14px!important;
+ }
+ .ipm-preview-panel{padding:0!important}
+ .ipm-preview-panel>.ipm-preview-bg{min-height:300px!important;margin:10px!important}
+ .ipm-controls>.ipm-title:first-child,.ipm-control-panel>.ipm-title:first-child,
+ .ipm-preview-panel>.ipm-title:first-child,.ipm-sheet-head{
+  margin:-14px -14px 14px!important;padding:13px 15px!important;
+ }
+ .ipm-step-actions{position:sticky!important;bottom:0!important}
+}
+@media(max-height:650px) and (min-width:901px){
+ .ipm-wrap{padding-top:6px!important}
+ .ipm-intro{margin-bottom:5px!important}
+ .ipm-intro h1{font-size:22px!important;margin:3px 0}
+ .ipm-intro p{display:none}
+ .ipm-steps{margin-bottom:6px!important;padding:4px}
+ .ipm-steps button{padding:6px 8px}
+ .ipm-grid,.ipm-sheet-grid{gap:10px!important}
+}
