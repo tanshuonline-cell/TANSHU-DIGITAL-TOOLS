@@ -49,6 +49,7 @@ const makers=[
 {en:'Aadhaar Card Crop & Print',hi:'आधार कार्ड क्रॉप और प्रिंट',sub:'Arrange front and back for personal print',icon:CreditCard,tag:'DAILY USE'},
 {en:'PAN Card Crop & Print',hi:'PAN कार्ड क्रॉप और प्रिंट',sub:'Prepare PAN card PDF for wallet-size print',icon:CreditCard,tag:'DAILY USE'},
 {en:'WhatsApp Print Editor',hi:'व्हाट्सऐप प्रिंट एडिटर',sub:'Straighten chat images and fit to A4',icon:Printer,tag:'DAILY USE'},
+{en:'Background Remover',hi:'बैकग्राउंड रिमूवर',sub:'Remove photo background and export PNG',icon:Image,tag:'POPULAR'},
 {en:'Document Perspective Fix',hi:'डॉक्यूमेंट पर्सपेक्टिव फिक्स',sub:'Drag four corners to straighten angled photos',icon:ScanLine,tag:'POPULAR'},
 {en:'Rubber Stamp / Seal Designer',hi:'रबर मोहर / सील डिजाइनर',sub:'Create authorised business stamps only',icon:ShieldCheck,tag:'NEW'},
 {en:'Exact KB Photo Compressor',hi:'फोटो को तय KB में कंप्रेस करें',sub:'Target 20KB, 50KB, 100KB and custom sizes',icon:Zap,tag:'DAILY USE'},
