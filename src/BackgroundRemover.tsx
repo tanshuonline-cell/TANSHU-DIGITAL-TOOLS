@@ -1,0 +1,72 @@
+import React,{useEffect,useRef,useState} from 'react';
+import {PDFDocument} from 'pdf-lib';
+import {ArrowLeft,Upload,Image as ImageIcon,Scissors,Download,LoaderCircle,FileImage,FileText,ShieldCheck,Palette} from 'lucide-react';
+import './BackgroundRemover.css';
+
+let modelPromise:Promise<any>|null=null;
+type ExportSize='large'|'high'|'medium'|'small';
+type BackgroundMode='transparent'|'white'|'blue'|'custom';
+const words={
+en:{back:'BACK TO TOOLS',kicker:'TANSHU DIGITAL TOOLS · PHOTO STUDIO',title:'BACKGROUND REMOVER',sub:'Remove the background in one click. Keep your original subject, shape and proportions.',upload:'Upload your photo',drop:'Drop an image here or browse files',formats:'JPG, PNG or WEBP · Up to 20 MB',remove:'REMOVE BACKGROUND',working:'Processing your photo…',model:'The AI model downloads once on first use. Keep this tab open.',background:'BACKGROUND',transparent:'Transparent',white:'White',blue:'Blue',custom:'Custom colour',quality:'DOWNLOAD SIZE',large:'Large · Original resolution',high:'High · Up to 2400 px',medium:'Medium · Up to 1600 px',small:'Small · Up to 1000 px',format:'FILE FORMAT',png:'PNG',jpg:'JPG',pdf:'PDF',download:'DOWNLOAD EDITED PHOTO',original:'DOWNLOAD ORIGINAL',reset:'CHANGE PHOTO',ready:'Background removed. Choose a background and download.',privacy:'Your photo is processed in this browser. It is not uploaded to our server.',error:'Could not remove the background. Try a clear photo with the subject fully visible.',need:'Upload a photo to get started.',processing:'Preparing AI model…',transparentNote:'Transparent background is preserved in PNG and PDF. JPG uses white.',compare:'PREVIEW',before:'Original',after:'Background removed',unsupported:'Please choose a JPG, PNG or WEBP image.',largeFile:'Please choose an image smaller than 20 MB.'},
+hi:{back:'टूल्स पर वापस',kicker:'TANSHU DIGITAL TOOLS · फोटो स्टूडियो',title:'बैकग्राउंड रिमूवर',sub:'एक क्लिक में बैकग्राउंड हटाएँ। फोटो का असली चेहरा, शेप और अनुपात वैसा ही रखें।',upload:'अपनी फोटो अपलोड करें',drop:'फोटो यहाँ छोड़ें या फाइल चुनें',formats:'JPG, PNG या WEBP · अधिकतम 20 MB',remove:'बैकग्राउंड हटाएँ',working:'आपकी फोटो प्रोसेस हो रही है…',model:'पहली बार AI मॉडल डाउनलोड होगा। कृपया टैब खुला रखें।',background:'बैकग्राउंड',transparent:'ट्रांसपेरेंट',white:'सफेद',blue:'नीला',custom:'कस्टम कलर',quality:'डाउनलोड साइज',large:'लार्ज · ओरिजिनल रिजॉल्यूशन',high:'हाई · अधिकतम 2400 px',medium:'मीडियम · अधिकतम 1600 px',small:'स्मॉल · अधिकतम 1000 px',format:'फाइल फॉर्मेट',png:'PNG',jpg:'JPG',pdf:'PDF',download:'एडिटेड फोटो डाउनलोड करें',original:'ओरिजिनल फोटो डाउनलोड करें',reset:'दूसरी फोटो चुनें',ready:'बैकग्राउंड हट गया। अब रंग और डाउनलोड विकल्प चुनें।',privacy:'आपकी फोटो इसी ब्राउज़र में प्रोसेस होती है। हमारे सर्वर पर अपलोड नहीं होती।',error:'बैकग्राउंड नहीं हट पाया। साफ फोटो चुनें जिसमें विषय पूरा दिखाई दे।',need:'शुरू करने के लिए फोटो अपलोड करें।',processing:'AI मॉडल तैयार हो रहा है…',transparentNote:'PNG और PDF में ट्रांसपेरेंट बैकग्राउंड रहेगा। JPG में सफेद रंग लगेगा।',compare:'प्रीव्यू',before:'ओरिजिनल',after:'बैकग्राउंड हटाया गया',unsupported:'कृपया JPG, PNG या WEBP फोटो चुनें।',largeFile:'कृपया 20 MB से छोटी फोटो चुनें।'}
+};
+export default function BackgroundRemover({hi=false,onBack}:{hi?:boolean;onBack:()=>void}){
+ const t=hi?words.hi:words.en;
+ const [file,setFile]=useState<File|null>(null),[originalUrl,setOriginalUrl]=useState(''),[resultUrl,setResultUrl]=useState(''),[resultBlob,setResultBlob]=useState<Blob|null>(null);
+ const [busy,setBusy]=useState(false),[progress,setProgress]=useState(0),[message,setMessage]=useState(''),[mode,setMode]=useState<BackgroundMode>('transparent'),[custom,setCustom]=useState('#f4f6f8'),[size,setSize]=useState<ExportSize>('large'),[format,setFormat]=useState<'png'|'jpg'|'pdf'>('png'),[drag,setDrag]=useState(false);
+ const inputRef=useRef<HTMLInputElement>(null);
+ useEffect(()=>()=>{if(originalUrl)URL.revokeObjectURL(originalUrl);},[originalUrl]);
+ useEffect(()=>()=>{if(resultUrl)URL.revokeObjectURL(resultUrl);},[resultUrl]);
+ const choose=(f?:File)=>{if(!f)return;if(!/^image\/(jpeg|png|webp)$/.test(f.type)){setMessage(t.unsupported);return;}if(f.size>20*1024*1024){setMessage(t.largeFile);return;}setFile(f);setOriginalUrl(URL.createObjectURL(f));setResultUrl('');setResultBlob(null);setMessage('');setProgress(0);setMode('transparent');};
+ const remove=async()=>{if(!file||busy)return;setBusy(true);setProgress(2);setMessage(t.processing);try{
+   if(!modelPromise){modelPromise=import('@huggingface/transformers').then(({pipeline})=>pipeline('background-removal','Xenova/modnet',{progress_callback:(x:any)=>{if(x?.progress!==undefined)setProgress(Math.max(3,Math.min(88,Math.round(x.progress*.88))));}}));}
+   const remover=await modelPromise;setMessage(t.working);setProgress(p=>Math.max(p,12));
+   const output=await remover(originalUrl);const w=output.width,h=output.height;
+   const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');if(!ctx)throw new Error('Canvas unavailable');
+   ctx.putImageData(new ImageData(new Uint8ClampedArray(output.data),w,h),0,0);
+   const blob:Blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('PNG encode failed')),'image/png'));
+   setResultBlob(blob);setResultUrl(URL.createObjectURL(blob));setProgress(100);setMessage(t.ready);
+  }catch(e){console.error('Background removal failed',e);modelPromise=null;setMessage(t.error);}finally{setBusy(false);}};
+ const loadResult=async()=>{if(!resultBlob)throw new Error('No processed image');const url=URL.createObjectURL(resultBlob);const img=new Image();try{await new Promise<void>((resolve,reject)=>{img.onload=()=>resolve();img.onerror=()=>reject(new Error('Image decode failed'));img.src=url;});const limit=size==='large'?Infinity:size==='high'?2400:size==='medium'?1600:1000;const scale=Math.min(1,limit/Math.max(img.naturalWidth,img.naturalHeight));return {img,width:Math.max(1,Math.round(img.naturalWidth*scale)),height:Math.max(1,Math.round(img.naturalHeight*scale)),url};}catch(e){URL.revokeObjectURL(url);throw e;}};
+ const downloadBlob=(blob:Blob,name:string)=>{const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();window.setTimeout(()=>URL.revokeObjectURL(u),1500);};
+ const exportImage=async()=>{if(!resultBlob)return;let loaded:any;try{loaded=await loadResult();const {img,width,height}=loaded;const canvas=document.createElement('canvas');canvas.width=width;canvas.height=height;const ctx=canvas.getContext('2d');if(!ctx)throw new Error('Canvas unavailable');
+   if(format==='jpg'||mode!=='transparent'){ctx.fillStyle=format==='jpg'&&mode==='transparent'?'#ffffff':mode==='white'?'#ffffff':mode==='blue'?'#1976d2':custom;ctx.fillRect(0,0,width,height);}ctx.drawImage(img,0,0,width,height);
+   if(format==='pdf'){const png=await new Promise<Blob>((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('PDF image encode failed')),'image/png'));const pdf=await PDFDocument.create();const embedded=await pdf.embedPng(await png.arrayBuffer());const page=pdf.addPage([width*.75,height*.75]);page.drawImage(embedded,{x:0,y:0,width:width*.75,height:height*.75});downloadBlob(new Blob([await pdf.save()],{type:'application/pdf'}),'tanshu-background-removed.pdf');}
+   else{const mime=format==='jpg'?'image/jpeg':'image/png';const blob=await new Promise<Blob>((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Image export failed')),mime,format==='jpg'?.92:1));downloadBlob(blob,'tanshu-background-removed.'+format);}
+  }catch(e){console.error(e);setMessage(t.error);}finally{if(loaded?.url)URL.revokeObjectURL(loaded.url);}};
+ const downloadOriginal=()=>{if(file)downloadBlob(file,file.name||'original-photo');};
+ const clear=()=>{setFile(null);setOriginalUrl('');setResultUrl('');setResultBlob(null);setMessage('');if(inputRef.current)inputRef.current.value='';};
+ const bg=mode==='white'?'#fff':mode==='blue'?'#1976d2':custom;
+ return <div className="bg-remover">
+  <header className="bg-remover-head"><button className="bg-back" onClick={onBack}><ArrowLeft size={16}/>{t.back}</button><div className="bg-brand"><span className="bg-brand-mark"><Scissors size={19}/></span><span><small>{t.kicker}</small><b>{t.title}</b></span></div><span className="bg-private"><ShieldCheck size={15}/> LOCAL PROCESSING</span></header>
+  <main className="bg-main"><section className="bg-intro"><div><span className="bg-eyebrow">ONE CLICK · CLEAN CUTOUT · ORIGINAL PROPORTIONS</span><h1>{t.title}</h1><p>{t.sub}</p></div><div className="bg-intro-art"><ImageIcon size={35}/><Scissors size={21}/></div></section>
+   <div className="bg-workspace">
+    <section className="bg-left">
+     <div className="bg-panel-title"><span>01</span><div><b>{t.upload}</b><small>{t.formats}</small></div></div>
+     {!file?<button className={'bg-upload-zone'+(drag?' is-drag':'')} onClick={()=>inputRef.current?.click()} onDragOver={e=>{e.preventDefault();setDrag(true)}} onDragLeave={()=>setDrag(false)} onDrop={e=>{e.preventDefault();setDrag(false);choose(e.dataTransfer.files?.[0]);}}><span><Upload size={24}/></span><b>{t.drop}</b><small>{t.formats}</small></button>:<div className="bg-source-preview"><img src={originalUrl} alt="Original upload"/><div><b>{file.name}</b><small>{(file.size/1024/1024).toFixed(2)} MB</small><button onClick={clear}>{t.reset}</button></div></div>}
+     <input ref={inputRef} hidden type="file" accept="image/jpeg,image/png,image/webp" onChange={e=>choose(e.target.files?.[0])}/>
+     <button className="bg-remove-btn" disabled={!file||busy} onClick={remove}>{busy?<><LoaderCircle className="spin" size={18}/>{t.working}</>:<><Scissors size={18}/>{t.remove}</>}</button>
+     {busy&&<div className="bg-progress"><div><span>{t.model}</span><b>{progress}%</b></div><i><em style={{width:progress+'%'}}/></i></div>}
+     <div className="bg-privacy"><ShieldCheck size={17}/><span>{t.privacy}</span></div>
+     {message&&<div className={'bg-message'+(resultBlob?' success':'')}>{message}</div>}
+    </section>
+    <section className="bg-right">
+     <div className="bg-panel-title"><span>02</span><div><b>{t.compare}</b><small>{resultBlob?t.after:t.before}</small></div></div>
+     <div className={'bg-preview-stage'+(mode==='transparent'?' checker':'')} style={{background:mode==='transparent'?undefined:bg}}>{resultUrl?<img src={resultUrl} alt="Background removed preview"/>:originalUrl?<img src={originalUrl} alt="Original preview"/>:<div className="bg-empty"><ImageIcon size={38}/><b>{t.need}</b></div>}</div>
+     <div className="bg-preview-labels"><span>{file?t.before:'—'}</span><span>{resultBlob?t.after:'—'}</span></div>
+     {resultBlob&&<div className="bg-export-controls">
+      <div className="bg-panel-title compact"><span>03</span><div><b>{t.background}</b><small>{t.transparentNote}</small></div></div>
+      <div className="bg-background-options">{(['transparent','white','blue','custom'] as BackgroundMode[]).map(m=><button key={m} className={mode===m?'active':''} onClick={()=>setMode(m)}><i className={'swatch '+m} style={m==='custom'?{background:custom}:undefined}/>{t[m]}</button>)}
+       {mode==='custom'&&<label className="bg-custom-color"><Palette size={15}/><input type="color" value={custom} onChange={e=>setCustom(e.target.value)}/>{custom.toUpperCase()}</label>}
+      </div>
+      <div className="bg-panel-title compact"><span>04</span><div><b>{t.quality}</b><small>Keep original aspect ratio · no stretching</small></div></div>
+      <div className="bg-size-options">{(['large','high','medium','small'] as ExportSize[]).map(s=><button key={s} className={size===s?'active':''} onClick={()=>setSize(s)}>{t[s]}</button>)}</div>
+      <div className="bg-panel-title compact"><span>05</span><div><b>{t.format}</b></div></div>
+      <div className="bg-format-options">{(['png','jpg','pdf'] as const).map(f=><button key={f} className={format===f?'active':''} onClick={()=>setFormat(f)}>{f==='png'?<FileImage size={16}/>:f==='jpg'?<ImageIcon size={16}/>:<FileText size={16}/>} {t[f]}</button>)}</div>
+      <button className="bg-download-btn" onClick={exportImage}><Download size={18}/>{t.download}</button><button className="bg-original-btn" onClick={downloadOriginal}><Download size={16}/>{t.original}</button>
+     </div>}
+    </section>
+   </div>
+  </main>
+ </div>;
+}
