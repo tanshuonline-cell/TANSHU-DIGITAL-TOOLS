@@ -19,9 +19,9 @@ export default function BackgroundRemover({hi=false,onBack}:{hi?:boolean;onBack:
  useEffect(()=>()=>{if(resultUrl)URL.revokeObjectURL(resultUrl);},[resultUrl]);
  const choose=(f?:File)=>{if(!f)return;if(!/^image\/(jpeg|png|webp)$/.test(f.type)){setMessage(t.unsupported);return;}if(f.size>20*1024*1024){setMessage(t.largeFile);return;}setFile(f);setOriginalUrl(URL.createObjectURL(f));setResultUrl('');setResultBlob(null);setMessage('');setProgress(0);setMode('transparent');};
  const remove=async()=>{if(!file||busy)return;setBusy(true);setProgress(2);setMessage(t.processing);try{
-   if(!modelPromise){modelPromise=import('@huggingface/transformers').then(({pipeline})=>pipeline('background-removal','Xenova/modnet',{progress_callback:(x:any)=>{if(x?.progress!==undefined)setProgress(Math.max(3,Math.min(88,Math.round(x.progress*.88))));}}));}
+   if(!modelPromise){modelPromise=import('@huggingface/transformers').then(({pipeline})=>pipeline('background-removal','onnx-community/ormbg-ONNX',{progress_callback:(x:any)=>{if(x?.progress!==undefined)setProgress(Math.max(3,Math.min(88,Math.round(x.progress*.88))));}}));}
    const remover=await modelPromise;setMessage(t.working);setProgress(p=>Math.max(p,12));
-   const output=await remover(originalUrl);const w=output.width,h=output.height;
+   const raw=await remover([originalUrl]);const output=Array.isArray(raw)?raw[0]:raw;const w=output.width,h=output.height;
    const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');if(!ctx)throw new Error('Canvas unavailable');
    ctx.putImageData(new ImageData(new Uint8ClampedArray(output.data),w,h),0,0);
    const blob:Blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('PNG encode failed')),'image/png'));
