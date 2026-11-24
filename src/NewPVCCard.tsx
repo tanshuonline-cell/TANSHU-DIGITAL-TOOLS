@@ -34,9 +34,9 @@ export default function NewPVCCard({hi=false,onBack}:{hi?:boolean;onBack:()=>voi
   if(media==='epson-l8050'||media==='custom-tray'){
    const slots=[{which:'front' as const,xmm:slot1X,ymm:slot1Y},{which:'back' as const,xmm:slot2X,ymm:slot2Y}];
    for(const slot of slots){if(target!=='both'&&slot.which!==target)continue;const data=slot.which==='front'?front:back;if(!data.src)continue;const xx=slot.xmm*scale,yy=slot.ymm*scale,ww=slotW*scale,hh=slotH*scale;
-    x.save();x.beginPath();x.rect(xx,yy,ww,hh);x.clip();x.fillStyle=baseColor==='none'?'#fff':baseColor;x.fillRect(xx,yy,ww,hh);
+    x.save();x.beginPath();const trayR=corner==='rounded'?Math.min(radius*scale,ww/2,hh/2):0;if(trayR>0&&typeof (x as any).roundRect==='function')(x as any).roundRect(xx,yy,ww,hh,trayR);else x.rect(xx,yy,ww,hh);x.clip();x.fillStyle=baseColor==='none'?'#fff':baseColor;x.fillRect(xx,yy,ww,hh);
     const im=new window.Image();im.src=data.src;await new Promise(r=>{im.onload=r;im.onerror=r});const fit=data.fit==='cover'?Math.max(ww/im.width,hh/im.height):Math.min(ww/im.width,hh/im.height);const dw=im.width*fit*data.zoom,dh=im.height*fit*data.zoom;x.translate(xx+ww/2,yy+hh/2);x.rotate(data.rotation*Math.PI/180);x.drawImage(im,-dw/2+data.x*ww/100,-dh/2+data.y*hh/100,dw,dh);x.restore();
-    if(border){x.strokeStyle=borderColor;x.lineWidth=borderWidth*scale;x.strokeRect(xx,yy,ww,hh);}if(guides){x.save();x.strokeStyle='#8993a3';x.lineWidth=1.5;x.setLineDash([8,5]);x.strokeRect(xx,yy,ww,hh);x.setLineDash([]);x.restore();}
+    if(border){x.beginPath();x.strokeStyle=borderColor;x.lineWidth=borderWidth*scale;if(trayR>0&&typeof (x as any).roundRect==='function')(x as any).roundRect(xx,yy,ww,hh,trayR);else x.rect(xx,yy,ww,hh);x.stroke();}if(guides){x.save();x.beginPath();x.strokeStyle='#8993a3';x.lineWidth=1.5;x.setLineDash([8,5]);if(trayR>0&&typeof (x as any).roundRect==='function')(x as any).roundRect(xx,yy,ww,hh,trayR);else x.rect(xx,yy,ww,hh);x.stroke();x.setLineDash([]);x.restore();}
     x.fillStyle='#111827';x.font=(4*scale)+'px sans-serif';x.fillText(slot.which==='front'?'SLOT 1 · FRONT':'SLOT 2 · BACK',xx,Math.max(4*scale,yy-2*scale));
    }return;
   }
