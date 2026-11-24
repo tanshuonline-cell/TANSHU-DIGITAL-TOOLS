@@ -100,3 +100,26 @@
  .ipm-step-actions{flex-wrap:wrap}
  .ipm-step-actions>*{flex:1 1 28%;min-width:0}
 }
+
+/* Independent, touch-friendly scrolling for both workspace columns */
+.ipm-control-panel,.ipm-preview-panel,.ipm-sheet-grid>.ipm-controls,.ipm-sheet-grid>.ipm-sheet-panel{min-height:0;overscroll-behavior:contain;scrollbar-gutter:stable}
+@media(min-width:901px){
+ .ipm-control-panel{max-height:calc(100vh - 210px);overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth}
+ .ipm-preview-panel{max-height:calc(100vh - 210px);overflow-y:auto;overflow-x:hidden}
+ .ipm-sheet-grid>.ipm-controls,.ipm-sheet-grid>.ipm-sheet-panel{max-height:calc(100vh - 190px);overflow-y:auto;overflow-x:hidden}
+ .ipm-preview-panel>.ipm-preview-bg{overflow:auto;display:flex;align-items:center;justify-content:center}
+}
+.ipm-preview-zoom{display:flex;align-items:center;justify-content:flex-end;gap:7px;padding:8px 14px 0;color:#718078;font-size:10px}
+.ipm-preview-zoom span{margin-right:auto;font-weight:700}
+.ipm-preview-zoom button{min-width:29px;height:27px;border:1px solid #dce5df;border-radius:7px;background:#f8faf8;color:#315d43;font-size:14px;font-weight:800;cursor:pointer}
+.ipm-preview-zoom button:last-child{font-size:10px;padding:0 9px}
+.ipm-preview-zoom b{min-width:42px;text-align:center;font-size:10px;color:#344d3c}
+.ipm-preview-panel .ipm-photo{transform:scale(var(--ipm-preview-zoom,1));transform-origin:center;flex:none}
+.ipm-preview-panel>.ipm-preview-bg{overscroll-behavior:contain;touch-action:pan-y}
+@media(max-width:900px){
+ .ipm-control-panel{max-height:68vh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+ .ipm-preview-panel{max-height:68vh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+ .ipm-sheet-grid>.ipm-controls,.ipm-sheet-grid>.ipm-sheet-panel{max-height:68vh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+ .ipm-preview-panel>.ipm-preview-bg{overflow:auto;display:flex;align-items:center;justify-content:center}
+}
+@media(max-width:520px){.ipm-preview-zoom{padding:7px 10px 0}.ipm-preview-zoom button{height:30px;min-width:32px}}
