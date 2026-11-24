@@ -4,7 +4,7 @@ import {ArrowLeft,ArrowRight,Upload,Image as ImageIcon,Scissors,Download,LoaderC
 import './PassportPhotoMaker.css';
 type Step=0|1|2|3|4;
 type Item={id:number;x:number;y:number;w:number;h:number;selected:boolean;page:number;group?:number};
-const paperPresets=[{name:'A4',w:210,h:297},{name:'A5',w:148,h:210},{name:'A6',w:105,h:148},{name:'4 × 6 inch',w:101.6,h:152.4},{name:'5 × 7 inch',w:127,h:177.8},{name:'3.5 × 5 inch',w:88.9,h:127},{name:'6 × 8 inch',w:152.4,h:203.2},{name:'Letter',w:215.9,h:279.4},{name:'Legal',w:215.9,h:355.6}];
+const paperPresets=[{name:'A3',w:297,h:420},{name:'A4',w:210,h:297},{name:'A5',w:148,h:210},{name:'A6',w:105,h:148},{name:'B4',w:250,h:353},{name:'B5',w:176,h:250},{name:'4 × 6 inch',w:101.6,h:152.4},{name:'5 × 7 inch',w:127,h:177.8},{name:'3.5 × 5 inch',w:88.9,h:127},{name:'6 × 8 inch',w:152.4,h:203.2},{name:'8 × 10 inch',w:203.2,h:254},{name:'Letter',w:215.9,h:279.4},{name:'Legal',w:215.9,h:355.6}];
 const photoPresets=[{name:'India Passport',w:35,h:45,u:'mm'},{name:'35 × 45 mm',w:35,h:45,u:'mm'},{name:'2 × 2 inch',w:2,h:2,u:'in'},{name:'3.5 × 4.5 cm',w:3.5,h:4.5,u:'cm'},{name:'Custom',w:35,h:45,u:'mm'}];
 const toMM=(v:number,u:string)=>u==='in'?v*25.4:u==='cm'?v*10:v;
 const loadImage=(src:string)=>new Promise<HTMLImageElement>((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=src;});
