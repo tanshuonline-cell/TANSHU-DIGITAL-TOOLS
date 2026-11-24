@@ -8,3 +8,29 @@
 .ipvc-card-holder{position:relative;touch-action:none;cursor:crosshair}.ipvc-card-holder canvas{pointer-events:none}.ipvc-region{position:absolute;border:2px solid #0c8cdb;background:#1c9bdb24;pointer-events:none}.ipvc-region.draft{border-style:dashed;border-color:#e58b1b;background:#e58b1b20}
 
 .ipvc-card-holder{touch-action:pan-x pan-y;cursor:default}.ipvc-card-holder.selecting{touch-action:none;cursor:crosshair}
+
+
+/* Studio workspace: compact tool rail + expansive, fitted document stage */
+.ipvc-workspace{width:100%;max-width:none;grid-template-columns:clamp(280px,24vw,350px) minmax(0,1fr);gap:16px;padding:14px 18px 18px;box-sizing:border-box}
+.ipvc-controls{min-width:0}
+.ipvc-preview,.ipvc-card-preview,.ipvc-sheet-preview{width:100%;min-width:0;min-height:0}
+.ipvc-preview .ipvc-scroll{display:flex;align-items:center;justify-content:center;position:relative}
+.ipvc-preview .ipvc-stage{width:auto!important;min-width:0!important;max-width:100%;max-height:100%;flex:0 0 auto;transform-origin:center center}
+.ipvc-preview .ipvc-source-canvas{display:block;width:auto;height:auto;max-width:min(100%,1100px);max-height:100%;object-fit:contain;flex:none}
+.ipvc-preview .ipvc-stage{cursor:crosshair}
+.ipvc-card-preview .ipvc-card-scroll{display:flex;align-items:center;justify-content:center}
+.ipvc-card-preview .ipvc-card-holder{width:min(96%,1100px);max-width:1100px;flex:0 0 auto}
+.ipvc-sheet-preview .ipvc-card-scroll{display:flex;align-items:center;justify-content:center}
+.ipvc-sheet-preview canvas{width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain}
+@media(min-width:761px){
+ .ipvc-workspace{grid-template-columns:clamp(280px,23vw,340px) minmax(0,1fr);height:100%;overflow:hidden}
+ .ipvc-preview .ipvc-scroll{min-height:0;padding:22px}
+ .ipvc-preview .ipvc-source-canvas{max-height:calc(100vh - 210px)}
+ .ipvc-card-preview .ipvc-card-holder{width:min(96%,1150px)}
+}
+@media(max-width:760px){
+ .ipvc-workspace{display:flex;flex-direction:column;overflow-y:auto;height:auto;min-height:0}
+ .ipvc-preview{min-height:72vh}
+ .ipvc-preview .ipvc-scroll{min-height:62vh}
+ .ipvc-preview .ipvc-source-canvas{max-height:58vh}
+}
