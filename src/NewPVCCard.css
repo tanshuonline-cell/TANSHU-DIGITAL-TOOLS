@@ -39,3 +39,7 @@
 /* Crop workspace is portalled above the A4 preview; compact back-to-settings control. */
 .np-crop-modal{z-index:2147483647!important}
 .np-crop-modal-head .np-crop-back{width:38px;height:38px;display:flex;align-items:center;justify-content:center;border:1px solid #536176;background:#263449;color:#fff;border-radius:9px;cursor:pointer}
+
+/* Draw a fresh crop rectangle by dragging on the PDF; then refine it with corner handles. */
+.np-crop-image-large>img{touch-action:none}
+.np-crop-zoombar button{white-space:nowrap}
