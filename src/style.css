@@ -1140,3 +1140,104 @@
   .document-studio .document-workspace-grid { min-height: 0; }
   .document-studio .document-preview-panel { position: static; }
 }
+
+
+/* FINAL DOCUMENT STUDIO WORKSPACE — explicit full viewport geometry */
+.document-tool-panel{
+  position:fixed!important;inset:0!important;z-index:2147482000!important;
+  display:block!important;width:100vw!important;height:100dvh!important;max-width:none!important;
+  padding:0!important;margin:0!important;overflow:hidden!important;background:#edf3ee!important;
+}
+.document-tool-panel>.document-studio{
+  display:flex!important;position:relative!important;flex-direction:column!important;
+  width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;
+  max-width:none!important;margin:0!important;overflow:hidden!important;
+}
+.document-studio .document-studio-top{width:100%!important;flex:0 0 auto!important}
+.document-studio .document-editor-shell{
+  display:flex!important;flex:1 1 0!important;flex-direction:column!important;
+  width:100%!important;max-width:none!important;height:auto!important;min-height:0!important;
+  overflow:hidden!important;padding:14px clamp(14px,2vw,30px) 18px!important;
+}
+.document-studio .document-editor-heading{
+  display:flex!important;flex:0 0 auto!important;width:100%!important;max-width:1800px!important;
+  min-width:0!important;margin:0 auto 14px!important;align-items:center!important;
+  justify-content:space-between!important;gap:18px!important;
+}
+.document-studio .document-workspace-grid{
+  display:grid!important;flex:1 1 0!important;flex-flow:unset!important;
+  grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr)!important;
+  width:100%!important;max-width:1800px!important;height:100%!important;min-height:0!important;
+  margin:0 auto!important;gap:clamp(14px,1.5vw,24px)!important;overflow:hidden!important;
+}
+.document-studio .document-controls{
+  display:flex!important;flex-direction:column!important;min-width:0!important;width:100%!important;
+  height:100%!important;max-height:100%!important;min-height:0!important;
+  overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain!important;
+  padding:clamp(20px,2vw,32px)!important;border:1px solid #d8e5db!important;
+  border-radius:20px!important;background:#fff!important;box-shadow:0 16px 42px #153d2b18!important;
+}
+.document-studio .document-fields{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px 18px!important}
+.document-studio .document-fields label{font-size:11px!important;gap:9px!important;letter-spacing:.35px!important}
+.document-studio .document-fields input,
+.document-studio .document-fields select{min-height:50px!important;padding:13px 14px!important;font-size:14px!important;border-radius:11px!important}
+.document-studio .document-fields textarea{min-height:280px!important;font-size:14px!important;line-height:1.75!important}
+.document-studio .document-rich-field{display:flex;flex-direction:column;gap:9px;min-width:0}
+.document-studio .document-field-label{font-size:11px;font-weight:900;letter-spacing:.35px;color:#65776c}
+.document-studio .document-rich-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:9px;border:1px solid #dce6de;border-radius:11px;background:#f6faf7}
+.document-studio .document-rich-toolbar button{min-width:34px;min-height:34px;padding:0 9px;border:1px solid #d8e4da;border-radius:7px;background:#fff;color:#28583f;font-size:10px;font-weight:850;cursor:pointer}
+.document-studio .document-rich-toolbar button:hover{background:#e9f3eb;border-color:#a9c7b0}
+.document-studio .document-rich-toolbar span{width:1px;height:23px;background:#d8e3da;margin:0 3px}
+.document-studio .document-rich-editor{
+  width:100%;min-height:360px;max-height:none;overflow:auto;padding:18px 19px;
+  border:1px solid #d6e2d8;border-radius:12px;background:#fbfdfb;color:#203d2d;
+  font:14px/1.8 Arial,sans-serif;letter-spacing:0;outline:none;white-space:normal;
+  box-shadow:inset 0 2px 5px #183c2a0a;
+}
+.document-studio .document-rich-editor:focus{border-color:#75a183;box-shadow:0 0 0 3px #e2f0e5}
+.document-studio .document-rich-editor:empty:before{content:attr(data-placeholder);color:#9aa89e}
+.document-studio .document-rich-editor p{margin:0 0 12px}
+.document-studio .document-rich-editor ul,.document-studio .document-rich-editor ol{padding-left:26px}
+.document-studio .document-rich-field>small{color:#89978d;font-size:10px}
+.document-studio .document-preview-panel{
+  display:flex!important;flex-direction:column!important;position:relative!important;top:auto!important;
+  align-self:stretch!important;width:100%!important;height:100%!important;min-width:0!important;
+  min-height:0!important;max-height:100%!important;overflow:hidden!important;
+  padding:18px!important;border:1px solid #d8e5db!important;border-radius:20px!important;
+  background:linear-gradient(145deg,#fbfdfb,#eef4ef)!important;box-shadow:0 16px 42px #153d2b18!important;
+}
+.document-studio .document-preview-head{display:flex!important;flex:0 0 auto!important;min-height:48px!important}
+.document-studio .document-preview-stage{
+  display:flex!important;flex:1 1 0!important;justify-content:center!important;align-items:flex-start!important;
+  min-width:0!important;min-height:0!important;width:100%!important;overflow:auto!important;
+  padding:16px!important;border:1px solid #dce7df!important;border-radius:14px!important;
+}
+.document-studio .document-preview-zoom{flex:0 0 auto!important;max-width:none!important}
+.document-studio .document-preview-footer{display:flex!important;flex:0 0 auto!important;justify-content:space-between!important;gap:8px!important}
+.document-studio .document-privacy-note{flex:0 0 auto!important;font-size:10px!important;line-height:1.5!important}
+@media(min-width:901px){
+  .document-studio .document-studio-top{padding:13px clamp(18px,2.4vw,36px)!important}
+  .document-studio .document-studio-top h1{font-size:clamp(20px,1.8vw,27px)!important}
+  .document-studio .document-editor-heading h2{font-size:22px!important}
+}
+@media(max-width:900px){
+  .document-tool-panel{overflow-y:auto!important}
+  .document-tool-panel>.document-studio{height:auto!important;min-height:100dvh!important;overflow:visible!important}
+  .document-studio .document-studio-top{position:sticky!important;top:0!important;grid-template-columns:auto minmax(0,1fr)!important}
+  .document-studio .document-editor-shell{height:auto!important;min-height:0!important;overflow:visible!important;padding:14px 12px 28px!important}
+  .document-studio .document-editor-heading{align-items:flex-start!important;flex-direction:column!important}
+  .document-studio .document-editor-actions{width:100%!important;justify-content:flex-start!important}
+  .document-studio .document-workspace-grid{display:flex!important;flex-direction:column!important;height:auto!important;min-height:0!important;overflow:visible!important}
+  .document-studio .document-controls{height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;padding:18px!important}
+  .document-studio .document-preview-panel{position:relative!important;height:auto!important;min-height:680px!important;max-height:none!important;overflow:visible!important}
+  .document-studio .document-preview-stage{min-height:560px!important;overflow:auto!important}
+  .document-studio .document-rich-editor{min-height:300px}
+}
+@media(max-width:560px){
+  .document-studio .document-fields{grid-template-columns:minmax(0,1fr)!important}
+  .document-studio .document-fields label.wide,.document-studio .document-rich-field{grid-column:1/-1!important}
+  .document-studio .document-editor-actions button{flex:1 1 30%!important;min-width:100px!important}
+  .document-studio .document-preview-panel{min-height:590px!important;padding:11px!important}
+  .document-studio .document-preview-stage{min-height:480px!important;padding:8px!important}
+  .document-studio .document-preview-zoom{--doc-zoom:.48!important}
+}
