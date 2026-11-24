@@ -40,3 +40,8 @@
 .ipvc-crop:after{content:'';position:absolute;left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;background:#ef4444;box-shadow:calc(100% + 0px) 0 0 #ef4444,0 calc(100% + 0px) 0 #ef4444,calc(100% + 0px) calc(100% + 0px) 0 #ef4444;border:0}
 .ipvc-crop.draft{border:1px solid #ef4444!important;border-style:solid!important;box-shadow:0 0 0 9999px #10253b12!important}
 .ipvc-stage{user-select:none;-webkit-user-select:none}
+
+.ipvc-split-setting{display:flex;flex-direction:column;gap:6px;padding:11px;border:1px solid #dfe7f0;border-radius:9px;background:#f8fafc;color:#43546c;font-size:12px}
+.ipvc-split-setting>span{font-weight:800}
+.ipvc-split-setting select{width:100%;min-height:38px;border:1px solid #d7e1ec;border-radius:8px;padding:8px;background:#fff;color:#33465f;font:inherit}
+.ipvc-split-setting small{font-size:11px;line-height:1.45;color:#718198}
