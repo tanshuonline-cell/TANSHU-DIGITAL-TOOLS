@@ -1664,3 +1664,16 @@
 @media(max-width:760px){
   .app.light .welcome-row.hero-panel{border-radius:19px 19px 0 0!important}
 }
+
+
+/* HOME HERO PHOTO — selected ImgBB visual, existing text and language controls retained */
+.app.light .welcome-row.hero-panel{gap:18px;align-items:center;min-height:300px!important}
+.app.light .hero-panel .hero-copy{flex:1 1 360px;max-width:500px}
+.app.light .hero-panel .hero-photo{flex:0 1 490px;width:min(40vw,490px);min-width:330px;height:auto;padding:0;border:1px solid rgba(207,180,112,.38);border-radius:16px;overflow:hidden;background:#0b2926;box-shadow:0 20px 42px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.12)}
+.app.light .hero-panel .hero-photo img{display:block;width:100%;height:auto;object-fit:contain}
+.app.light .hero-panel .date-chip{flex:0 0 auto}
+@media(max-width:900px){
+ .app.light .welcome-row.hero-panel{flex-wrap:wrap;min-height:0!important}
+ .app.light .hero-panel .hero-copy{flex:1 1 100%;max-width:100%}
+ .app.light .hero-panel .hero-photo{flex:1 1 100%;width:100%;min-width:0;max-width:620px;margin:0 auto}
+}
