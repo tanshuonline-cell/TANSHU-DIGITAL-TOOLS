@@ -1556,3 +1556,15 @@
  .pdf-editor-root .pdf-preview-actions{width:100%}
  .pdf-editor-root .pdf-preview-actions button{font-size:10px;padding:7px 9px}
 }
+
+
+/* PDF editor direct preview selection and staged editing */
+.pdf-editor-root .pdf-canvas-wrap{position:relative;touch-action:none;user-select:none;-webkit-user-select:none}
+.pdf-editor-root .pdf-text-hit{touch-action:none;cursor:text}
+.pdf-editor-root .pdf-selection-rect{position:absolute;z-index:8;border:2px solid #16865d;background:rgba(36,178,125,.18);border-radius:3px;pointer-events:none;box-shadow:0 0 0 1px rgba(255,255,255,.8) inset}
+.pdf-editor-root .pdf-drag-hint{font-size:12px;color:#557064;align-self:center;padding:4px 8px}
+.pdf-editor-root .pdf-inline-edit{z-index:12;min-width:min(320px,calc(100vw - 40px));max-width:420px;padding:12px;background:#fff;border:1px solid #b7d6c7;border-radius:12px;box-shadow:0 12px 36px rgba(18,55,39,.2)}
+.pdf-editor-root .pdf-inline-edit textarea{width:100%;min-height:90px;resize:vertical;border:1px solid #c9d8d0;border-radius:8px;padding:10px;font:inherit;color:#17251e;background:#fbfdfb}
+.pdf-editor-root .pdf-inline-edit small{display:block;margin-top:6px;color:#527063;font-size:11px}
+.pdf-editor-root .pdf-queued-preview{position:absolute;z-index:5;display:flex;align-items:flex-start;overflow:hidden;padding:1px 2px;background:#fff;color:#151a17;white-space:pre-wrap;line-height:1.15;pointer-events:none}
+@media(max-width:700px){.pdf-editor-root .pdf-page-toolbar{flex-wrap:wrap;gap:8px}.pdf-editor-root .pdf-preview-actions{display:flex;flex-wrap:wrap}.pdf-editor-root .pdf-inline-edit{position:fixed!important;left:12px!important;right:12px!important;top:auto!important;bottom:16px!important;width:auto;max-width:none}}
