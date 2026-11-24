@@ -1602,3 +1602,8 @@
   line-height:1.35!important;
   padding:3px 4px;
 }
+
+
+/* PVC PDF Maker must escape the generic 640px tool-page content rail. */
+.tool-page-panel.pvc-card-tool-panel{inset:0;width:100vw;height:100dvh;max-width:none!important;max-height:none;padding:0;box-sizing:border-box;align-items:stretch;justify-content:stretch;overflow:hidden}
+.tool-page-panel.pvc-card-tool-panel>.ipvc-app{width:100%;max-width:none;min-width:0;min-height:0;flex:1}
