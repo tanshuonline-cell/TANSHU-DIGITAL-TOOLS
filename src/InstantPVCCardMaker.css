@@ -36,9 +36,10 @@
 }
 
 /* Fine red crop guide with unobtrusive corner grips */
-.ipvc-crop{border:1px solid #ef4444!important;box-shadow:0 0 0 9999px #10253b22!important;cursor:move}
-.ipvc-crop:after{content:'';position:absolute;left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;background:#ef4444;box-shadow:calc(100% + 0px) 0 0 #ef4444,0 calc(100% + 0px) 0 #ef4444,calc(100% + 0px) calc(100% + 0px) 0 #ef4444;border:0}
-.ipvc-crop.draft{border:1px solid #ef4444!important;border-style:solid!important;box-shadow:0 0 0 9999px #10253b12!important}
+.ipvc-crop{border:1px dotted #ef4444!important;box-shadow:0 0 0 9999px #10253b18!important;cursor:move;background:transparent!important}
+.ipvc-crop:after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 0 0,#ef4444 0 2px,transparent 2.5px),radial-gradient(circle at 100% 0,#ef4444 0 2px,transparent 2.5px),radial-gradient(circle at 0 100%,#ef4444 0 2px,transparent 2.5px),radial-gradient(circle at 100% 100%,#ef4444 0 2px,transparent 2.5px)}
+.ipvc-crop.draft{border:1px dotted #ef4444!important;box-shadow:0 0 0 9999px #10253b0c!important}
+.ipvc-controlrow button.selected{border-color:#2876d6;background:#edf5ff;color:#1766c7;font-weight:800}
 .ipvc-stage{user-select:none;-webkit-user-select:none}
 
 .ipvc-split-setting{display:flex;flex-direction:column;gap:6px;padding:11px;border:1px solid #dfe7f0;border-radius:9px;background:#f8fafc;color:#43546c;font-size:12px}
