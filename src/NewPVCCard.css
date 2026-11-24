@@ -43,3 +43,8 @@
 /* Draw a fresh crop rectangle by dragging on the PDF; then refine it with corner handles. */
 .np-crop-image-large>img{touch-action:none}
 .np-crop-zoombar button{white-space:nowrap}
+
+/* Thin dotted crop outline, with visible but compact corner grips. */
+.np-crop-rect-large{border:1.5px dashed #ff3b30!important;background:#ff3b3014!important}
+.np-crop-handle{width:16px!important;height:16px!important;border:2px solid #fff!important}
+.np-crop-handle.nw{left:-9px!important;top:-9px!important}.np-crop-handle.ne{right:-9px!important;top:-9px!important}.np-crop-handle.sw{left:-9px!important;bottom:-9px!important}.np-crop-handle.se{right:-9px!important;bottom:-9px!important}
