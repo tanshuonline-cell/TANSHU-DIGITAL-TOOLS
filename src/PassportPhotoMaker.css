@@ -3,3 +3,36 @@
 @media(max-width:520px){.ipm-back{padding:8px;font-size:9px}.ipm-brand b{font-size:10px}.ipm-brand small{font-size:7px}.ipm-intro{align-items:flex-start}.ipm-intro> b{font-size:21px}.ipm-steps button{min-width:112px;font-size:9px;padding:8px}.ipm-fields{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.ipm-fields input,.ipm-fields select{padding:8px 5px;font-size:10px}.ipm-actions{flex-wrap:wrap}.ipm-actions>*{flex:1}.ipm-bg-options button{font-size:8px}.ipm-sheet-head{align-items:flex-start;flex-direction:column}.ipm-sheet-scroll{max-height:58vh}.ipm-stack{grid-template-columns:1fr}.ipm-toolbar button{flex:1;justify-content:center}.ipm-upload{min-height:145px}}
 
 .ipm-photo{width:min(100%,260px);height:auto;flex:none}.ipm-page-nav{display:flex;align-items:center;justify-content:center;gap:14px;padding:10px 0 0;color:#526258;font-size:10px}.ipm-page-nav button{border:1px solid #e0e7e2;background:#f8faf8;color:#315d43;border-radius:7px;padding:6px 10px;font-size:9px;font-weight:700;cursor:pointer}.ipm-page-nav button:disabled{opacity:.35;cursor:not-allowed}.ipm-sheet-photo.grouped{outline:1px dashed #789b82;outline-offset:-1px}.ipm-delete{animation:ipm-trash-wiggle .42s ease-in-out infinite alternate;opacity:1!important}.ipm-delete svg{transform-origin:top center;animation:ipm-trash-lid .42s ease-in-out infinite alternate}@keyframes ipm-trash-wiggle{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}@keyframes ipm-trash-lid{from{transform:rotate(0)}to{transform:rotate(-24deg)}}
+/* Passport Photo Maker usability: full-height desktop workspace and scroll-safe step navigation */
+.ipm{overflow-x:hidden;overflow-y:visible}
+.ipm-wrap{width:100%;max-width:1680px;margin-inline:auto}
+.ipm-grid{grid-template-columns:minmax(360px,.88fr) minmax(0,1.12fr);gap:22px;align-items:stretch}
+.ipm-panel{min-width:0}
+.ipm-preview-bg{min-height:clamp(440px,58vh,700px);padding:clamp(24px,4vw,56px)}
+.ipm-photo{width:min(100%,clamp(280px,30vw,440px));max-height: min(68vh,680px)}
+.ipm-crop-stage{min-height:clamp(380px,52vh,620px);padding:clamp(24px,4vw,56px)}
+.ipm-photo.crop{width:min(100%,clamp(280px,29vw,420px))}
+.ipm-step-actions{position:sticky;bottom:10px;z-index:5;background:#ffffffed;padding:10px;border:1px solid #e5e9ed;border-radius:12px;box-shadow:0 6px 24px #17251a16;backdrop-filter:blur(10px)}
+.ipm-step-actions button{min-height:42px}
+.ipm-range{min-height:34px}
+@media(min-width:901px){
+ .ipm-wrap{padding-inline:clamp(28px,4vw,64px)}
+ .ipm-grid{grid-template-columns:minmax(400px,.82fr) minmax(480px,1.18fr);gap:24px}
+ .ipm-panel{padding:clamp(22px,2vw,34px)}
+ .ipm-preview-bg{min-height: min(68vh,720px)}
+ .ipm-crop-stage{min-height:min(60vh,650px)}
+ .ipm-photo{width:min(100%,min(34vw,460px))}
+}
+@media(max-width:900px){
+ .ipm-grid{grid-template-columns:minmax(0,1fr)}
+ .ipm-preview-bg{min-height:320px}
+ .ipm-crop-stage{min-height:300px}
+ .ipm-photo,.ipm-photo.crop{width:min(100%,320px)}
+ .ipm-step-actions{position:sticky;bottom:6px}
+}
+@media(max-width:520px){
+ .ipm-preview-bg{min-height:280px;padding:18px}
+ .ipm-crop-stage{min-height:260px;padding:16px}
+ .ipm-step-actions{gap:6px;padding:8px}
+ .ipm-step-actions button{font-size:9px;padding:10px 8px}
+}
