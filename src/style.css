@@ -1654,3 +1654,13 @@
  .app.light .welcome-row.hero-panel{padding:23px 20px!important;min-height:0!important;border-radius:19px!important}
  .app.light .hero-panel .hero-visual{width:100%;min-width:0;max-width:340px}
 }
+
+
+/* HOME HERO: preserve existing emerald palette; square lower corners only */
+.app.light .welcome-row.hero-panel{
+  border-radius:24px 24px 0 0!important;
+  box-shadow:0 32px 76px rgba(9,43,35,.34),0 13px 30px rgba(10,37,31,.18),inset 0 1px rgba(255,255,255,.12)!important;
+}
+@media(max-width:760px){
+  .app.light .welcome-row.hero-panel{border-radius:19px 19px 0 0!important}
+}
