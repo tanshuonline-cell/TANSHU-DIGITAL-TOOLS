@@ -1845,3 +1845,12 @@
 .maker-about-modal li:before{content:'•';position:absolute;left:3px;top:0;color:#c8a34d;font-size:17px;font-weight:900}
 .maker-about-close{position:absolute;right:14px;top:12px;width:32px;height:32px;border:1px solid var(--border);border-radius:50%;background:transparent;color:var(--text);font-size:22px;line-height:1;cursor:pointer}
 @media(max-width:760px){.maker-card{padding:9px}.maker-card .demo-thumb{height:90px}.maker-card h3{font-size:10px}.maker-card p{font-size:9px;min-height:25px;max-height:25px}.maker-actions{gap:5px;margin-top:8px}.maker-actions button{font-size:8px;padding:5px 4px;min-height:30px}.maker-about-modal{padding:21px 17px}.maker-about-modal h2{font-size:17px}}
+
+
+/* REALISTIC PHOTO DEMO THUMBNAILS — four unique photo panels in one optimised asset */
+.demo-thumb.demo-real{background-image:url('/maker-assets/maker-real-thumbnails.jpg');background-repeat:no-repeat;background-size:400% 100%;background-color:#10281e}
+.demo-thumb.demo-real svg{display:none!important}
+.demo-thumb.demo-real-0{background-position:0% center}
+.demo-thumb.demo-real-1{background-position:33.333% center}
+.demo-thumb.demo-real-2{background-position:66.667% center}
+.demo-thumb.demo-real-3{background-position:100% center}
