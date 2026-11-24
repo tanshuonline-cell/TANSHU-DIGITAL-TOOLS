@@ -1587,3 +1587,18 @@
 .pdf-editor-root .pdf-pending-item b{font-size:9px;letter-spacing:.05em;color:#276244}
 .pdf-editor-root .pdf-pending-item small{font-size:10px;line-height:1.4;color:#566c5d;overflow-wrap:anywhere}
 .pdf-editor-root .pdf-pending-item>button{width:28px;height:28px;border:1px solid #d9e5dc;border-radius:8px;background:#fff;color:#9b4539;font-size:18px;line-height:1;cursor:pointer}
+
+
+/* PDF replacement preview: expand vertically and wrap long text instead of clipping */
+.pdf-editor-root .pdf-queued-preview,
+.pdf-editor-root .pdf-live-replacement{
+  height:auto!important;
+  min-height:22px;
+  max-height:none!important;
+  overflow:visible!important;
+  white-space:pre-wrap!important;
+  overflow-wrap:anywhere;
+  word-break:normal;
+  line-height:1.35!important;
+  padding:3px 4px;
+}
