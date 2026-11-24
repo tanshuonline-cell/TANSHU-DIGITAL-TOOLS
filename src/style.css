@@ -1391,3 +1391,61 @@
  .document-studio.certificate-mode>.certificate-mode-top .document-secure{justify-self:start}
  .document-studio.certificate-mode>.document-studio-certificate{height:auto!important;min-height:100dvh!important}
 }
+
+
+/* PDF EDITOR — override the generic 640px tool-page content cap */
+.tool-page-panel.document-tool-panel{
+  align-items:stretch!important;
+  justify-content:stretch!important;
+  padding:0!important;
+  width:100vw!important;
+  height:100dvh!important;
+  max-width:none!important;
+  overflow:hidden!important;
+}
+.tool-page-panel.document-tool-panel>.pdf-editor-root{
+  align-self:stretch!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  height:100%!important;
+  min-height:0!important;
+  flex:1 1 0!important;
+}
+.pdf-editor-root>.pdf-editor-layout{
+  width:100%!important;
+  max-width:none!important;
+  grid-template-columns:minmax(320px, min(34vw, 430px)) minmax(0,1fr)!important;
+}
+.pdf-editor-root>.pdf-editor-header,
+.pdf-editor-root>.pdf-editor-footer,
+.pdf-editor-root>.pdf-editor-status{
+  width:100%!important;
+  max-width:none!important;
+}
+@media(max-width:900px){
+  .tool-page-panel.document-tool-panel{height:100dvh!important;overflow-y:auto!important}
+  .tool-page-panel.document-tool-panel>.pdf-editor-root{
+    height:auto!important;
+    min-height:100dvh!important;
+    overflow:visible!important;
+  }
+  .pdf-editor-root>.pdf-editor-layout{
+    display:flex!important;
+    flex-direction:column!important;
+    width:100%!important;
+    max-width:none!important;
+  }
+  .pdf-editor-root .pdf-editor-tools,
+  .pdf-editor-root .pdf-page-view{
+    width:100%!important;
+    max-width:none!important;
+  }
+  .pdf-editor-root .pdf-page-view{height:min(78vh,820px)!important;min-height:500px!important}
+}
+@media(max-width:560px){
+  .pdf-editor-root .pdf-editor-header,
+  .pdf-editor-root .pdf-editor-footer,
+  .pdf-editor-root .pdf-editor-layout{width:100%!important;max-width:none!important}
+  .pdf-editor-root .pdf-page-view{height:72vh!important;min-height:460px!important}
+}
