@@ -36,3 +36,67 @@
  .ipm-step-actions{gap:6px;padding:8px}
  .ipm-step-actions button{font-size:9px;padding:10px 8px}
 }
+
+/* Layout v2: broad settings column + persistent preview rail */
+.ipm,.ipm *{box-sizing:border-box}
+.ipm{width:100%;max-width:100%;overflow-x:clip}
+.ipm-wrap{width:100%;max-width:1720px;padding-left:clamp(16px,2.4vw,40px);padding-right:clamp(16px,2.4vw,40px)}
+.ipm-grid{display:grid;grid-template-columns:minmax(0,1.16fr) minmax(320px,.84fr);gap:clamp(16px,2vw,28px);align-items:start}
+.ipm-control-panel{width:100%;min-width:0}
+.ipm-preview-panel{position:sticky;top:16px;align-self:start;min-width:0;max-height:calc(100vh - 32px);overflow:auto;display:flex;flex-direction:column;padding:0;background:#fff;border:1px solid #e2e9e3;box-shadow:0 14px 36px #203d2b12}
+.ipm-preview-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 20px;background:linear-gradient(115deg,#183e2d 0%,#286348 58%,#b18a48 150%);color:#fff}
+.ipm-preview-heading>div{display:flex;flex-direction:column;gap:4px}
+.ipm-preview-heading small{font-size:8px;letter-spacing:.16em;font-weight:800;color:#d9c38f}
+.ipm-preview-heading b{font-size:15px;letter-spacing:.01em;color:#fff}
+.ipm-preview-heading>span{font-size:10px;font-weight:700;color:#f3ead7;white-space:nowrap}
+.ipm-preview-panel>.ipm-preview-bg{flex:none;min-height:clamp(260px,48vh,480px);max-height:calc(100vh - 115px);margin:14px;padding:clamp(16px,2vw,28px);background:linear-gradient(145deg,#f3f6f4,#e9efeb);border:1px solid #e2e9e3}
+.ipm-preview-panel .ipm-photo{width:auto;height:auto;max-width:min(100%,360px);max-height: min(58vh,460px)}
+.ipm-preview-panel .ipm-photo img{width:100%;height:100%;object-fit:contain}
+.ipm-control-panel>.ipm-upload{min-height:clamp(210px,34vh,310px);border-width:2px;background:linear-gradient(145deg,#fbfdfb,#f0f6f1);gap:14px}
+.ipm-control-panel>.ipm-upload svg{width:42px;height:42px}
+.ipm-control-panel>.ipm-upload b{font-size:15px}
+.ipm-control-panel>.ipm-upload small{font-size:11px}
+.ipm-control-panel .ipm-title b{font-size:14px}
+.ipm-control-panel .ipm-fields label,.ipm-control-panel .ipm-field{font-size:11px}
+.ipm-control-panel .ipm-fields input,.ipm-control-panel .ipm-fields select{min-height:40px;font-size:13px}
+.ipm-control-panel .ipm-primary,.ipm-control-panel .ipm-secondary{min-height:42px;font-size:11px}
+.ipm-step-actions{position:sticky;bottom:10px;z-index:8}
+@media(min-width:901px){
+ .ipm-intro{margin-bottom:14px}
+ .ipm-steps{margin-bottom:14px}
+ .ipm-grid{grid-template-columns:minmax(0,1.18fr) minmax(330px,.82fr)}
+ .ipm-preview-panel>.ipm-preview-bg{min-height:clamp(270px,48vh,470px)}
+ .ipm-crop-stage{min-height:clamp(300px,42vh,460px)}
+}
+@media(min-width:901px) and (max-height:800px){
+ .ipm-wrap{padding-top:18px}
+ .ipm-preview-panel>.ipm-preview-bg{min-height:260px;max-height:calc(100vh - 170px)}
+ .ipm-preview-panel .ipm-photo{max-height:48vh}
+ .ipm-control-panel{padding:20px}
+}
+@media(max-width:900px){
+ .ipm-wrap{padding:16px 12px 30px}
+ .ipm-grid{grid-template-columns:minmax(0,1fr);gap:14px}
+ .ipm-preview-panel{position:static;top:auto;max-height:none;overflow:visible;order:2}
+ .ipm-control-panel{order:1;padding:16px}
+ .ipm-preview-heading{padding:13px 15px}
+ .ipm-preview-heading b{font-size:13px}
+ .ipm-preview-panel>.ipm-preview-bg{min-height:240px;max-height:none;margin:10px}
+ .ipm-preview-panel .ipm-photo{max-width:min(100%,280px);max-height:340px}
+ .ipm-control-panel>.ipm-upload{min-height:190px}
+ .ipm-step-actions{position:sticky;bottom:6px}
+}
+@media(max-width:520px){
+ .ipm-head{gap:8px}
+ .ipm-wrap{padding:12px 10px 24px}
+ .ipm-intro h1{font-size:clamp(21px,6vw,26px)}
+ .ipm-control-panel{padding:13px}
+ .ipm-control-panel>.ipm-upload{min-height:180px}
+ .ipm-control-panel>.ipm-upload b{font-size:13px;text-align:center;padding:0 8px}
+ .ipm-preview-panel>.ipm-preview-bg{min-height:220px;padding:14px}
+ .ipm-preview-heading>span{font-size:9px}
+ .ipm-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .ipm-fields label:last-child:nth-child(odd){grid-column:1/-1}
+ .ipm-step-actions{flex-wrap:wrap}
+ .ipm-step-actions>*{flex:1 1 28%;min-width:0}
+}
