@@ -1,10 +1,10 @@
 import React from 'react';
-const groups=[
+const groups: {name:string;items:[string,string,number,number][]}[]=[
 {name:'Education & Other',items:[['labour','Labour / Construction Worker Card',85.6,53.98],['apaar','APAAR / ABC Academic ID',85.6,53.98],['student','School / College / Student ID',85.6,53.98],['company','Company / Organization ID',85.6,53.98],['other-dept','Other State / Department Card',0,0]]},
 {name:'Identity & Government',items:[['aadhaar','Aadhaar PVC',86,54],['voter','Voter ID / EPIC',86,54],['pan','PAN Card',85.6,53.98],['dl','Driving Licence',85.6,53.98],['rc','Vehicle RC',85.6,53.98],['udid','UDID Disability ID',85.6,53.98],['npr','NPR / MNIC',85.6,53.98],['gov','Government Employee / Pension ID',85.6,53.98]]},
 {name:'Health & Welfare',items:[['ayushman','Ayushman / PM-JAY',85.6,53.98],['abha','ABHA Health ID',85.6,53.98],['health','CGHS / ECHS / State Health Card',85.6,53.98]]},
 {name:'Labour, Agriculture & Property',items:[['eshram','e-Shram / UAN',85.6,53.98],['mgnrega','MGNREGA Job Card',85.6,53.98],['kisan','Kisan Credit / Farmer Card',85.6,53.98],['ration','Ration / Family Card · Custom',0,0],['svamitva','SVAMITVA / Property Card · Custom',0,0]]
-}] as const;
+}];
 type Props={cardType:string;onCardType:(v:string)=>void;w:number;h:number;onSize:(w:number,h:number)=>void;corner:string;onCorner:(v:string)=>void;radius:number;onRadius:(v:number)=>void;border:boolean;onBorder:(v:boolean)=>void;borderColor:string;onBorderColor:(v:string)=>void;borderWidth:number;onBorderWidth:(v:number)=>void;sheetContent:string;onSheetContent:(v:string)=>void;media:string;onMedia:(v:string)=>void;template:string;onTemplate:(v:string)=>void;preset:string;onPreset:(v:string)=>void;};
 export default function NewPVCCardSettings(p:Props){
 const field=(name:string,el:React.ReactNode)=><label className="np-select">{name}{el}</label>;
