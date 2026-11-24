@@ -834,3 +834,15 @@
  .certificate-studio-head{padding-left:70px!important}
 }
 @media print{.certificate-studio-back-float{display:none!important}}
+
+
+/* Certificate Studio: save-draft navigation and return/resume choice */
+.certificate-draft-overlay{position:fixed!important;inset:0!important;z-index:2147483600!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:20px!important;background:rgba(10,25,18,.62)!important;backdrop-filter:blur(9px)!important}
+.certificate-draft-dialog{width:min(100%,460px)!important;padding:30px!important;border:1px solid #dce8df!important;border-radius:22px!important;background:#fff!important;color:#183c2b!important;box-shadow:0 24px 80px #071c1240!important;text-align:center!important}
+.certificate-draft-dialog h2{margin:10px 0 9px!important;color:#173e2c!important;font-size:22px!important;line-height:1.25!important;font-weight:850!important}
+.certificate-draft-dialog p{margin:0 0 20px!important;color:#607367!important;font-size:14px!important;line-height:1.6!important}
+.certificate-draft-mark{width:42px!important;height:42px!important;display:grid!important;place-items:center!important;margin:0 auto 14px!important;border-radius:50%!important;background:#e7f2e9!important;color:#1b6a43!important;font-size:22px!important;font-weight:900!important}
+.certificate-draft-dialog .certificate-studio-primary,.certificate-draft-dialog .certificate-studio-secondary{width:100%!important;min-height:44px!important;margin:7px 0 0!important}
+.certificate-draft-cancel{display:block!important;width:100%!important;margin:12px 0 0!important;padding:9px!important;border:0!important;background:transparent!important;color:#65766b!important;font-size:12px!important;font-weight:800!important;cursor:pointer!important}
+@media(max-width:560px){.certificate-draft-dialog{padding:23px!important;border-radius:18px!important}.certificate-draft-dialog h2{font-size:19px!important}}
+@media print{.certificate-draft-overlay{display:none!important}}
