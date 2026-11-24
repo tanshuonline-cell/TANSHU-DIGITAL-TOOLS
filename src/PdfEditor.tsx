@@ -16,7 +16,7 @@ export default function PdfEditor({hi=false,onBack=()=>{}}:{hi?:boolean;onBack?:
  const canvasRef=useRef<HTMLCanvasElement|null>(null); const hostRef=useRef<HTMLDivElement|null>(null); const [meta,setMeta]=useState<PageMeta|null>(null);
  const tr=(en:string,hiText:string)=>hi?hiText:en;
  useEffect(()=>{if(!bytes)return;let cancelled=false;(async()=>{try{const task=(pdfjsLib as any).getDocument({data:bytes.slice()});const loaded=await task.promise;if(cancelled)return;setPdf(loaded);setPageCount(loaded.numPages);setPage(1);setStatus(tr('PDF loaded. Select a text block on the page to replace it.','PDF खुल गई। बदलने के लिए पेज पर किसी टेक्स्ट ब्लॉक को चुनें।'));}catch(e:any){setStatus('Could not open this PDF: '+(e?.message||'unsupported or protected file'));}})();return()=>{cancelled=true}} ,[bytes]);
- useEffect(()=>{if(!pdf||!canvasRef.current||!hostRef.current)return;let cancelled=false;(async()=>{try{const p=await pdf.getPage(page);const viewport=p.getViewport({scale});const canvas=canvasRef.current!;const context=canvas.getContext('2d');if(!context)return;canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);canvas.style.width=viewport.width+'px';canvas.style.height=viewport.height+'px';await p.render({canvasContext:context,viewport}).promise;if(cancelled)return;const text=await p.getTextContent();const raw:TextHit[]=[];for(const item of text.items as any[]){if(!item.str?.trim()||!item.transform)continue;const tx=(pdfjsLib as any).Util.transform(viewport.transform,item.transform);const h=Math.max(8,Math.abs(tx[3]));raw.push({str:item.str,left:tx[4],top:tx[5]-h,width:Math.max(8,(item.width||12)*scale),height:h*1.35,pageWidth:viewport.width,pageHeight:viewport.height,page});}raw.sort((a,b)=>Math.abs(a.top-b.top)<8?a.left-b.left:a.top-b.top);setHits(raw);setMeta({width:p.view[2]-p.view[0],height:p.view[3]-p.view[1],rotation:p.rotate||0});}catch(e:any){setStatus('Page preview error: '+(e?.message||''));}})();return()=>{cancelled=true}},[pdf,page,scale]);
+ useEffect(()=>{if(!pdf||!canvasRef.current||!hostRef.current)return;let cancelled=false;(async()=>{try{const p=await pdf.getPage(page);const viewport=p.getViewport({scale});const canvas=canvasRef.current!;const context=canvas.getContext('2d');if(!context)return;canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);canvas.style.width=viewport.width+'px';canvas.style.height=viewport.height+'px';await p.render({canvasContext:context,viewport}).promise;if(cancelled)return;const text=await p.getTextContent();const raw:TextHit[]=[];for(const item of text.items as any[]){if(!item.str?.trim()||!item.transform)continue;const tx=(pdfjsLib as any).Util.transform(viewport.transform,item.transform);const h=Math.max(8,Math.abs(tx[3]));raw.push({str:item.str,left:tx[4],top:tx[5]-h,width:Math.max(8,(item.width||12)*scale),height:h*1.05,pageWidth:viewport.width,pageHeight:viewport.height,page});}raw.sort((a,b)=>Math.abs(a.top-b.top)<8?a.left-b.left:a.top-b.top);setHits(raw);setMeta({width:p.view[2]-p.view[0],height:p.view[3]-p.view[1],rotation:p.rotate||0});}catch(e:any){setStatus('Page preview error: '+(e?.message||''));}})();return()=>{cancelled=true}},[pdf,page,scale]);
  const loadFile=async(file?:File)=>{if(!file)return;if(file.type!=='application/pdf'&&!file.name.toLowerCase().endsWith('.pdf')){setStatus(tr('Please choose a PDF file.','कृपया PDF फाइल चुनें।'));return;}setBusy(true);try{const data=new Uint8Array(await file.arrayBuffer());setBytes(data);setOriginalBytes(data.slice());setHistory([data.slice()]);setHistoryIndex(0);setProcessedBytes(null);setQueuedReplacements([]);setQueuedAdds([]);setProcessed(false);setFileName(file.name.replace(/\.pdf$/i,''));setSelected(null);setStatus(tr('Opening PDF…','PDF खोली जा रही है…'));}catch(e:any){setStatus(e.message||'File read failed')}finally{setBusy(false)}};
 
  const queueReplacement=()=>{if(!selected||!replacement.trim())return;setQueuedReplacements(q=>[...q,{hit:selected,text:replacement.trim()}]);setSelected(null);setReplacement('');setProcessed(false);setProcessedBytes(null);setStatus(tr('Replacement added to the edit queue. Continue editing or process when ready.','बदलाव एडिट सूची में जोड़ दिया गया। और बदलाव करें या तैयार होने पर प्रोसेस करें।'));};
@@ -27,14 +27,55 @@ export default function PdfEditor({hi=false,onBack=()=>{}}:{hi?:boolean;onBack?:
  for(let pg=1;pg<=pageCount;pg++){const p=await pdf.getPage(pg);const viewport=p.getViewport({scale});const content=await p.getTextContent();
  for(const item of content.items as any[]){if(!item.str)continue;const source=String(item.str);if(!source.toLocaleLowerCase().includes(needle))continue;
  const tx=(pdfjsLib as any).Util.transform(viewport.transform,item.transform);const h=Math.max(8,Math.abs(tx[3]));
- const hit:TextHit={str:source,left:tx[4],top:tx[5]-h,width:Math.max(8,(item.width||12)*scale),height:h*1.35,pageWidth:viewport.width,pageHeight:viewport.height,page:pg};
+ const hit:TextHit={str:source,left:tx[4],top:tx[5]-h,width:Math.max(8,(item.width||12)*scale),height:h*1.05,pageWidth:viewport.width,pageHeight:viewport.height,page:pg};
  let replaced='';let cursor=0;let lower=source.toLocaleLowerCase();let at=lower.indexOf(needle);while(at>=0){replaced+=source.slice(cursor,at)+findReplacement;cursor=at+findTerm.length;at=lower.indexOf(needle,cursor);}replaced+=source.slice(cursor);found.push({hit,text:replaced});
  }}
  if(found.length){setQueuedReplacements(q=>[...q,...found]);setFindCount(found.length);setProcessed(false);setProcessedBytes(null);setStatus(tr('Found and queued '+found.length+' text item(s) across the PDF. Review the queue before saving.','पूरी PDF में '+found.length+' टेक्स्ट आइटम मिले और Queue में जोड़े गए। सेव करने से पहले जाँच लें।'));}
  else{setFindCount(0);setStatus(tr('No matching text was found in selectable PDF text. Scanned image text needs OCR first.','चुना जा सकने वाला मेल खाता टेक्स्ट नहीं मिला। स्कैन की हुई इमेज के लिए पहले OCR चाहिए।'));}
  }catch(e:any){setStatus(e?.message||'Find & Replace failed');}finally{setBusy(false)}};
  const removeQueuedReplacement=(index:number)=>setQueuedReplacements(q=>q.filter((_,i)=>i!==index));
- const processPdf=useCallback(async()=>{if(!bytes)return;setBusy(true);setProcessed(false);try{const doc=await PDFDocument.load(bytes,{ignoreEncryption:false});const font=await doc.embedFont(StandardFonts.Helvetica);for(const item of queuedReplacements){const h=item.hit;const p=doc.getPage(h.page-1);const pw=p.getWidth(),ph=p.getHeight();const sx=pw/h.pageWidth,sy=ph/h.pageHeight;const x=h.left*sx,y=ph-(h.top+h.height)*sy,w=h.width*sx,hh=h.height*sy;p.drawRectangle({x:x-1,y:y-1,width:w+3,height:hh+3,color:rgb(1,1,1)});const lines=item.text.split(/\r?\n/);const targetSize=Math.max(6,Math.min(72,(hh/Math.max(1,lines.length))*.72));if(/[\u0900-\u097F]/.test(item.text)){const factor=4,canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.ceil(w*factor));canvas.height=Math.max(1,Math.ceil(hh*factor));const ctx=canvas.getContext('2d');if(!ctx)throw new Error('Text canvas unavailable');let px=targetSize*factor;ctx.fillStyle='#171a18';ctx.textBaseline='top';ctx.font=px+'px "Noto Sans Devanagari", Mangal, "Nirmala UI", sans-serif';const widest=Math.max(...lines.map(line=>ctx.measureText(line).width),1);if(widest>canvas.width) {px=Math.max(16,px*canvas.width/widest);ctx.font=px+'px "Noto Sans Devanagari", Mangal, "Nirmala UI", sans-serif';}const lineHeight=canvas.height/Math.max(1,lines.length);lines.forEach((line,i)=>ctx.fillText(line,0,i*lineHeight,canvas.width));const png=await doc.embedPng(canvas.toDataURL('image/png'));p.drawImage(png,{x,y,width:w,height:hh});}else{p.drawText(item.text,{x,y:y+Math.max(1,hh*.12),size:targetSize,font,color:rgb(.08,.1,.09),maxWidth:Math.max(w,20)});}}for(const item of queuedAdds){const p=doc.getPage(item.page-1);p.drawText(item.text,{x:Math.max(0,Number(item.x)||24),y:Math.max(0,p.getHeight()-((Number(item.y)||35)*2.83465)),size:Math.max(5,Math.min(72,Number(item.size)||12)),font,color:rgb(.08,.1,.09),maxWidth:p.getWidth()-24});}const out=await doc.save();const nextBytes=new Uint8Array(out);setHistory(h=>[...h.slice(0,historyIndex+1),nextBytes.slice()]);setHistoryIndex(i=>i+1);setProcessedBytes(nextBytes);setBytes(nextBytes);setQueuedReplacements([]);setQueuedAdds([]);setSelected(null);setReplacement('');setProcessed(true);setStatus(tr('Edits saved into the preview. Choose Edit Again to continue, or download when final.','बदलाव प्रीव्यू में सेव हो गए। आगे सुधार के लिए Edit Again चुनें या तैयार होने पर डाउनलोड करें।'));}catch(e:any){setStatus('PDF processing failed: '+(e?.message||'Unsupported or encrypted file'));}finally{setBusy(false)}},[bytes,queuedReplacements,queuedAdds,hi,historyIndex]);
+ const processPdf=useCallback(async()=>{if(!bytes)return;setBusy(true);setProcessed(false);try{
+ const doc=await PDFDocument.load(bytes,{ignoreEncryption:false});
+ const font=await doc.embedFont(StandardFonts.Helvetica);
+ for(const item of queuedReplacements){
+  const h=item.hit,p=doc.getPage(h.page-1),pw=p.getWidth(),ph=p.getHeight();
+  const sx=pw/h.pageWidth,sy=ph/h.pageHeight;
+  const x=h.left*sx,y=ph-(h.top+h.height)*sy,w=Math.max(1,h.width*sx),hh=Math.max(1,h.height*sy);
+  // Keep the cover strictly inside the original text item's bounds so adjacent lines/content are not erased.
+  p.drawRectangle({x,y,width:w,height:hh,color:rgb(1,1,1)});
+  const lines=item.text.replace(/\r/g,'').split('\n');
+  const pad=0.5,availableW=Math.max(1,w-pad*2),availableH=Math.max(1,hh-pad*2);
+  if(/[\u0900-\u097F]/.test(item.text)){
+   const factor=4,canvas=document.createElement('canvas');
+   canvas.width=Math.max(1,Math.ceil(availableW*factor));canvas.height=Math.max(1,Math.ceil(availableH*factor));
+   const ctx=canvas.getContext('2d');if(!ctx)throw new Error('Text canvas unavailable');
+   let px=Math.max(4,Math.min(72,availableH/Math.max(1,lines.length)*.82))*factor;
+   const family='"Noto Sans Devanagari", Mangal, "Nirmala UI", sans-serif';
+   const widest=Math.max(...lines.map(line=>{ctx.font=px+'px '+family;return ctx.measureText(line).width}),1);
+   if(widest>canvas.width)px=Math.max(4*factor,px*canvas.width/widest);
+   ctx.font=px+'px '+family;ctx.fillStyle='#171a18';ctx.textBaseline='top';
+   const lineHeight=Math.min(px*1.18,canvas.height/Math.max(1,lines.length));
+   lines.forEach((line,i)=>ctx.fillText(line,0,i*lineHeight,canvas.width));
+   const png=await doc.embedPng(canvas.toDataURL('image/png'));
+   p.drawImage(png,{x:x+pad,y:y+pad,width:availableW,height:availableH});
+  }else{
+   const requested=Math.max(4,Math.min(72,availableH/Math.max(1,lines.length)*.78));
+   const widthAtOne=Math.max(...lines.map(line=>font.widthOfTextAtSize(line,1)),1);
+   const size=Math.max(4,Math.min(requested,availableW/widthAtOne));
+   const lineHeight=size*1.15;
+   lines.forEach((line,i)=>p.drawText(line,{x:x+pad,y:y+availableH-size-(i*lineHeight),size,font,color:rgb(.08,.1,.09),maxWidth:availableW}));
+  }
+ }
+ for(const item of queuedAdds){
+  const p=doc.getPage(item.page-1);
+  p.drawText(item.text,{x:Math.max(0,Number(item.x)||24),y:Math.max(0,p.getHeight()-((Number(item.y)||35)*2.83465)),size:Math.max(5,Math.min(72,Number(item.size)||12)),font,color:rgb(.08,.1,.09),maxWidth:p.getWidth()-24});
+ }
+ const out=await doc.save(),nextBytes=new Uint8Array(out);
+ setHistory(h=>[...h.slice(0,historyIndex+1),nextBytes.slice()]);setHistoryIndex(i=>i+1);
+ setProcessedBytes(nextBytes);setBytes(nextBytes);setQueuedReplacements([]);setQueuedAdds([]);
+ setSelected(null);setReplacement('');setProcessed(true);
+ setStatus(tr('Edits saved. Replacement text is fitted inside its original text area to avoid shifting or overlapping nearby content.','बदलाव सेव हो गए। नया टेक्स्ट मूल टेक्स्ट एरिया में फिट किया गया है ताकि आसपास का टेक्स्ट न खिसके और न चढ़े।'));
+ }catch(e:any){setStatus('PDF processing failed: '+(e?.message||'Unsupported or encrypted file'));}finally{setBusy(false)}},[bytes,queuedReplacements,queuedAdds,hi,historyIndex]);
  const undoEdit=()=>{if(historyIndex<=0)return;const prev=history[historyIndex-1].slice();setHistoryIndex(i=>i-1);setBytes(prev);setProcessedBytes(prev);setProcessed(true);setQueuedReplacements([]);setQueuedAdds([]);setSelected(null);setStatus(tr('Undo: previous PDF state restored.','Undo: पिछली PDF स्थिति वापस आ गई।'));}; const redoEdit=()=>{if(historyIndex<0||historyIndex>=history.length-1)return;const next=history[historyIndex+1].slice();setHistoryIndex(i=>i+1);setBytes(next);setProcessedBytes(next);setProcessed(true);setQueuedReplacements([]);setQueuedAdds([]);setSelected(null);setStatus(tr('Redo: next PDF state restored.','Redo: अगली PDF स्थिति वापस आ गई।'));};
  const downloadBlob=(blob:Blob,name:string)=>{const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1200);};
  const downloadPdf=()=>{if(processedBytes)downloadBlob(new Blob([processedBytes as any],{type:'application/pdf'}),(fileName||'document')+'_edited.pdf');};
