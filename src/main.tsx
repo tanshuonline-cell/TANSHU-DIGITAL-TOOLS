@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import AdminPortal from './AdminPortal';
+import AdminDashboard from './AdminDashboard';
 import './style.css';
 
-const isAdminLogin = window.location.pathname === '/admin-login';
+const path = window.location.pathname;
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    {isAdminLogin ? <AdminPortal onBack={() => window.location.assign('/')} /> : <App />}
+    {path === '/admin-login' ? <AdminPortal onBack={() => window.location.assign('/')} /> : path === '/admin' ? <AdminDashboard /> : <App />}
   </React.StrictMode>
 );
