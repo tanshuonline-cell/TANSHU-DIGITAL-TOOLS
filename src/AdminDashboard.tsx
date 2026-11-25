@@ -8,7 +8,7 @@ const base = import.meta.env.VITE_SUPABASE_URL as string;
 const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
 const toolSlug = (name:string) => name.toLowerCase().normalize('NFKD').replace(/[’']/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const readSession = () => { try { return JSON.parse(sessionStorage.getItem('tanshu_admin_session') || '{}'); } catch { return {}; } };
-const categoryNames:Record<string,string> = {csc:'CSC & ID SERVICES',cyber:'CYBER CAFE',maker:'INSTANT MAKERS',docs:'DOCUMENTS',print:'PRINT & SCAN',photo:'PHOTO STUDIO',pvc:'PVC & ID CARDS',pdf:'PDF TOOLS',business:'BUSINESS',education:'EDUCATION',typing:'TYPING & CAREER',qr:'QR & BARCODE',utility:'UTILITIES',banking:'BANKING',govt:'GOVERNMENT ACCESS',graphics:'GRAPHIC DESIGN',stamp:'STAMP & SEAL',image:'IMAGE EDITING',portrait:'PORTRAIT STUDIO',idprint:'ID PRINT',forms:'FORMS & CALCULATORS',web:'WEB & SOCIAL',finance:'FINANCE'};
+const categoryNames:Record<string,string> = {'site-images':'SITE IMAGES',csc:'CSC & ID SERVICES',cyber:'CYBER CAFE',maker:'INSTANT MAKERS',docs:'DOCUMENTS',print:'PRINT & SCAN',photo:'PHOTO STUDIO',pvc:'PVC & ID CARDS',pdf:'PDF TOOLS',business:'BUSINESS',education:'EDUCATION',typing:'TYPING & CAREER',qr:'QR & BARCODE',utility:'UTILITIES',banking:'BANKING',govt:'GOVERNMENT ACCESS',graphics:'GRAPHIC DESIGN',stamp:'STAMP & SEAL',image:'IMAGE EDITING',portrait:'PORTRAIT STUDIO',idprint:'ID PRINT',forms:'FORMS & CALCULATORS',web:'WEB & SOCIAL',finance:'FINANCE'};
 const categoryForMaker = (name:string) => /pvc|card|id/i.test(name)?'pvc':/pdf/i.test(name)?'pdf':/photo|portrait|background|signature|image/i.test(name)?'photo':/resume|certificate|document|letter/i.test(name)?'docs':'maker';
 
 export default function AdminDashboard() {
@@ -27,7 +27,16 @@ export default function AdminDashboard() {
   const [file,setFile] = useState<File|null>(null); const [message,setMessage] = useState(''); const [busy,setBusy] = useState(false);
   const headers = useMemo(()=>({apikey:key, Authorization:'Bearer '+(token||''), 'Content-Type':'application/json'}),[token]);
   const toolOptions = useMemo<ToolOption[]>(() => {
+    const imageSlots:ToolOption[] = [
+      {label:'Home Hero Image (16:9)',key:'site-home-hero',category:'site-images',description:'Homepage hero/banner image',source:'directory',ready:true},
+      {label:'Website / App Profile Photo (1:1)',key:'site-profile-photo',category:'site-images',description:'Profile avatar image',source:'directory',ready:true},
+      {label:'Intro Slide 1 (16:9)',key:'site-intro-slide-1',category:'site-images',description:'First intro splash image',source:'directory',ready:true},
+      {label:'Intro Slide 2 (16:9)',key:'site-intro-slide-2',category:'site-images',description:'Second intro splash image',source:'directory',ready:true},
+      {label:'Intro Slide 3 (16:9)',key:'site-intro-slide-3',category:'site-images',description:'Third intro splash image',source:'directory',ready:true},
+      ...['csc','cyber','maker','docs','print','photo','pvc','pdf','business','recordform','education','typing','qr','utility','banking','govt','graphics','stamp','image','portrait','idprint','forms','web','finance'].map(id=>({label:'Explore Category — '+(categoryNames[id]||id)+' (16:9)',key:'site-category-'+id,category:'site-images',description:'Explore Category card image',source:'directory' as const,ready:true}))
+    ];
     const options:ToolOption[] = [
+      ...imageSlots,
       ...tools.map(t => ({label:String(t[1]),key:toolSlug(String(t[1])),category:String(t[0]),description:String(t[3]||''),source:'directory' as const,ready:false})),
       ...makers.map(m => ({label:m.en,key:toolSlug(m.en),category:categoryForMaker(m.en),description:String(m.sub||''),source:'maker' as const,ready:!!m.ready}))
     ];
