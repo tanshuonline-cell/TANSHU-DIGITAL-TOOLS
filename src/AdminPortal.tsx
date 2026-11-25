@@ -16,10 +16,7 @@ export default function AdminPortal({ onBack }: AdminPortalProps) {
     try {
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-login`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-        },
+        headers: { 'Content-Type': 'application/json', apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
         body: JSON.stringify({ username, password }),
       });
       const result = await response.json().catch(() => ({}));
@@ -29,12 +26,27 @@ export default function AdminPortal({ onBack }: AdminPortalProps) {
       window.location.assign('/admin');
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Unable to sign in.');
-    } finally {
-      setBusy(false);
-    }
+    } finally { setBusy(false); }
   }
 
   return <main className="admin-auth-page">
+    <style>{`
+      .admin-auth-page{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 15% 10%,#253b63 0,transparent 45%),#090d18;color:#f8fafc;font-family:inherit}
+      .admin-auth-card{width:min(100%,430px);padding:36px;border:1px solid #34415b;border-radius:22px;background:#111827;box-shadow:0 24px 80px #0008}
+      .admin-auth-mark{display:grid;place-items:center;width:52px;height:52px;border-radius:16px;background:#243b63;color:#a9c7ff}
+      .admin-auth-eyebrow{margin:22px 0 8px;color:#9db7e9;font-size:11px;font-weight:800;letter-spacing:.16em}
+      .admin-auth-card h1{margin:0;font-size:32px;letter-spacing:-.04em}
+      .admin-auth-copy{margin:12px 0 26px;color:#aab5c8;line-height:1.6}
+      .admin-auth-card form{display:grid;gap:10px}
+      .admin-auth-card label{margin-top:6px;font-size:13px;font-weight:700;color:#dce5f5}
+      .admin-auth-card input{width:100%;box-sizing:border-box;border:1px solid #3a4861;border-radius:10px;background:#0b1220;color:white;padding:13px 14px;font:inherit;outline:none}
+      .admin-auth-card input:focus{border-color:#86aefb;box-shadow:0 0 0 3px #86aefb22}
+      .admin-auth-card form button{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:12px;border:0;border-radius:10px;padding:14px;background:#a9c7ff;color:#101827;font-weight:800;cursor:pointer}
+      .admin-auth-card form button:disabled{opacity:.6;cursor:wait}
+      .admin-auth-error{margin:4px 0;color:#ffaaa8;font-size:13px}
+      .admin-auth-note{display:flex;align-items:center;gap:8px;color:#8e9bb0;font-size:12px;margin:20px 0}
+      .admin-auth-back{border:0;background:transparent;color:#a9c7ff;padding:6px 0;cursor:pointer}
+    `}</style>
     <section className="admin-auth-card">
       <div className="admin-auth-mark"><ShieldCheck size={24}/></div>
       <p className="admin-auth-eyebrow">TANSHU DIGITAL TOOLS · ADMIN</p>
