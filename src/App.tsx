@@ -4,7 +4,7 @@ const BackgroundRemover=lazy(()=>import('./BackgroundRemover'));
 const PassportPhotoMaker=lazy(()=>import('./PassportPhotoMaker'));
 const InstantPVCCardMaker=lazy(()=>import('./InstantPVCCardMaker'));
 const NewPVCCard=lazy(()=>import('./NewPVCCard'));
-import {Search,Grid2X2,Star,Clock3,Home,Image,FileText,Printer,CreditCard,Briefcase,GraduationCap,Keyboard,QrCode,Landmark,Wrench,Globe2,Sun,Moon,ChevronRight,Sparkles,ArrowUpRight,Menu,X,Languages,LayoutDashboard,ScanLine,FolderOpen,ShieldCheck, Zap, Heart, Command, Info} from 'lucide-react';
+import {Search,Grid2X2,Star,Clock3,Home,Image,FileText,Printer,CreditCard,Briefcase,GraduationCap,Keyboard,QrCode,Landmark,Wrench,Globe2,Sun,Moon,ChevronRight,Sparkles,ArrowUpRight,Menu,X,Languages,LayoutDashboard,ScanLine,FolderOpen,ShieldCheck, Zap, Heart, Command, Info,Play} from 'lucide-react';
 type Lang='en'|'hi';
 const categories=[
 { id:'csc',en:'CSC CENTER TOOLS',hi:'CSC सेंटर टूल्स',desc:'Everyday services and assisted workflows',icon:Landmark,count:18 },
