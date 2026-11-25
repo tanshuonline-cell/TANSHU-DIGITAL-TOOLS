@@ -1948,3 +1948,7 @@
 .top-auth-link{font-size:0!important;min-width:48px!important;padding:0 10px!important}
 .top-auth-link:after{content:'Admin';font-size:11px!important}
 @media(max-width:560px){.top-auth-link:after{font-size:10px!important}}
+
+/* Admin-managed site imagery: consistent 16:9 previews and square profile avatar */
+.top-avatar{overflow:hidden}.top-avatar img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.intro-image-gallery{display:flex;gap:8px;margin-top:10px;max-width:100%}.intro-image-gallery img{width:calc(50% - 4px);min-width:0;border-radius:9px;object-fit:cover}
