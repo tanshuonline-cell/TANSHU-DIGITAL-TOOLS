@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import VideoStudio from './VideoStudio';
 import { makers, tools } from './App';
 import { ArrowLeft, ImagePlus, LogOut, Save, Send, Search, Check, MonitorPlay, Grid2X2, List, UploadCloud } from 'lucide-react';
 
@@ -13,6 +14,7 @@ const categoryForMaker = (name:string) => /pvc|card|id/i.test(name)?'pvc':/pdf/i
 
 export default function AdminDashboard() {
   const session = readSession();
+  const [showVideoStudio,setShowVideoStudio] = useState(false);
   const token = session.access_token as string|undefined;
   const [toolKey,setToolKey] = useState('');
   const [search,setSearch] = useState('');
@@ -97,6 +99,7 @@ export default function AdminDashboard() {
       }else setMessage(environment==='preview'?'Preview configuration saved.':'Live configuration saved.');
     }catch(e){setMessage(e instanceof Error?e.message:'Operation failed.');}finally{setBusy(false);}
   }
+  if(showVideoStudio) return <main className="admin-auth-page" style={{display:'block',padding:24,minHeight:'100vh'}}><VideoStudio onBack={()=>setShowVideoStudio(false)}/></main>;
   if(!token) return <main className="admin-auth-page"><section className="admin-auth-card"><h1>Session expired</h1><p>Please sign in again.</p><button onClick={()=>window.location.assign('/admin-login')}>Admin Login</button></section></main>;
   const imageUrl=path?base+'/storage/v1/object/public/tool-thumbnails/'+path:'';
   const previewSrc=file?URL.createObjectURL(file):imageUrl;
@@ -105,7 +108,7 @@ export default function AdminDashboard() {
   return <div className="admin-auth-page" style={{display:'block',padding:24,minHeight:'100vh'}}>
     <header style={{maxWidth:1320,margin:'0 auto 22px',display:'flex',justifyContent:'space-between',alignItems:'center',gap:16,flexWrap:'wrap'}}>
       <div><p className="admin-auth-eyebrow">TANSHU DIGITAL TOOLS · ADMIN WORKSPACE</p><h1 style={{marginBottom:4}}>Thumbnail Studio</h1><p className="admin-auth-copy" style={{margin:0}}>Find a website tool, inspect its thumbnail card and configure its image</p></div>
-      <button className="admin-auth-back" onClick={()=>{sessionStorage.removeItem('tanshu_admin_session');window.location.assign('/admin-login')}}><LogOut size={15}/> Sign out</button>
+      <div style={{display:'flex',gap:9,flexWrap:'wrap'}}><button onClick={()=>setShowVideoStudio(true)}><Video size={15}/> Video Studio</button><button className="admin-auth-back" onClick={()=>{sessionStorage.removeItem('tanshu_admin_session');window.location.assign('/admin-login')}}><LogOut size={15}/> Sign out</button></div>
     </header>
     <div style={{maxWidth:1320,margin:'auto',display:'grid',gridTemplateColumns:'minmax(280px,0.95fr) minmax(0,1.55fr)',gap:20,alignItems:'start'}}>
       <section className="admin-auth-card" style={{width:'100%',padding:18}}>
