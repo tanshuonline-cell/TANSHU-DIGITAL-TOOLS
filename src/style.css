@@ -1863,3 +1863,9 @@
 .maker-card .demo-thumb.demo-real-2{background-position:66.667% center!important}
 .maker-card .demo-thumb.demo-real-3{background-position:100% center!important}
 .maker-card .demo-thumb.demo-real svg{display:none!important}
+
+
+/* v3 safe fix: allow the left navigation panel to scroll independently */
+.sidebar{overflow-y:auto;overscroll-behavior:contain; scrollbar-gutter:stable;}
+.sidebar .side-bottom{flex-shrink:0}
+.sidebar nav,.sidebar .brand,.sidebar .workspace-label,.sidebar .sidebar-label{flex-shrink:0}
