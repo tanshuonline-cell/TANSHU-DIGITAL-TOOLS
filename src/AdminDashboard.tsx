@@ -29,6 +29,8 @@ export default function AdminDashboard() {
   const toolOptions = useMemo<ToolOption[]>(() => {
     const imageSlots:ToolOption[] = [
       {label:'Home Hero Image (16:9)',key:'site-home-hero',category:'site-images',description:'Homepage hero/banner image',source:'directory',ready:true},
+      {label:'CSS Center Workspace Thumbnail (16:9)',key:'site-css-center',category:'site-images',description:'CSS Center workspace feature image',source:'directory',ready:true},
+      {label:'Cyber Cafe Workspace Thumbnail (16:9)',key:'site-cyber-cafe',category:'site-images',description:'Cyber Cafe workspace feature image',source:'directory',ready:true},
       {label:'Website / App Profile Photo (1:1)',key:'site-profile-photo',category:'site-images',description:'Profile avatar image',source:'directory',ready:true},
       {label:'Intro Slide 1 (16:9)',key:'site-intro-slide-1',category:'site-images',description:'First intro splash image',source:'directory',ready:true},
       {label:'Intro Slide 2 (16:9)',key:'site-intro-slide-2',category:'site-images',description:'Second intro splash image',source:'directory',ready:true},
