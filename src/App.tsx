@@ -32,7 +32,7 @@ const categories=[
 { id:'web',en:'WEB, SOCIAL & DIGITAL CREATOR TOOLS',hi:'वेब, सोशल और डिजिटल क्रिएटर टूल्स',desc:'QR, social creatives, thumbnails and web utilities',icon:Globe2,count:12 },
 { id:'finance',en:'FINANCE & CALCULATORS',hi:'फाइनेंस और कैलकुलेटर',desc:'Salary, savings, tax, loan and everyday calculations',icon:Landmark,count:12 }
 ];
-const makers=[
+export const makers=[
 {en:'Instant Passport Photo Maker',hi:'इंस्टेंट पासपोर्ट फोटो मेकर',sub:'Single photo + A4 multi-copy passport photo sheet',subHi:'सिंगल फोटो और A4 पर मल्टी-कॉपी शीट',details:'• Single portrait preview with precise crop and zoom\n• AI background removal and clean photo preparation\n• Arrange multiple copies on A4 and other paper sizes\n• Adjust photo size, spacing, position and margins\n• Preview and export a print-ready PDF',detailsHi:'• सिंगल फोटो का सटीक क्रॉप और ज़ूम\n• AI बैकग्राउंड रिमूवल और फोटो तैयारी\n• A4 सहित अलग-अलग पेपर पर कई कॉपी सजाएँ\n• फोटो साइज, गैप, पोज़िशन और मार्जिन बदलें\n• प्रिंट-रेडी PDF का प्रीव्यू और एक्सपोर्ट',icon:Image,tag:'MOST USED',ready:true,priority:2},
 {en:'PVC Card Maker',hi:'PVC कार्ड मेकर',sub:'Design front and back layouts',icon:CreditCard,tag:'POPULAR'},
 {en:'PVC CARD MAKER (PHOTO)',hi:'PVC कार्ड मेकर (फोटो)',sub:'Create PVC cards from photos or PDF with flexible print layouts',subHi:'फोटो या PDF से PVC कार्ड और प्रिंट लेआउट बनाएँ',details:'• Import an ID-card PDF and crop the required page area\n• Split front and back from one PDF page\n• Choose a card profile or enter a custom size\n• Prepare A4, 4×6 photo-paper and printer layouts\n• Fine-tune crop, zoom and image adjustments\n• Export a clean, print-ready PDF',detailsHi:'• ID कार्ड PDF से ज़रूरी हिस्सा क्रॉप करें\n• एक PDF पेज से फ्रंट और बैक अलग करें\n• कार्ड प्रोफाइल या कस्टम साइज चुनें\n• A4, 4×6 और प्रिंटर लेआउट तैयार करें\n• क्रॉप, ज़ूम और फोटो एडजस्ट करें\n• प्रिंट-रेडी PDF एक्सपोर्ट करें',icon:CreditCard,tag:'',ready:true,priority:3},
@@ -99,7 +99,7 @@ const makers=[
 {en:'Biodata Maker',hi:'बायोडाटा मेकर',sub:'Create a personal biodata with a clean printable layout',icon:FileText,tag:''},
 {en:'Letterhead Designer',hi:'लेटरहेड डिजाइनर',sub:'Create a branded business letterhead and document header',icon:FileText,tag:''}
 ];
-const tools=[
+export const tools=[
 ['csc','Aadhaar Card Crop & Print','आधार कार्ड क्रॉप और प्रिंट','Arrange user-provided Aadhaar front and back for personal print',CreditCard],['csc','PAN Card Crop & Print','PAN कार्ड क्रॉप और प्रिंट','Prepare user-provided PAN card for wallet-size print',CreditCard],
  ['photo','Stamp Size Photo Maker','स्टाम्प साइज फोटो मेकर','Ready-to-print photo sizing',Image],
 ['pvc','Student ID Card Maker','स्टूडेंट ID कार्ड मेकर','Editable student card layout',CreditCard],['pvc','Employee ID Card Maker','एम्प्लॉयी ID कार्ड मेकर','Workplace identity card design',CreditCard],
