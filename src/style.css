@@ -1926,3 +1926,15 @@
 .maker-card:hover .maker-open,.maker-card:focus-within .maker-open{background:#d02c78!important;color:#fff!important;border-color:#f3c96c!important}
 .maker-card .maker-actions button:hover,.maker-card .maker-actions button:focus-visible{transform:translateY(-1px)!important}
 @media(max-width:760px){.maker-card h3{font-size:clamp(8px,2.35vw,10px)!important;letter-spacing:-.035em!important}.maker-card .maker-actions{gap:4px!important}.maker-card .maker-actions button{font-size:7.5px!important;min-height:26px!important;height:26px!important;padding:3px 2px!important}}
+
+
+/* Fine-scale premium pass: smaller labels and restrained decorative treatment */
+.maker-card:before,.maker-card:after{display:none!important;content:none!important}
+.maker-card h3{font-size:clamp(8px,.68vw,10px)!important;letter-spacing:-.035em!important;margin:1px 1px 7px!important;height:1.2em!important}
+.maker-card .maker-actions{gap:5px!important}
+.maker-card .maker-actions button{font-size:7px!important;letter-spacing:0!important;min-height:24px!important;height:24px!important;padding:2px 3px!important;border-radius:5px!important;overflow:hidden!important;text-overflow:clip!important;white-space:nowrap!important;box-shadow:0 1px 3px #25102b12!important}
+.maker-card .maker-about{border-color:#d9c7df!important;background:linear-gradient(180deg,#fff,#faf6fb)!important;color:#63316d!important}
+.maker-card .maker-open{background:linear-gradient(135deg,#a9165d,#c02b75)!important;border-color:#a9165d!important}
+.maker-card:hover .maker-about,.maker-card:focus-within .maker-about{background:#35113f!important;color:#ffd16c!important;border-color:#e5b65a!important}
+.maker-card:hover .maker-open,.maker-card:focus-within .maker-open{background:#d02c78!important;border-color:#f3c96c!important}
+@media(max-width:760px){.maker-card h3{font-size:clamp(7px,2vw,9px)!important}.maker-card .maker-actions{gap:3px!important}.maker-card .maker-actions button{font-size:6.5px!important;padding:2px 2px!important;min-height:23px!important;height:23px!important}}
