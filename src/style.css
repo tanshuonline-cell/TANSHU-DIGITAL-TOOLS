@@ -1910,3 +1910,19 @@
 .maker-card .demo-thumb{position:relative;box-shadow:0 7px 13px -5px #18233a35,0 2px 4px #18233a18!important}
 .maker-card h3{position:relative;z-index:1;margin-top:3px!important}
 .maker-card .maker-actions{position:relative;z-index:1}
+
+
+/* Maker card compact title, premium actions, and consistent hover for thumbnail cards */
+.maker-card{background:#fff!important;color:#17131a!important;transition:transform .22s ease,background .22s ease,border-color .22s ease,box-shadow .22s ease!important}
+.app.light .maker-card:before,.app.dark .maker-card:before{content:none!important;display:none!important;animation:none!important}
+.maker-card h3{font-size:clamp(9px,0.78vw,12px)!important;line-height:1.2!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;min-height:0!important;height:1.25em!important;margin:2px 1px 9px!important;letter-spacing:-.025em!important;text-transform:uppercase}
+.maker-card .maker-actions{display:flex!important;justify-content:center!important;align-items:center!important;gap:6px!important;margin-top:auto!important}
+.maker-card .maker-actions button{flex:1 1 0!important;min-width:0!important;min-height:27px!important;height:27px!important;padding:3px 5px!important;border-radius:6px!important;font-size:8px!important;line-height:1!important;letter-spacing:.01em!important;white-space:nowrap!important;box-shadow:0 2px 5px #24102b0b!important;transition:background .18s ease,color .18s ease,border-color .18s ease,transform .18s ease!important}
+.maker-card .maker-about{background:#fff!important;color:#5b2468!important;border:1px solid #cbb5d0!important}
+.maker-card .maker-open{background:#a9165d!important;color:#fff!important;border:1px solid #9b164f!important}
+.maker-card:hover,.maker-card:focus-within{background:#35113f!important;border-color:#e5b65a!important;box-shadow:0 10px 24px #35113f30!important;transform:translateY(-3px)!important}
+.maker-card:hover h3,.maker-card:focus-within h3{color:#f5eaf5!important}
+.maker-card:hover .maker-about,.maker-card:focus-within .maker-about{background:#35113f!important;color:#ffd16c!important;border-color:#e5b65a!important}
+.maker-card:hover .maker-open,.maker-card:focus-within .maker-open{background:#d02c78!important;color:#fff!important;border-color:#f3c96c!important}
+.maker-card .maker-actions button:hover,.maker-card .maker-actions button:focus-visible{transform:translateY(-1px)!important}
+@media(max-width:760px){.maker-card h3{font-size:clamp(8px,2.35vw,10px)!important;letter-spacing:-.035em!important}.maker-card .maker-actions{gap:4px!important}.maker-card .maker-actions button{font-size:7.5px!important;min-height:26px!important;height:26px!important;padding:3px 2px!important}}
