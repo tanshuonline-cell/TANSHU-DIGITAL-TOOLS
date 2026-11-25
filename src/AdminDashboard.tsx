@@ -50,11 +50,11 @@ export default function AdminDashboard() {
   function selectTool(t:ToolOption){
     setToolKey(t.key);setSearch(search);setPath('');setFile(null);setMessage('');
     const saved=configFor(t.key);
-    if(saved){setPath(saved.storage_path||'');setFit(saved.fit||'cover');setX(saved.position_x??50);setY(saved.position_y??50);setZoom(saved.zoom??100);}
+    if(saved){setPath(saved.storage_path||'');setFit(saved.fit||'cover');setX(saved.position_x??50);setY(saved.position_y??50);setZoom((saved.zoom??1)*100);}
     else {setFit('cover');setX(50);setY(50);setZoom(100);}
   }
   function selectConfig(c:Config){
-    setToolKey(c.tool_key);setEnvironment(c.environment);setPath(c.storage_path||'');setFit(c.fit||'cover');setX(c.position_x??50);setY(c.position_y??50);setZoom(c.zoom??100);setFile(null);setMessage('');
+    setToolKey(c.tool_key);setEnvironment(c.environment);setPath(c.storage_path||'');setFit(c.fit||'cover');setX(c.position_x??50);setY(c.position_y??50);setZoom((c.zoom??1)*100);setFile(null);setMessage('');
   }
   async function save(publish=false){
     if(!token){setMessage('Session missing. Please sign in again.');return;}
@@ -68,7 +68,7 @@ export default function AdminDashboard() {
         if(!up.ok) throw new Error('Image upload failed: '+await up.text());
       }
       if(!storagePath) throw new Error('Please upload a thumbnail image before saving this tool.');
-      const row={tool_key:toolKey.trim(),environment,storage_path:storagePath,fit,position_x:x,position_y:y,zoom,crop:{},updated_at:new Date().toISOString()};
+      const row={tool_key:toolKey.trim(),environment,storage_path:storagePath,fit,position_x:x,position_y:y,zoom:zoom/100,crop:{},updated_at:new Date().toISOString()};
       const r=await fetch(base+'/rest/v1/thumbnail_configs?on_conflict=tool_key,environment',{method:'POST',headers:{...headers,Prefer:'resolution=merge-duplicates,return=representation'},body:JSON.stringify(row)});
       if(!r.ok) throw new Error('Save failed: '+await r.text());
       setPath(storagePath);await load();
@@ -130,10 +130,10 @@ export default function AdminDashboard() {
         </section>
         <section className="admin-auth-card" style={{width:'100%',padding:22}}>
           <h2 style={{marginTop:0}}>Thumbnail configuration</h2>
-          <label>Configuration environment</label><select value={environment} onChange={e=>{setEnvironment(e.target.value as 'preview'|'live');const c=configFor(toolKey,e.target.value as 'preview'|'live');if(c){setPath(c.storage_path||'');setFit(c.fit||'cover');setX(c.position_x??50);setY(c.position_y??50);setZoom(c.zoom??100);}else{setPath('');setFit('cover');setX(50);setY(50);setZoom(100);}setFile(null);}} style={{width:'100%',padding:11,marginTop:8,background:'#0b1220',color:'white',border:'1px solid #3a4861',borderRadius:9}}><option value="preview">Preview (safe draft)</option><option value="live">Live</option></select>
+          <label>Configuration environment</label><select value={environment} onChange={e=>{setEnvironment(e.target.value as 'preview'|'live');const c=configFor(toolKey,e.target.value as 'preview'|'live');if(c){setPath(c.storage_path||'');setFit(c.fit||'cover');setX(c.position_x??50);setY(c.position_y??50);setZoom((c.zoom??1)*100);}else{setPath('');setFit('cover');setX(50);setY(50);setZoom(100);}setFile(null);}} style={{width:'100%',padding:11,marginTop:8,background:'#0b1220',color:'white',border:'1px solid #3a4861',borderRadius:9}}><option value="preview">Preview (safe draft)</option><option value="live">Live</option></select>
           <label style={{display:'block',marginTop:16}}>Upload thumbnail image</label><input type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>setFile(e.target.files?.[0]||null)}/>
           <div style={{display:'grid',gridTemplateColumns:'minmax(0,1fr) 170px',gap:16,marginTop:16}}>
-            <div><label>Fit</label><select value={fit} onChange={e=>setFit(e.target.value)} style={{width:'100%',padding:10,background:'#0b1220',color:'white',border:'1px solid #3a4861',borderRadius:8}}><option value="cover">Cover</option><option value="contain">Contain</option><option value="fill">Fill</option></select>
+            <div><label>Fit</label><select value={fit} onChange={e=>setFit(e.target.value)} style={{width:'100%',padding:10,background:'#0b1220',color:'white',border:'1px solid #3a4861',borderRadius:8}}><option value="cover">Cover</option><option value="contain">Contain</option></select>
               <label style={{display:'block',marginTop:14}}>Horizontal position: {x}%</label><input type="range" min="0" max="100" value={x} onChange={e=>setX(+e.target.value)}/>
               <label style={{display:'block',marginTop:10}}>Vertical position: {y}%</label><input type="range" min="0" max="100" value={y} onChange={e=>setY(+e.target.value)}/>
               <label style={{display:'block',marginTop:10}}>Zoom: {zoom}%</label><input type="range" min="50" max="200" value={zoom} onChange={e=>setZoom(+e.target.value)}/>
