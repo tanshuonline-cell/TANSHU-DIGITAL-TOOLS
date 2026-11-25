@@ -1,15 +1,23 @@
 import { useEffect, useMemo, useState } from 'react';
+import { makers, tools } from './App';
 import { ArrowLeft, ImagePlus, LogOut, Save, UploadCloud, ShieldCheck, Send } from 'lucide-react';
 
 type Config = { tool_key:string; environment:'preview'|'live'; storage_path:string|null; fit:string; position_x:number; position_y:number; zoom:number; crop:unknown };
 const base = import.meta.env.VITE_SUPABASE_URL as string;
 const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
+const toolSlug = (name:string) => name.toLowerCase().normalize('NFKD').replace(/[’']/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const readSession = () => { try { return JSON.parse(sessionStorage.getItem('tanshu_admin_session') || '{}'); } catch { return {}; } };
 
 export default function AdminDashboard() {
   const session = readSession();
   const token = session.access_token as string|undefined;
   const [toolKey,setToolKey] = useState('');
+  const toolOptions = useMemo(() => {
+    const options = [...tools.map(t => ({ label: t[1], key: toolSlug(t[1]) })), ...makers.map(m => ({ label: m.en, key: toolSlug(m.en) }))];
+    const unique = new Map<string,{label:string;key:string}>();
+    options.forEach(option => { if(option.key && !unique.has(option.key)) unique.set(option.key, option); });
+    return [...unique.values()].sort((a,b)=>a.label.localeCompare(b.label));
+  },[]);
   const [environment,setEnvironment] = useState<'preview'|'live'>('preview');
   const [configs,setConfigs] = useState<Config[]>([]);
   const [path,setPath] = useState('');
@@ -51,7 +59,7 @@ export default function AdminDashboard() {
   return <div className="admin-auth-page" style={{display:'block',padding:24}}><header style={{maxWidth:1100,margin:'0 auto 24px',display:'flex',justifyContent:'space-between',alignItems:'center'}}><div><p className="admin-auth-eyebrow">TANSHU DIGITAL TOOLS · ADMIN</p><h1>Thumbnail Manager</h1></div><button className="admin-auth-back" onClick={()=>{sessionStorage.removeItem('tanshu_admin_session');window.location.assign('/admin-login')}}><LogOut size={15}/> Sign out</button></header>
   <div style={{maxWidth:1100,margin:'auto',display:'grid',gridTemplateColumns:'minmax(220px,1fr) minmax(0,2fr)',gap:20}}>
   <section className="admin-auth-card" style={{width:'100%',padding:20}}><h2>Saved configurations</h2>{configs.length?configs.map((c,i)=><button key={c.tool_key+c.environment+i} onClick={()=>selectConfig(c)} style={{display:'block',width:'100%',textAlign:'left',padding:12,margin:'8px 0',border:'1px solid #34415b',borderRadius:9,background:'#0b1220',color:'white',cursor:'pointer'}}><b>{c.tool_key}</b><small style={{display:'block',color:'#9db7e9'}}>{c.environment}</small></button>):<p className="admin-auth-copy">No saved thumbnails yet.</p>}</section>
-  <section className="admin-auth-card" style={{width:'100%',padding:24}}><h2>Configure thumbnail</h2><label>Tool key</label><input value={toolKey} onChange={e=>setToolKey(e.target.value)} placeholder="e.g. passport-photo-maker"/><label>Configuration</label><select value={environment} onChange={e=>setEnvironment(e.target.value as 'preview'|'live')} style={{width:'100%',padding:12,marginTop:8,background:'#0b1220',color:'white',border:'1px solid #3a4861',borderRadius:10}}><option value="preview">Preview</option><option value="live">Live</option></select>
+  <section className="admin-auth-card" style={{width:'100%',padding:24}}><h2>Configure thumbnail</h2><label>Choose website tool</label><select value={toolKey} onChange={e=>{setToolKey(e.target.value);setPath("");setFile(null);setMessage("");}} style={{width:"100%",padding:12,marginTop:8,marginBottom:14,background:"#0b1220",color:"white",border:"1px solid #3a4861",borderRadius:10}}><option value="">-- Select a tool ({toolOptions.length} available) --</option>{toolKey&&!toolOptions.some(t=>t.key===toolKey)&&<option value={toolKey}>{toolKey} · saved configuration</option>}{toolOptions.map(t=><option key={t.key} value={t.key}>{t.label}</option>)}</select><label>Configuration</label><select value={environment} onChange={e=>setEnvironment(e.target.value as 'preview'|'live')} style={{width:'100%',padding:12,marginTop:8,background:'#0b1220',color:'white',border:'1px solid #3a4861',borderRadius:10}}><option value="preview">Preview</option><option value="live">Live</option></select>
   <label style={{display:'block',marginTop:16}}>Upload image</label><input type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>setFile(e.target.files?.[0]||null)}/><div style={{display:'grid',gridTemplateColumns:'minmax(0,1fr) 180px',gap:16,marginTop:16}}><div><label>Fit</label><select value={fit} onChange={e=>setFit(e.target.value)} style={{width:'100%',padding:10,background:'#0b1220',color:'white',border:'1px solid #3a4861',borderRadius:8}}><option value="cover">Cover</option><option value="contain">Contain</option><option value="fill">Fill</option></select><label style={{display:'block',marginTop:14}}>Horizontal position: {x}%</label><input type="range" min="0" max="100" value={x} onChange={e=>setX(+e.target.value)}/><label style={{display:'block',marginTop:10}}>Vertical position: {y}%</label><input type="range" min="0" max="100" value={y} onChange={e=>setY(+e.target.value)}/><label style={{display:'block',marginTop:10}}>Zoom: {zoom}%</label><input type="range" min="50" max="200" value={zoom} onChange={e=>setZoom(+e.target.value)}/></div><div style={{aspectRatio:'4/3',overflow:'hidden',borderRadius:12,background:'#0b1220',border:'1px solid #34415b',display:'grid',placeItems:'center'}}>{(file||imageUrl)?<img src={file?URL.createObjectURL(file):imageUrl} style={{width:'100%',height:'100%',objectFit:fit as 'cover'|'contain'|'fill',objectPosition:`${x}% ${y}%`,transform:`scale(${zoom/100})`}}/>:<ImagePlus color="#718096"/>}</div></div>
   <p className="admin-auth-copy">Position and zoom are saved as configuration values. Preview and Live are separate.</p><div style={{display:'flex',gap:10,flexWrap:'wrap'}}><button onClick={()=>void save(false)} disabled={busy}><Save size={15}/> Save {environment}</button>{environment==='preview'&&<button onClick={()=>void save(true)} disabled={busy}><Send size={15}/> Promote Preview → Live</button>}</div>{message&&<p role="status" className="admin-auth-copy">{message}</p>}</section></div></div>;
 }
