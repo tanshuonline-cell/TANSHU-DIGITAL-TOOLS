@@ -292,7 +292,6 @@ const TOOL_THUMBNAILS:Record<string,string>={
  'Multi Customer Instant Passport Photo Maker':'https://i.ibb.co/vCc6jXSZ/file-000000005acc81fa87b10e13cd8b5085.png',
  'Multi Customer Photo Maker':'https://i.ibb.co/vCc6jXSZ/file-000000005acc81fa87b10e13cd8b5085.png',
  'Passport Photo Join & Sheet Composer':'https://i.ibb.co/vCc6jXSZ/file-000000005acc81fa87b10e13cd8b5085.png',
- 'AI Family Portrait Composer':'https://i.ibb.co/vCc6jXSZ/file-000000005acc81fa87b10e13cd8b5085.png',
  'QR & BARCODE TOOLS':'https://i.ibb.co/bph3MN5/file-00000000521882098f705ea1f20a1548.png',
  'YouTube Thumbnail Maker':'https://i.ibb.co/39x5q9R6/file-0000000094f081f8abbbca5b748d3465.png',
  'Bank Letter Maker':'https://i.ibb.co/HmwkX60/file-00000000aa4c81faa9f05d1ed4de438e.png',
