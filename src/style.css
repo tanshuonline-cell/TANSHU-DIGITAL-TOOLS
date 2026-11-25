@@ -1963,3 +1963,20 @@
 .scene-art{width:170px!important;height:126px!important}
 .scene-art>img{width:100%!important;height:auto!important;aspect-ratio:16/9!important;object-fit:cover!important;border-radius:12px!important;border:1px solid rgba(255,255,255,.88);box-shadow:0 12px 24px rgba(13,30,23,.28),0 3px 8px rgba(13,30,23,.16)!important;overflow:hidden}
 @media(max-width:760px){.category-card .demo-thumb{width:62px!important;flex-basis:62px!important}.tool-row .demo-thumb{width:68px!important;flex-basis:68px!important}.scene-art{width:150px!important;height:116px!important}}
+
+/* YouTube tutorial library cards */
+.tutorial-library{margin:30px 0 34px;padding:22px;border:1px solid var(--border);border-radius:18px;background:var(--panel)}
+.tutorial-video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.tutorial-video-card{min-width:0;overflow:hidden;border:1px solid var(--border);border-radius:13px;background:var(--panel);box-shadow:0 5px 16px #10203012}
+.tutorial-video-thumb,.tutorial-video-card iframe{display:block;position:relative;width:100%;aspect-ratio:16/9;border:0;padding:0;background:#101820;overflow:hidden}
+.tutorial-video-thumb{cursor:pointer}
+.tutorial-video-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.tutorial-video-thumb span{position:absolute;inset:0;display:grid;place-items:center;color:white;background:#0002;transition:background .2s}
+.tutorial-video-thumb:hover span{background:#0006}
+.tutorial-video-thumb span svg{filter:drop-shadow(0 2px 5px #0009)}
+.tutorial-video-copy{padding:13px 14px 15px}
+.tutorial-video-copy>b{display:block;font-size:13px;line-height:1.4;color:var(--text)}
+.tutorial-video-copy p{margin:7px 0;color:var(--muted);font-size:11px;line-height:1.5}
+.tutorial-video-copy a{display:inline-block;margin-top:8px;color:var(--accent,#a9165d);font-size:11px;font-weight:800;text-decoration:none}
+@media(max-width:900px){.tutorial-video-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.tutorial-library{padding:13px;margin:20px 0}.tutorial-video-grid{grid-template-columns:1fr;gap:12px}.tutorial-video-copy{padding:11px}}
