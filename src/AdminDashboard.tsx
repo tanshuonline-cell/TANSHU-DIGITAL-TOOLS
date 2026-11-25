@@ -67,7 +67,8 @@ export default function AdminDashboard() {
         const up=await fetch(base+'/storage/v1/object/tool-thumbnails/'+storagePath,{method:'POST',headers:{apikey:key,Authorization:'Bearer '+token,'Content-Type':file.type,'x-upsert':'true'},body:file});
         if(!up.ok) throw new Error('Image upload failed: '+await up.text());
       }
-      const row={tool_key:toolKey.trim(),environment,storage_path:storagePath||null,fit,position_x:x,position_y:y,zoom,crop:null,updated_at:new Date().toISOString()};
+      if(!storagePath) throw new Error('Please upload a thumbnail image before saving this tool.');
+      const row={tool_key:toolKey.trim(),environment,storage_path:storagePath,fit,position_x:x,position_y:y,zoom,crop:{},updated_at:new Date().toISOString()};
       const r=await fetch(base+'/rest/v1/thumbnail_configs?on_conflict=tool_key,environment',{method:'POST',headers:{...headers,Prefer:'resolution=merge-duplicates,return=representation'},body:JSON.stringify(row)});
       if(!r.ok) throw new Error('Save failed: '+await r.text());
       setPath(storagePath);await load();
