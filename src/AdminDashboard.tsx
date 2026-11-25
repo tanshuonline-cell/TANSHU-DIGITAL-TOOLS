@@ -108,7 +108,7 @@ export default function AdminDashboard() {
   return <div className="admin-auth-page" style={{display:'block',padding:24,minHeight:'100vh'}}>
     <header style={{maxWidth:1320,margin:'0 auto 22px',display:'flex',justifyContent:'space-between',alignItems:'center',gap:16,flexWrap:'wrap'}}>
       <div><p className="admin-auth-eyebrow">TANSHU DIGITAL TOOLS · ADMIN WORKSPACE</p><h1 style={{marginBottom:4}}>Thumbnail Studio</h1><p className="admin-auth-copy" style={{margin:0}}>Find a website tool, inspect its thumbnail card and configure its image</p></div>
-      <div style={{display:'flex',gap:9,flexWrap:'wrap'}}><button onClick={()=>setShowVideoStudio(true)}><Video size={15}/> Video Studio</button><button className="admin-auth-back" onClick={()=>{sessionStorage.removeItem('tanshu_admin_session');window.location.assign('/admin-login')}}><LogOut size={15}/> Sign out</button></div>
+      <div style={{display:'flex',gap:9,flexWrap:'wrap'}}><button onClick={()=>setShowVideoStudio(true)}><MonitorPlay size={15}/> Video Studio</button><button className="admin-auth-back" onClick={()=>{sessionStorage.removeItem('tanshu_admin_session');window.location.assign('/admin-login')}}><LogOut size={15}/> Sign out</button></div>
     </header>
     <div style={{maxWidth:1320,margin:'auto',display:'grid',gridTemplateColumns:'minmax(280px,0.95fr) minmax(0,1.55fr)',gap:20,alignItems:'start'}}>
       <section className="admin-auth-card" style={{width:'100%',padding:18}}>
