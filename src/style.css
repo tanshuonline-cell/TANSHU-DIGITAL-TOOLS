@@ -1854,3 +1854,12 @@
 .demo-thumb.demo-real-1{background-position:33.333% center}
 .demo-thumb.demo-real-2{background-position:66.667% center}
 .demo-thumb.demo-real-3{background-position:100% center}
+
+
+/* FIX: force realistic maker sprite to render above thumbnail fallback backgrounds */
+.maker-card .demo-thumb.demo-real{background-image:url('/maker-assets/maker-real-thumbnails.jpg')!important;background-repeat:no-repeat!important;background-size:400% 100%!important;background-color:#10281e!important}
+.maker-card .demo-thumb.demo-real-0{background-position:0% center!important}
+.maker-card .demo-thumb.demo-real-1{background-position:33.333% center!important}
+.maker-card .demo-thumb.demo-real-2{background-position:66.667% center!important}
+.maker-card .demo-thumb.demo-real-3{background-position:100% center!important}
+.maker-card .demo-thumb.demo-real svg{display:none!important}
