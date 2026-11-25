@@ -81,6 +81,7 @@ export default function AdminDashboard() {
   if(!token) return <main className="admin-auth-page"><section className="admin-auth-card"><h1>Session expired</h1><p>Please sign in again.</p><button onClick={()=>window.location.assign('/admin-login')}>Admin Login</button></section></main>;
   const imageUrl=path?base+'/storage/v1/object/public/tool-thumbnails/'+path:'';
   const previewSrc=file?URL.createObjectURL(file):imageUrl;
+  const workspaceUrl=selected?'/?tool-preview='+encodeURIComponent(selected.label):'';
   const categories=[...new Set(toolOptions.map(t=>t.category))].sort((a,b)=>(categoryNames[a]||a).localeCompare(categoryNames[b]||b));
   return <div className="admin-auth-page" style={{display:'block',padding:24,minHeight:'100vh'}}>
     <header style={{maxWidth:1320,margin:'0 auto 22px',display:'flex',justifyContent:'space-between',alignItems:'center',gap:16,flexWrap:'wrap'}}>
@@ -116,7 +117,15 @@ export default function AdminDashboard() {
               <div><b style={{display:'block',fontSize:16}}>{selected?.label||'Tool name'}</b><p style={{fontSize:12,color:'#9db7e9',lineHeight:1.5}}>{selected?.description||'Tool description will appear here.'}</p><small style={{color:'#8fa3bf'}}>Website card · 16:9 image area</small></div>
             </div>
           </div>
-          <p className="admin-auth-copy" style={{marginBottom:0}}>This is the website listing-card preview for the selected tool, not a live interactive view of the tool workspace.</p>
+          <p className="admin-auth-copy" style={{marginBottom:0}}>ऊपर वाला भाग वेबसाइट की listing card का preview है। नीचे उसी चुने हुए tool का वास्तविक website workspace खुलता है।</p>
+        </section>
+        <section className="admin-auth-card" style={{width:'100%',padding:18}}>
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',gap:12,flexWrap:'wrap',marginBottom:12}}>
+            <div><p className="admin-auth-eyebrow" style={{marginBottom:5}}>LIVE WEBSITE WORKSPACE</p><h2 style={{margin:0}}>Actual tool preview</h2><p className="admin-auth-copy" style={{margin:'5px 0 0'}}>यह वेबसाइट में खुलने वाले उसी tool का वास्तविक workspace है। यहाँ आप उसके controls और layout जाँच सकते हैं।</p></div>
+            {selected&&<a href={workspaceUrl} target="_blank" rel="noreferrer" style={{color:'#a9c9ff',fontSize:13,textDecoration:'underline'}}>Open in new tab ↗</a>}
+          </div>
+          {selected?<iframe key={selected.key} title={selected.label+' actual workspace preview'} src={workspaceUrl} style={{display:'block',width:'100%',height:780,border:'1px solid #34415b',borderRadius:12,background:'#fff'}}/>:<div style={{padding:40,textAlign:'center',border:'1px dashed #52627b',borderRadius:12,color:'#9db7e9'}}>पहले बाईं ओर से कोई website tool चुनें।</div>}
+          <p className="admin-auth-copy" style={{margin:'10px 0 0'}}>नोट: जो tool अभी वेबसाइट पर निर्माणाधीन है, उसका वही उपलब्ध status screen दिखेगा। यह preview tool की मौजूदा functionality को नहीं बदलता।</p>
         </section>
         <section className="admin-auth-card" style={{width:'100%',padding:22}}>
           <h2 style={{marginTop:0}}>Thumbnail configuration</h2>
