@@ -20,6 +20,7 @@ export default function AdminDashboard() {
   const [view,setView] = useState<'grid'|'list'>('grid');
   const [environment,setEnvironment] = useState<'preview'|'live'>('preview');
   const [configs,setConfigs] = useState<Config[]>([]);
+  const [configsLoaded,setConfigsLoaded] = useState(false);
   const [path,setPath] = useState('');
   const [fit,setFit] = useState('cover');
   const [x,setX] = useState(50); const [y,setY] = useState(50); const [zoom,setZoom] = useState(100);
@@ -41,17 +42,23 @@ export default function AdminDashboard() {
     return matchesSearch && (category==='all'||t.category===category);
   }),[toolOptions,search,category]);
   const configFor = (tool:string,env: 'preview'|'live'=environment) => configs.find(c=>c.tool_key===tool&&c.environment===env);
-  async function load() {
-    if(!token) return;
+  async function load():Promise<Config[]> {
+    if(!token) throw new Error('Admin session missing. Please sign in again.');
     const r=await fetch(base+'/rest/v1/thumbnail_configs?select=*&order=tool_key.asc',{headers});
-    if(r.ok) setConfigs(await r.json());
+    if(!r.ok) throw new Error('Could not load saved thumbnails: '+await r.text());
+    const rows=await r.json() as Config[];
+    setConfigs(rows);setConfigsLoaded(true);
+    return rows;
   }
-  useEffect(()=>{void load();},[token]);
-  function selectTool(t:ToolOption){
+  useEffect(()=>{let active=true;load().catch(e=>{if(active)setMessage(e instanceof Error?e.message:'Could not load saved thumbnails.');});return()=>{active=false;};},[token]);
+  async function selectTool(t:ToolOption){
     setToolKey(t.key);setSearch(search);setPath('');setFile(null);setMessage('');
-    const saved=configFor(t.key);
-    if(saved){setPath(saved.storage_path||'');setFit(saved.fit||'cover');setX(saved.position_x??50);setY(saved.position_y??50);setZoom((saved.zoom??1)*100);}
-    else {setFit('cover');setX(50);setY(50);setZoom(100);}
+    try {
+      const rows=configsLoaded?configs:await load();
+      const saved=rows.find(c=>c.tool_key===t.key&&c.environment===environment);
+      if(saved){setPath(saved.storage_path||'');setFit(saved.fit||'cover');setX(saved.position_x??50);setY(saved.position_y??50);setZoom((saved.zoom??1)*100);}
+      else {setFit('cover');setX(50);setY(50);setZoom(100);}
+    } catch(e) {setMessage(e instanceof Error?e.message:'Could not load saved configuration.');}
   }
   function selectConfig(c:Config){
     setToolKey(c.tool_key);setEnvironment(c.environment);setPath(c.storage_path||'');setFit(c.fit||'cover');setX(c.position_x??50);setY(c.position_y??50);setZoom((c.zoom??1)*100);setFile(null);setMessage('');
