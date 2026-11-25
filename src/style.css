@@ -1901,3 +1901,12 @@
 .top-auth-link{display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:0 11px;border:1px solid #d9c2e2;border-radius:9px;background:#fff;color:#552064;font-size:11px;font-weight:800;text-decoration:none;white-space:nowrap}
 .top-auth-link:hover,.top-auth-link:focus-visible{background:#35113f;color:#ffd16c;border-color:#e5b65a;outline-offset:2px}
 @media(max-width:560px){.top-auth-link{padding:0 8px;font-size:10px}}
+
+
+/* Preview card polish: remove green glow and lift the thumbnail visually */
+.maker-card:before,
+.maker-card.maker-ready:before{content:none!important;display:none!important}
+.maker-card.maker-ready{background:#fff!important}
+.maker-card .demo-thumb{position:relative;box-shadow:0 7px 13px -5px #18233a35,0 2px 4px #18233a18!important}
+.maker-card h3{position:relative;z-index:1;margin-top:3px!important}
+.maker-card .maker-actions{position:relative;z-index:1}
