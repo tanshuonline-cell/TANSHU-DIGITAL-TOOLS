@@ -257,7 +257,7 @@ const tools=[
 
 function DemoThumb({title}:{title:string}){
  const n=title.toLowerCase();
- const realIndex=/background remover/i.test(title)?0:/passport photo maker/i.test(title)?1:/instant pvc card maker/i.test(title)?2:/pvc card maker \(photo\)/i.test(title)?3:-1;
+ const realIndex=/background remover/i.test(title)?0:/passport photo maker/i.test(title)||/resume maker/i.test(title)?1:/instant pvc card maker/i.test(title)||/document & certificate studio|certificate template studio/i.test(title)?2:/pvc card maker \(photo\)/i.test(title)||/pdf editor studio/i.test(title)?3:-1;
  const kind=/background|remove|transparent/.test(n)?'remove':/instant passport photo maker/.test(n)?'passport':/instant pvc card maker|pvc card maker|new pvc card/.test(n)?'pvc':/resume maker/.test(n)?'resume':/passport|photo|portrait|family|signature|thumb|image|crop|resize|enhance|upscal|retouch/.test(n)?'photo':/aadhaar|pan card|voter|driving|id card|pvc|card|farmer/.test(n)?'card':/pdf|document|scan|letter|application|resume|biodata|certificate|admit|question|agreement|stamp paper/.test(n)?'doc':/banner|poster|pamphlet|logo|social|youtube|invitation|visiting|sticker|design|graphic/.test(n)?'design':/calculator|salary|interest|gold|silver|gst|emi|percentage|age|date|rate|tax/.test(n)?'calc':/qr|barcode/.test(n)?'qr':/stamp|seal/.test(n)?'stamp':/print|sheet|layout|compress|convert|merge|split|watermark/.test(n)?'print':'utility';
  return <div className={'demo-thumb demo-'+kind+(realIndex>=0?' demo-real demo-real-'+realIndex:'')} aria-label={title+' realistic demo thumbnail'}>
   <svg viewBox="0 0 120 76" role="img" aria-hidden="true">
