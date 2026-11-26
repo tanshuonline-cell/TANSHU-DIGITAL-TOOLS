@@ -1,4 +1,4 @@
-import React,{useMemo,useState} from 'react';
+import React,{useEffect,useMemo,useRef,useState} from 'react';
 
 type Item={description:string;hsn:string;qty:number;rate:number;gst:number};
 type Props={hi:boolean;onBack:()=>void};
@@ -11,6 +11,10 @@ const InvoiceMaker=({hi,onBack}:Props)=>{
  const [items,setItems]=useState<Item[]>([{description:'Product / Service',hsn:'',qty:1,rate:1000,gst:18}]);
  const [discount,setDiscount]=useState(0),[shipping,setShipping]=useState(0),[currency,setCurrency]=useState('INR'),[showGst,setShowGst]=useState(true),[notice,setNotice]=useState('');
  const [accent,setAccent]=useState('#244c3b'),[pageColor,setPageColor]=useState('#ffffff'),[textColor,setTextColor]=useState('#202b35');
+ const draftLoaded=useRef(false);
+ useEffect(()=>{try{const raw=window.localStorage.getItem('tdt-invoice-draft-v1');if(raw){const d=JSON.parse(raw);if(d&&typeof d==='object'){if(d.kind)setKind(d.kind);if(d.template)setTemplate(d.template);if(d.paper)setPaper(d.paper);if(d.orientation)setOrientation(d.orientation);if(d.business)setBusiness(d.business);if(d.customer)setCustomer(d.customer);if(d.meta)setMeta(d.meta);if(Array.isArray(d.items)&&d.items.length)setItems(d.items);if(typeof d.discount==='number')setDiscount(d.discount);if(typeof d.shipping==='number')setShipping(d.shipping);if(d.currency)setCurrency(d.currency);if(typeof d.showGst==='boolean')setShowGst(d.showGst);if(d.accent)setAccent(d.accent);if(d.pageColor)setPageColor(d.pageColor);if(d.textColor)setTextColor(d.textColor);}}}catch{}draftLoaded.current=true;},[]);
+ useEffect(()=>{if(!draftLoaded.current)return;try{window.localStorage.setItem('tdt-invoice-draft-v1',JSON.stringify({kind,template,paper,orientation,business,customer,meta,items,discount,shipping,currency,showGst,accent,pageColor,textColor}));}catch{}},[kind,template,paper,orientation,business,customer,meta,items,discount,shipping,currency,showGst,accent,pageColor,textColor]);
+
  const fmt=(n:number)=>new Intl.NumberFormat('en-IN',{style:'currency',currency,maximumFractionDigits:2}).format(n||0);
  const subtotal=items.reduce((s,x)=>s+x.qty*x.rate,0),discountAmt=Math.min(subtotal,Math.max(0,discount)),taxable=subtotal-discountAmt;
  const tax=items.reduce((s,x)=>s+Math.max(0,x.qty*x.rate*(1-(subtotal?discountAmt/subtotal:0)))*(x.gst/100),0);
