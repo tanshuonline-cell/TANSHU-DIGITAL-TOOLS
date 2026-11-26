@@ -2031,3 +2031,8 @@
 /* Signature Maker occupies the complete viewport, independent of the site's centered page layout. */
 .tool-page-panel.signature-maker-tool-panel{inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;min-width:0!important;padding:0!important;margin:0!important;align-items:stretch!important;justify-content:flex-start!important;overflow:hidden!important}
 .tool-page-panel.signature-maker-tool-panel>.sig-shell{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important}
+
+/* Hard override: Signature Maker's app-level modal must span the browser viewport, not the centered content column. */
+html body #root .tool-page-panel.signature-maker-tool-panel{position:fixed!important;inset:0!important;display:block!important;width:100vw!important;height:100vh!important;height:100dvh!important;max-width:none!important;min-width:100vw!important;margin:0!important;padding:0!important;transform:none!important;overflow:hidden!important;z-index:2147483000!important;box-sizing:border-box!important}
+html body #root .tool-page-panel.signature-maker-tool-panel>.sig-shell{position:absolute!important;inset:0!important;display:flex!important;flex-direction:column!important;width:100%!important;height:100%!important;min-width:0!important;max-width:none!important;margin:0!important;padding:0!important;transform:none!important;box-sizing:border-box!important}
+html body #root .tool-page-panel.signature-maker-tool-panel .sig-workspace{width:100%!important;max-width:none!important;min-width:0!important;grid-template-columns:minmax(320px,34%) minmax(0,1fr)!important;flex:1!important}
