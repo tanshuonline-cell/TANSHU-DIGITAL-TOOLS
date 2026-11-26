@@ -10,7 +10,8 @@ const InvoiceMaker=({hi,onBack}:Props)=>{
  const [meta,setMeta]=useState({number:'INV-001',date:new Date().toISOString().slice(0,10),due:'',place:'',terms:'Payment due within 15 days',notes:'Thank you for your business.'});
  const [items,setItems]=useState<Item[]>([{description:'Product / Service',hsn:'',qty:1,rate:1000,gst:18}]);
  const [discount,setDiscount]=useState(0),[shipping,setShipping]=useState(0),[currency,setCurrency]=useState('INR'),[showGst,setShowGst]=useState(true),[notice,setNotice]=useState('');
- const fmt=(n:number)=>new Intl.NumberFormat('en-IN',{style:'currency',currency,maximumFractionDigits:2}).format(n||0);\n const subtotal=items.reduce((s,x)=>s+x.qty*x.rate,0),discountAmt=Math.min(subtotal,Math.max(0,discount)),taxable=subtotal-discountAmt;
+ const fmt=(n:number)=>new Intl.NumberFormat('en-IN',{style:'currency',currency,maximumFractionDigits:2}).format(n||0);
+ const subtotal=items.reduce((s,x)=>s+x.qty*x.rate,0),discountAmt=Math.min(subtotal,Math.max(0,discount)),taxable=subtotal-discountAmt;
  const tax=items.reduce((s,x)=>s+Math.max(0,x.qty*x.rate*(1-(subtotal?discountAmt/subtotal:0)))*(x.gst/100),0);
  const total=Math.max(0,taxable+tax+shipping);
  const updateItem=(i:number,k:keyof Item,v:string|number)=>setItems(old=>old.map((x,j)=>j===i?{...x,[k]:v}:x));
