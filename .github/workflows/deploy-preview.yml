@@ -29,6 +29,7 @@ jobs:
         with:
           path: dist
   deploy:
+    if: github.ref == 'refs/heads/design/premium-ui'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
