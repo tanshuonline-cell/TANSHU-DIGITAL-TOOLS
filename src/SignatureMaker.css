@@ -60,3 +60,10 @@ html:has(.sig-shell),body:has(.sig-shell){overflow:hidden!important;height:100dv
 
 .sig-zoom{display:flex;align-items:center;gap:7px;margin-left:auto;margin-right:14px}.sig-zoom button{min-width:30px;height:30px;border:1px solid #dfe2e8;border-radius:8px;background:#fff;color:#b50035;font-weight:800;cursor:pointer}.sig-zoom span{min-width:42px;text-align:center;font-size:11px;color:#555d69}.sig-preview-head{display:flex;gap:12px}.sig-pad{overflow:auto;align-items:flex-start;justify-content:flex-start}.sig-pad canvas{flex-shrink:0;max-width:none!important;max-height:none!important}
 @media(max-width:760px){.sig-zoom{margin:0 0 0 auto;gap:4px}.sig-zoom button{min-width:27px;height:27px}.sig-preview-head{flex-wrap:wrap}.sig-pad{overflow:auto}.sig-pad canvas{max-width:none!important}}
+
+/* Small, targeted spacing and confirmation/export controls */
+.sig-settings input[type=color]{display:block;margin-top:12px;position:relative;clear:both}
+.sig-settings label+input[type=color]{margin-top:12px}
+.sig-export .sig-confirm{display:inline-flex;align-items:center;justify-content:center;min-width:90px;margin-top:10px;padding:10px 22px;border:0;border-radius:9px;background:#16803c;color:#fff;font-weight:800;cursor:pointer}
+.sig-downloads{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.sig-downloads button{display:flex;align-items:center;gap:8px;border:0;border-radius:10px;background:linear-gradient(110deg,#d0003d,#a6002e);color:#fff;padding:13px 16px;font-size:13px;font-weight:800;cursor:pointer}
+@media(max-width:760px){.sig-downloads{width:100%;flex-direction:column}.sig-downloads button{width:100%;justify-content:center}}
