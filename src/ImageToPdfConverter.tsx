@@ -7,7 +7,7 @@ type Entry={id:string;file:File;url:string;width:number;height:number};
 const fmt=(n:number)=>n<1024?n+' B':n<1048576?(n/1024).toFixed(1)+' KB':(n/1048576).toFixed(2)+' MB';
 const A4:[number,number]=[595.28,841.89],LETTER:[number,number]=[612,792];
 export default function ImageToPdfConverter({mode,hi=false,onBack=()=>{}}:{mode:'jpg'|'png'|'all';hi?:boolean;onBack?:()=>void}){
- const isJpg=mode==='jpg',isPng=mode==='png',isAll=mode==='all',title=isAll?'IMAGE TO PDF CONVERTER':isJpg?'JPG TO PDF CONVERTER':'PNG TO PDF CONVERTER',sub=isAll?'JPG PNG AND PHOTO TO PDF CONVERTER':isJpg?'JPG images into a clean PDF':'PNG images into a clean PDF';
+ const isJpg=mode==='jpg',isAll=mode==='all',title=isAll?'IMAGE TO PDF CONVERTER':isJpg?'JPG TO PDF CONVERTER':'PNG TO PDF CONVERTER',sub=isAll?'JPG PNG AND PHOTO TO PDF CONVERTER':isJpg?'JPG images into a clean PDF':'PNG images into a clean PDF';
  const [files,setFiles]=useState<Entry[]>([]),[paper,setPaper]=useState('A4'),[orientation,setOrientation]=useState('auto'),[fit,setFit]=useState('fit'),[margin,setMargin]=useState('8'),[busy,setBusy]=useState(false),[progress,setProgress]=useState(0),[pdfUrl,setPdfUrl]=useState(''),[pdfSize,setPdfSize]=useState(0),[pages,setPages]=useState(0),[error,setError]=useState(''),[status,setStatus]=useState('');
  const input=useRef<HTMLInputElement>(null),urls=useRef<string[]>([]),pdfUrlRef=useRef(''),[drag,setDrag]=useState(false);
  const tr=(en:string,h:string)=>hi?h:en;
