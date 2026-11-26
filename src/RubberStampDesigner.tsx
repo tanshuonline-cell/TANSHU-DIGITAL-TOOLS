@@ -4,6 +4,16 @@ import { PDFDocument } from 'pdf-lib';
 import './RubberStampDesigner.css';
 
 type Shape = 'round' | 'rect' | 'oval' | 'square' | 'line';
+type StampType = 'ordinary' | 'self-inking' | 'pre-inked' | 'round-seal' | 'oval-square' | 'date-numbering' | 'signature-text';
+const stampTypes: {id:StampType;name:string;hi:string}[] = [
+ {id:'ordinary',name:'Ordinary rubber stamp',hi:'साधारण रबर स्टैम्प'},
+ {id:'self-inking',name:'Self-Inking stamp',hi:'सेल्फ-इंकिंग स्टैम्प'},
+ {id:'pre-inked',name:'Pre-Inked stamp',hi:'प्री-इंक्ड स्टैम्प'},
+ {id:'round-seal',name:'Round stamp / seal',hi:'गोल स्टैम्प / सील'},
+ {id:'oval-square',name:'Oval / Square stamp',hi:'ओवल / स्क्वायर स्टैम्प'},
+ {id:'date-numbering',name:'Date & Numbering stamp',hi:'डेट और नंबरिंग स्टैम्प'},
+ {id:'signature-text',name:'Signature & Text stamp',hi:'सिग्नेचर और टेक्स्ट स्टैम्प'}
+];
 type Ink = 'blue' | 'black' | 'red' | 'green' | 'violet';
 const inks: Record<Ink,string> = { blue:'#174f9b', black:'#20242a', red:'#bd2638', green:'#16734d', violet:'#6742a5' };
 const shapes: Shape[] = ['rect','round','oval','square','line'];
@@ -20,7 +30,7 @@ const presets = [
 const restricted = /\b(government|govt\.?|भारत सरकार|भारत निर्वाचन आयोग|election commission|court|police|ministry|income tax department|reserve bank|rbi|cbi|cbse|passport office|official government)\b|भारतीय पुलिस/i;
 const names: Record<Shape,string> = {round:'Round',rect:'Rectangle',oval:'Oval',square:'Square',line:'Single line'};
 export default function RubberStampDesigner({hi=false,onBack}:{hi?:boolean;onBack:()=>void}) {
- const [shape,setShape]=useState<Shape>('rect'),[top,setTop]=useState('YOUR COMPANY NAME'),[middle,setMiddle]=useState('AUTHORISED SIGNATORY'),[bottom,setBottom]=useState('PATNA · BIHAR');
+ const [stampType,setStampType]=useState<StampType>('ordinary'),[shape,setShape]=useState<Shape>('rect'),[top,setTop]=useState('YOUR COMPANY NAME'),[middle,setMiddle]=useState('AUTHORISED SIGNATORY'),[bottom,setBottom]=useState('PATNA · BIHAR');
  const [width,setWidth]=useState(50),[height,setHeight]=useState(25),[ink,setInk]=useState<Ink>('blue'),[font,setFont]=useState('Arial'),[fontSize,setFontSize]=useState(4.2),[border,setBorder]=useState<'single'|'double'>('double'),[mirror,setMirror]=useState(false),[logo,setLogo]=useState<string|null>(null),[logoName,setLogoName]=useState(''),[tab,setTab]=useState<'settings'|'preview'>('settings'),[notice,setNotice]=useState(''),[zoom,setZoom]=useState(100);
  const svgRef=useRef<SVGSVGElement>(null);
  const round=shape==='round', square=shape==='square', w=(round||square)?Math.max(width,height):width, h=(round||square)?Math.max(width,height):height, vw=w*10,vh=h*10,cx=vw/2,cy=vh/2;
@@ -35,15 +45,16 @@ export default function RubberStampDesigner({hi=false,onBack}:{hi?:boolean;onBac
  const exportJpg=async()=>{if(forbidden){setNotice(label('Official-style seals are not supported.','आधिकारिक संस्थाओं की सील की नकल की अनुमति नहीं है।'));return;}try{save(await raster('image/jpeg'),'rubber-stamp-design.jpg');setNotice('');}catch{setNotice('JPG export failed.');}};
  const exportPdf=async()=>{if(forbidden){setNotice(label('Official-style seals are not supported.','आधिकारिक संस्थाओं की सील की नकल की अनुमति नहीं है।'));return;}try{const blob=await raster();const bytes=new Uint8Array(await blob.arrayBuffer());const pdf=await PDFDocument.create();const page=pdf.addPage([w/25.4*72,h/25.4*72]);const image=await pdf.embedPng(bytes);page.drawImage(image,{x:0,y:0,width:page.getWidth(),height:page.getHeight()});save(new Blob([await pdf.save()],{type:'application/pdf'}),'rubber-stamp-actual-size.pdf');setNotice('');}catch{setNotice('PDF export failed.');}};
  const printStamp=()=>{if(forbidden){setNotice(label('Official-style seals are not supported.','आधिकारिक संस्थाओं की सील की नकल की अनुमति नहीं है।'));return;}const win=window.open('','_blank');if(!win){setNotice('Allow pop-ups to print this stamp.');return;}const markup=exportMarkup();win.document.write('<!doctype html><html><head><title>Print stamp</title><style>@page{size:'+w+'mm '+h+'mm;margin:0}html,body{margin:0;padding:0;width:'+w+'mm;height:'+h+'mm}svg{display:block;width:'+w+'mm;height:'+h+'mm}</style></head><body>'+markup+'<script>window.onload=function(){window.focus();window.print()}<\/script></body></html>');win.document.close();setNotice('');};
- const usePreset=(p:typeof presets[number])=>{setShape(p.shape);setTop(p.top);setMiddle(p.middle);setBottom(p.bottom);setNotice('');};
+ const usePreset=(p:typeof presets[number])=>{setStampType(p.name==='Round office'?'round-seal':['Received','Paid','Approved'].includes(p.name)?'self-inking':p.name==='Copy'?'pre-inked':'ordinary');setShape(p.shape);setTop(p.top);setMiddle(p.middle);setBottom(p.bottom);setNotice('');};
  const loadLogo=(file?:File)=>{if(!file)return;if(!file.type.startsWith('image/')){setNotice('Choose an image file.');return;}if(file.size>3*1024*1024){setNotice('Logo must be under 3 MB.');return;}const reader=new FileReader();reader.onload=()=>{setLogo(String(reader.result));setLogoName(file.name);};reader.readAsDataURL(file);};
- const reset=()=>{setShape('rect');setTop('YOUR COMPANY NAME');setMiddle('AUTHORISED SIGNATORY');setBottom('PATNA · BIHAR');setWidth(50);setHeight(25);setInk('blue');setFont('Arial');setFontSize(4.2);setBorder('double');setMirror(false);setLogo(null);setLogoName('');setNotice('');setZoom(100);};
+ const reset=()=>{setStampType('ordinary');setShape('rect');setTop('YOUR COMPANY NAME');setMiddle('AUTHORISED SIGNATORY');setBottom('PATNA · BIHAR');setWidth(50);setHeight(25);setInk('blue');setFont('Arial');setFontSize(4.2);setBorder('double');setMirror(false);setLogo(null);setLogoName('');setNotice('');setZoom(100);};
  return <div className="rsd-shell">
   <header className="rsd-header"><button className="rsd-back" onClick={onBack}><ArrowLeft size={17}/>{label('Back','वापस')}</button><div className="rsd-brand"><span className="rsd-brand-icon"><Stamp size={20}/></span><div><b>{label('Rubber Stamp Designer','रबर स्टैम्प डिज़ाइनर')}</b><small>{label('Create a clean, print-ready business stamp in a few quick steps.','अपना अधिकृत बिज़नेस स्टैम्प कुछ आसान स्टेप में बनाएँ।')}</small></div></div><button className="rsd-reset" onClick={reset}><RotateCcw size={15}/><span>{label('Reset','रीसेट')}</span></button></header>
   <div className="rsd-mobile-tabs"><button className={tab==='settings'?'active':''} onClick={()=>setTab('settings')}>{label('Settings','सेटिंग')}</button><button className={tab==='preview'?'active':''} onClick={()=>setTab('preview')}>{label('Preview','प्रीव्यू')}</button></div>
   <div className="rsd-workspace">
    <aside className={'rsd-settings '+(tab==='preview'?'rsd-hide-mobile':'')}>
     <div className="rsd-panel-heading"><div><span className="rsd-kicker">{label('STEP 01','स्टेप 01')}</span><h2>{label('Design setup','डिज़ाइन सेटअप')}</h2></div><span className="rsd-step">01 / 02</span></div>
+    <section className="rsd-section"><h3>{label('Stamp type · 7 categories','स्टैम्प के प्रकार · 7 कैटेगरी')}</h3><div className="rsd-type-grid">{stampTypes.map(t=><button type="button" key={t.id} className={stampType===t.id?'selected':''} onClick={()=>{setStampType(t.id);if(t.id==='round-seal')setShape('round');else if(t.id==='oval-square')setShape('oval');else if(t.id==='date-numbering'){setShape('rect');setTop('DATE: DD / MM / YYYY');setMiddle('NO. 0001');setBottom('');}else if(t.id==='signature-text'){setShape('rect');setTop('NAME / COMPANY');setMiddle('SIGNATURE');setBottom('DESIGNATION');}else if(shape==='line')setShape('rect');}}><b>{label(t.name,t.hi)}</b></button>)}</div><small className="rsd-hint">{label('Choose the stamp category, then customise its shape and artwork below.','पहले स्टैम्प की कैटेगरी चुनें, फिर नीचे आकार और डिज़ाइन बदलें।')}</small></section>
     <section className="rsd-section"><h3>{label('Stamp shape','स्टैम्प का आकार')}</h3><div className="rsd-shape-grid">{shapes.map(s=><button key={s} className={shape===s?'selected':''} onClick={()=>setShape(s)}><span className={'rsd-shape-icon '+s}/><b>{names[s]}</b></button>)}</div></section>
     <section className="rsd-section"><h3>{label('Quick templates','तैयार टेम्पलेट')}</h3><div className="rsd-presets">{presets.map(p=><button key={p.name} onClick={()=>usePreset(p)} className={shape===p.shape&&top===p.top?'selected':''}>{p.name}</button>)}</div></section>
     <section className="rsd-section"><h3><Type size={15}/>{label('Stamp text','स्टैम्प टेक्स्ट')}</h3><label>{label('Top line','ऊपर की लाइन')}<input maxLength={56} value={top} onChange={e=>setTop(e.target.value.toUpperCase())}/></label><label>{label('Middle line','बीच की लाइन')}<input maxLength={56} value={middle} onChange={e=>setMiddle(e.target.value.toUpperCase())}/></label><label>{label('Bottom line','नीचे की लाइन')}<input maxLength={56} value={bottom} onChange={e=>setBottom(e.target.value.toUpperCase())}/></label></section>
