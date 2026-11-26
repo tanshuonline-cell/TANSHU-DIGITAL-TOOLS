@@ -28,7 +28,7 @@ export default function PANPhotoSignatureResizer({onBack}:{onBack?:()=>void}){
  const px=useMemo(()=>({w:Math.round(current.w/2.54*dpi),h:Math.round(current.h/2.54*dpi)}),[current.w,current.h,dpi]);
  const process=async()=>{
   const file=files[kind];if(!file){setError('पहले फोटो या सिग्नेचर अपलोड करें।');return;}
-  if(!/^image\\/(jpeg|png|webp)$/i.test(file.type)){setError('कृपया JPG, PNG या WebP इमेज चुनें।');return;}
+   if(!/^image\/(jpeg|png|webp)$/i.test(file.type)){setError('कृपया JPG, PNG या WebP इमेज चुनें।');return;}
   setBusy(true);setError('');
   try{
    const img=new Image();img.src=URL.createObjectURL(file);await new Promise<void>((res,rej)=>{img.onload=()=>res();img.onerror=()=>rej(new Error('Image could not be opened'));});
