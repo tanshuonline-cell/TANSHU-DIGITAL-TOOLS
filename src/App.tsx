@@ -684,6 +684,9 @@ return <div className={dark?'app dark':'app light'}><style>{`.voice-search-butto
  .footer-social>a,.footer-social .social-youtube>summary{width:34px;height:34px;flex-basis:34px}
  .footer-social .social-youtube .social-menu{position:fixed;left:50%;right:auto;top:auto;bottom:72px;transform:translateX(-50%);width:min(260px,calc(100vw - 24px));min-width:0;box-sizing:border-box;z-index:1000}
 }
+/* Header YouTube menu: open below the icon so it stays visible on desktop */
+.top-actions .social-youtube .social-menu{top:35px;bottom:auto;z-index:1000}
+
 `}
 </style>
 <aside className={'sidebar '+(mobile?'show':'')}><div className="brand"><div className="brandmark brandmark-premium"><span>T</span><i>✦</i></div><div><b>TANSHU</b><strong>DIGITAL TOOLS</strong><small>ALL IN ONE WORKSPACE</small></div><button className="close-nav" onClick={()=>setMobile(false)}><X size={18}/></button></div>
