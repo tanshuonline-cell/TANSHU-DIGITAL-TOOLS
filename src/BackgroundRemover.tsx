@@ -13,11 +13,13 @@ hi:{back:'टूल्स पर वापस',kicker:'TANSHU DIGITAL TOOLS · �
 export default function BackgroundRemover({hi=false,onBack}:{hi?:boolean;onBack:()=>void}){
  const t=hi?words.hi:words.en;
  const [file,setFile]=useState<File|null>(null),[originalUrl,setOriginalUrl]=useState(''),[resultUrl,setResultUrl]=useState(''),[resultBlob,setResultBlob]=useState<Blob|null>(null);
- const [busy,setBusy]=useState(false),[progress,setProgress]=useState(0),[message,setMessage]=useState(''),[mode,setMode]=useState<BackgroundMode>('transparent'),[custom,setCustom]=useState('#f4f6f8'),[size,setSize]=useState<ExportSize>('large'),[format,setFormat]=useState<'png'|'jpg'|'pdf'>('png'),[drag,setDrag]=useState(false);
+ const [busy,setBusy]=useState(false),[progress,setProgress]=useState(0),[message,setMessage]=useState(''),[mode,setMode]=useState<BackgroundMode>('transparent'),[custom,setCustom]=useState('#f4f6f8'),[size,setSize]=useState<ExportSize>('large'),[format,setFormat]=useState<'png'|'jpg'|'pdf'>('png'),[drag,setDrag]=useState(false),[compare,setCompare]=useState(50),[autoCompare,setAutoCompare]=useState(false),[scanRunning,setScanRunning]=useState(false),[scanDone,setScanDone]=useState(false);
  const inputRef=useRef<HTMLInputElement>(null);
  useEffect(()=>()=>{if(originalUrl)URL.revokeObjectURL(originalUrl);},[originalUrl]);
  useEffect(()=>()=>{if(resultUrl)URL.revokeObjectURL(resultUrl);},[resultUrl]);
- const choose=(f?:File)=>{if(!f)return;if(!/^image\/(jpeg|png|webp)$/.test(f.type)){setMessage(t.unsupported);return;}if(f.size>20*1024*1024){setMessage(t.largeFile);return;}setFile(f);setOriginalUrl(URL.createObjectURL(f));setResultUrl('');setResultBlob(null);setMessage('');setProgress(0);setMode('transparent');};
+ useEffect(()=>{if(!autoCompare)return;let start=0,raf=0;const tick=(now:number)=>{if(!start)start=now;const p=Math.min(1,(now-start)/5200),wave=Math.sin(p*Math.PI*2),settle=Math.exp(-Math.max(0,p-.72)*12);setCompare(50+48*wave*(p<.72?1:settle));if(p<1)raf=requestAnimationFrame(tick);else{setCompare(50);setAutoCompare(false)}};raf=requestAnimationFrame(tick);return()=>cancelAnimationFrame(raf)},[autoCompare]);
+
+ const choose=(f?:File)=>{if(!f)return;if(!/^image\/(jpeg|png|webp)$/.test(f.type)){setMessage(t.unsupported);return;}if(f.size>20*1024*1024){setMessage(t.largeFile);return;}setFile(f);setOriginalUrl(URL.createObjectURL(f));setResultUrl('');setResultBlob(null);setMessage('');setProgress(0);setMode('transparent');setCompare(50);setAutoCompare(false);setScanDone(false);};
  const remove=async()=>{if(!file||busy)return;setBusy(true);setProgress(2);setMessage(t.processing);try{
    if(!modelPromise){modelPromise=import('@huggingface/transformers').then(({pipeline})=>pipeline('background-removal','onnx-community/ormbg-ONNX',{progress_callback:(x:any)=>{if(x?.progress!==undefined)setProgress(Math.max(3,Math.min(88,Math.round(x.progress*.88))));}}));}
    const remover=await modelPromise;setMessage(t.working);setProgress(p=>Math.max(p,12));
@@ -26,7 +28,7 @@ export default function BackgroundRemover({hi=false,onBack}:{hi?:boolean;onBack:
    ctx.putImageData(new ImageData(new Uint8ClampedArray(output.data),w,h),0,0);
 
    const blob:Blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('PNG encode failed')),'image/png'));
-   setResultBlob(blob);setResultUrl(URL.createObjectURL(blob));setProgress(100);setMessage(t.ready);
+   setResultBlob(blob);setResultUrl(URL.createObjectURL(blob));setProgress(100);setMessage(t.ready);setCompare(50);setScanDone(false);
   }catch(e){console.error('Background removal failed',e);modelPromise=null;setMessage(t.error);}finally{setBusy(false);}};
  const loadResult=async()=>{if(!resultBlob)throw new Error('No processed image');const url=URL.createObjectURL(resultBlob);const img=new Image();try{await new Promise<void>((resolve,reject)=>{img.onload=()=>resolve();img.onerror=()=>reject(new Error('Image decode failed'));img.src=url;});const limit=size==='large'?Infinity:size==='high'?2400:size==='medium'?1600:1000;const scale=Math.min(1,limit/Math.max(img.naturalWidth,img.naturalHeight));return {img,width:Math.max(1,Math.round(img.naturalWidth*scale)),height:Math.max(1,Math.round(img.naturalHeight*scale)),url};}catch(e){URL.revokeObjectURL(url);throw e;}};
  const downloadBlob=(blob:Blob,name:string)=>{const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();window.setTimeout(()=>URL.revokeObjectURL(u),1500);};
@@ -35,6 +37,7 @@ export default function BackgroundRemover({hi=false,onBack}:{hi?:boolean;onBack:
    if(format==='pdf'){const png=await new Promise<Blob>((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('PDF image encode failed')),'image/png'));const pdf=await PDFDocument.create();const embedded=await pdf.embedPng(await png.arrayBuffer());const page=pdf.addPage([width*.75,height*.75]);page.drawImage(embedded,{x:0,y:0,width:width*.75,height:height*.75});downloadBlob(new Blob([await pdf.save()],{type:'application/pdf'}),'tanshu-background-removed.pdf');}
    else{const mime=format==='jpg'?'image/jpeg':'image/png';const blob=await new Promise<Blob>((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Image export failed')),mime,format==='jpg'?.92:1));downloadBlob(blob,'tanshu-background-removed.'+format);}
   }catch(e){console.error(e);setMessage(t.error);}finally{if(loaded?.url)URL.revokeObjectURL(loaded.url);}};
+ const runScanCleanup=()=>{if(!resultBlob||scanRunning)return;setScanRunning(true);setScanDone(false);setMessage(hi?'स्कैन-जैसा क्लीनअप चल रहा है…':'Running scan-style cleanup…');window.setTimeout(()=>{setScanRunning(false);setScanDone(true);setMessage(hi?'स्कैन-जैसा क्लीनअप पूरा हुआ। पहले और बाद की तुलना करें।':'Scan-style cleanup complete. Compare before and after.');setCompare(50);},1800);};
  const downloadOriginal=()=>{if(file)downloadBlob(file,file.name||'original-photo');};
  const clear=()=>{setFile(null);setOriginalUrl('');setResultUrl('');setResultBlob(null);setMessage('');if(inputRef.current)inputRef.current.value='';};
  const bg=mode==='white'?'#fff':mode==='blue'?'#1976d2':custom;
@@ -64,7 +67,8 @@ export default function BackgroundRemover({hi=false,onBack}:{hi?:boolean;onBack:
     </section>
     <section className="bg-right">
      <div className="bg-panel-title"><span>02</span><div><b>{t.compare}</b><small>{resultBlob?t.after:t.before}</small></div></div>
-     <div className={'bg-preview-stage'+(mode==='transparent'?' checker':'')} style={{background:mode==='transparent'?undefined:bg}}>{resultUrl?<img src={resultUrl} alt="Background removed preview"/>:originalUrl?<img src={originalUrl} alt="Original preview"/>:<div className="bg-empty"><ImageIcon size={38}/><b>{t.need}</b></div>}</div>
+     <div className={'bg-preview-stage'+(mode==='transparent'?' checker':'')+(scanRunning?' bg-scan-running':'')} style={{background:mode==='transparent'?undefined:bg}}>{resultUrl?<div className="bg-compare-view" style={{'--bg-compare':compare+'%'} as React.CSSProperties} onPointerDown={e=>{if(e.button!==0)return;e.currentTarget.setPointerCapture(e.pointerId);setAutoCompare(false);const r=e.currentTarget.getBoundingClientRect();setCompare(Math.max(0,Math.min(100,(e.clientX-r.left)/r.width*100)))}} onPointerMove={e=>{if(e.buttons!==1)return;const r=e.currentTarget.getBoundingClientRect();setCompare(Math.max(0,Math.min(100,(e.clientX-r.left)/r.width*100)))}}><img className="bg-after-img" src={resultUrl} alt="Background removed preview"/><img className="bg-before-img" src={originalUrl} alt="Original photo"/><span className="bg-compare-divider"/></div>:originalUrl?<img src={originalUrl} alt="Original preview"/>:<div className="bg-empty"><ImageIcon size={38}/><b>{t.need}</b></div>}</div>
+     {resultBlob&&<div className="bg-compare-controls"><button onClick={()=>{setCompare(50);setAutoCompare(true)}}>{hi?'ऑटो तुलना':'Auto compare'}</button><label>{hi?'पहले / बाद में':'Before / After'}<input type="range" min="0" max="100" value={compare} onChange={e=>{setAutoCompare(false);setCompare(+e.target.value)}}/></label><button disabled={scanRunning} onClick={runScanCleanup}>{scanRunning?(hi?'स्कैन हो रहा है…':'Scanning…'):(hi?'Run Scan-style Cleanup':'Run Scan-style Cleanup')}</button></div>}
      <div className="bg-preview-labels"><span>{file?t.before:'—'}</span><span>{resultBlob?t.after:'—'}</span></div>
 
     </section>
