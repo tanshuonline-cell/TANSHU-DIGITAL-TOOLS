@@ -1,0 +1,2 @@
+Cloudflare Pages deployment trigger.
+This file has no effect on the application.
