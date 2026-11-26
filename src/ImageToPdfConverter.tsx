@@ -28,7 +28,7 @@ export default function ImageToPdfConverter({mode,hi=false,onBack=()=>{}}:{mode:
   try{const doc=await PDFDocument.create();doc.setTitle(title);doc.setCreator('TANSHU DIGITAL TOOLS');doc.setProducer('TANSHU DIGITAL TOOLS');
    for(let i=0;i<files.length;i++){const entry=files[i],bytes=await entry.file.arrayBuffer(),embedded=isJpg?await doc.embedJpg(bytes):await doc.embedPng(bytes),mw=Number(margin)||0,pt=mw*72/25.4;
     let dims:[number,number];if(paper==='A4')dims=[...A4];else if(paper==='Letter')dims=[...LETTER];else dims=[entry.width*72/96,entry.height*72/96];
-    if(orientation==='portrait'&&dims[0]>dims[1])dims=[dims[1],dims[0]];if(orientation==='landscape'&&dims[1]>dims[0])dims=[dims[1],dims[0]];
+    if(orientation==='portrait'&&dims[0]>dims[1])dims=[dims[1],dims[0]];if(orientation==='landscape'&&dims[1]>dims[0])dims=[dims[1],dims[0]];if(orientation==='auto'&&paper!=='original'&&embedded.width>embedded.height&&dims[1]>dims[0])dims=[dims[1],dims[0]];
     const page=doc.addPage(dims),availW=Math.max(1,dims[0]-pt*2),availH=Math.max(1,dims[1]-pt*2),scale=fit==='fit'?Math.min(availW/embedded.width,availH/embedded.height):Math.max(availW/embedded.width,availH/embedded.height),w=embedded.width*scale,h=embedded.height*scale;
     page.drawImage(embedded,{x:(dims[0]-w)/2,y:(dims[1]-h)/2,width:w,height:h});setProgress(Math.round((i+1)/files.length*85));
    }
