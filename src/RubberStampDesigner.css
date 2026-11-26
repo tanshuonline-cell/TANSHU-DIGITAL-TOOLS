@@ -128,3 +128,10 @@ body:has(.rubber-stamp-tool-panel){
     overflow:visible!important;
   }
 }
+
+/* Seven researched stamp categories, kept separate from physical shape controls. */
+.rsd-type-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.rsd-type-grid button{min-height:38px;padding:8px 9px;text-align:left;border:1px solid #e5e9f1;border-radius:8px;background:#fff;color:#536078;font-size:10px;font-weight:750;line-height:1.35;cursor:pointer}
+.rsd-type-grid button.selected{border-color:#8a7be5;background:#f5f3ff;color:#5548b4;box-shadow:0 0 0 2px #8a7be51a}
+.rsd-type-grid+.rsd-hint{display:block;margin-top:8px}
+@media(max-width:760px){.rsd-type-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rsd-type-grid button{font-size:9px;padding:8px 7px}}
