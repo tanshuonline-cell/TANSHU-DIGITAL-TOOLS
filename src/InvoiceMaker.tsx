@@ -9,7 +9,8 @@ const InvoiceMaker=({hi,onBack}:Props)=>{
  const [customer,setCustomer]=useState({name:'Customer Name',address:'',gstin:'',phone:''});
  const today=new Date();const localDate=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;const [meta,setMeta]=useState({number:'INV-001',date:localDate,due:'',place:'',terms:'Payment due within 15 days',notes:'Thank you for your business.'});
  const [items,setItems]=useState<Item[]>([{description:'Product / Service',hsn:'',qty:1,rate:1000,gst:18}]);
- const [discount,setDiscount]=useState(0),[shipping,setShipping]=useState(0),[currency,setCurrency]=useState('INR'),[showGst,setShowGst]=useState(true),[notice,setNotice]=useState('');\n const [accent,setAccent]=useState('#244c3b'),[pageColor,setPageColor]=useState('#ffffff'),[textColor,setTextColor]=useState('#202b35');
+ const [discount,setDiscount]=useState(0),[shipping,setShipping]=useState(0),[currency,setCurrency]=useState('INR'),[showGst,setShowGst]=useState(true),[notice,setNotice]=useState('');
+ const [accent,setAccent]=useState('#244c3b'),[pageColor,setPageColor]=useState('#ffffff'),[textColor,setTextColor]=useState('#202b35');
  const fmt=(n:number)=>new Intl.NumberFormat('en-IN',{style:'currency',currency,maximumFractionDigits:2}).format(n||0);
  const subtotal=items.reduce((s,x)=>s+x.qty*x.rate,0),discountAmt=Math.min(subtotal,Math.max(0,discount)),taxable=subtotal-discountAmt;
  const tax=items.reduce((s,x)=>s+Math.max(0,x.qty*x.rate*(1-(subtotal?discountAmt/subtotal:0)))*(x.gst/100),0);
