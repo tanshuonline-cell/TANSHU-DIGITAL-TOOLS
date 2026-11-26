@@ -1,7 +1,7 @@
 import React,{useCallback,useEffect,useRef,useState} from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 import {PDFDocument} from 'pdf-lib';
-import {ArrowLeft,Upload,FileText,Download,Minimize2,CheckCircle2,AlertCircle,Loader2,ChevronLeft,ChevronRight,RefreshCw,Target,ShieldCheck} from 'lucide-react';
+import {ArrowLeft,Upload,FileText,Download,Minimize2,CheckCircle2,AlertCircle,Loader2,ChevronLeft,ChevronRight,Target,ShieldCheck} from 'lucide-react';
 import './CompressPDF.css';
 
 (pdfjsLib as any).GlobalWorkerOptions.workerSrc=new URL('pdfjs-dist/build/pdf.worker.min.mjs',import.meta.url).toString();
@@ -24,7 +24,7 @@ export default function CompressPDF({hi=false,onBack=()=>{}}:{hi?:boolean;onBack
  const [resultSize,setResultSize]=useState(0);
  const [qualityLabel,setQualityLabel]=useState('');
  const [page,setPage]=useState(1);
- const [previewMode,setPreviewMode]=useState<'result'|'original'>('result');
+ const [previewMode,setPreviewMode]=useState<'result'|'original'>('original');
  const [dragging,setDragging]=useState(false);
  const inputRef=useRef<HTMLInputElement>(null);
  const originalCanvas=useRef<HTMLCanvasElement>(null);
@@ -43,7 +43,7 @@ export default function CompressPDF({hi=false,onBack=()=>{}}:{hi?:boolean;onBack
    const bytes=new Uint8Array(await file.arrayBuffer());
    const doc=await (pdfjsLib as any).getDocument({data:bytes.slice()}).promise;
    setLoaded({file,bytes,doc,pages:doc.numPages});
-   previewDoc.current=doc;
+   previewDoc.current=doc;setPreviewMode('original');
    setStatus(tr('PDF ready. Choose your target size and compress.','PDF तैयार है। टारगेट साइज चुनें और कंप्रेस करें।'));
   }catch(e:any){setLoaded(null);setError(e?.message||tr('This PDF could not be opened. It may be damaged or password protected.','यह PDF नहीं खुल सकी। फाइल खराब या पासवर्ड से सुरक्षित हो सकती है।'));}
   finally{setBusy(false);}
@@ -57,7 +57,7 @@ export default function CompressPDF({hi=false,onBack=()=>{}}:{hi?:boolean;onBack
    if(!doc||!canvas)return;
    try{
     const pg=await doc.getPage(page);if(cancelled)return;
-    const base=pg.getViewport({scale:1});const scale=Math.min(1.5,760/base.width,900/base.height);
+    const base=pg.getViewport({scale:1});const scale=Math.max(.08,Math.min(1.5,760/base.width,900/base.height));
     const viewport=pg.getViewport({scale:Math.max(.35,scale)});
     canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);
     const ctx=canvas.getContext('2d');if(!ctx)return;
@@ -72,7 +72,8 @@ export default function CompressPDF({hi=false,onBack=()=>{}}:{hi?:boolean;onBack
   setBusy(true);setError('');setProgress(0);setStatus(tr('Preparing compression…','कंप्रेशन तैयार हो रहा है…'));setResult(null);setResultSize(0);setQualityLabel('');
   try{
    const source=await (pdfjsLib as any).getDocument({data:loaded.bytes.slice()}).promise;
-   let best:Uint8Array|null=null;let bestSize=Infinity;let chosen='';
+   let best:Uint8Array|null=loaded.bytes.slice();let bestSize=loaded.bytes.length;let chosen=tr('Original retained (already smallest)','मूल PDF रखी गई (पहले से सबसे छोटी)');
+   if(loaded.bytes.length<=targetBytes){const newDoc=await (pdfjsLib as any).getDocument({data:best.slice()}).promise;resultDoc.current=newDoc;setResult(best);setResultSize(best.length);setQualityLabel(chosen);setPreviewMode('result');setStatus(tr('Original PDF is already within your target size. No extra compression was needed.','मूल PDF पहले से आपके टारगेट साइज के अंदर है। अतिरिक्त कंप्रेशन की जरूरत नहीं पड़ी।'));setProgress(100);await source.destroy();return;}
    for(let pass=0;pass<profiles.length;pass++){
     const profile=profiles[pass];const out=await PDFDocument.create();
     for(let i=1;i<=source.numPages;i++){
@@ -119,7 +120,7 @@ export default function CompressPDF({hi=false,onBack=()=>{}}:{hi?:boolean;onBack
   <div className="cpdf-workspace">
    <aside className="cpdf-settings">
     <div className="cpdf-kicker">{tr('QUICK WORKFLOW','आसान वर्कफ़्लो')}</div><h1>{tr('Compress PDF','PDF कंप्रेस करें')}</h1><p className="cpdf-intro">{tr('Reduce large PDFs to a smaller file size while keeping pages readable.','बड़े PDF का साइज कम करें और पेज को पढ़ने लायक रखें।')}</p>
-    <button className={'cpdf-upload '+(loaded?'has-file':'')} onClick={()=>inputRef.current?.click()} onDragOver={e=>{e.preventDefault();setDragging(true)}} onDragLeave={()=>setDragging(false)} onDrop={e=>{e.preventDefault();setDragging(false);loadFile(e.dataTransfer.files?.[0])}}>
+    <button className={'cpdf-upload '+(loaded?'has-file ':'')+(dragging?'dragging':'')} onClick={()=>inputRef.current?.click()} onDragOver={e=>{e.preventDefault();setDragging(true)}} onDragLeave={()=>setDragging(false)} onDrop={e=>{e.preventDefault();setDragging(false);loadFile(e.dataTransfer.files?.[0])}}>
      {loaded?<><span className="cpdf-upload-icon"><FileText size={25}/></span><b>{loaded.file.name}</b><small>{loaded.pages} {tr('pages','पेज')} · {formatBytes(loaded.bytes.length)}</small><span className="cpdf-change">{tr('Change PDF','PDF बदलें')}</span></>:<><span className="cpdf-upload-icon"><Upload size={25}/></span><b>{tr('Upload your PDF','अपनी PDF अपलोड करें')}</b><small>{tr('Click to browse or drag & drop here','फाइल चुनें या यहाँ ड्रैग-ड्रॉप करें')}</small><span className="cpdf-filetypes">PDF FILES ONLY</span></>}
     </button>
     <input ref={inputRef} type="file" accept="application/pdf,.pdf" hidden onChange={e=>{loadFile(e.target.files?.[0]);e.currentTarget.value='';}}/>
