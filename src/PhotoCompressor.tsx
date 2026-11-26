@@ -11,17 +11,17 @@ export default function PhotoCompressor({hi=false,onBack=()=>{}}:{hi?:boolean;on
  const [loaded,setLoaded]=useState<ImgFile|null>(null),[target,setTarget]=useState('50'),[unit,setUnit]=useState<'KB'|'MB'>('KB'),[preset,setPreset]=useState('50KB');
  const [busy,setBusy]=useState(false),[progress,setProgress]=useState(0),[status,setStatus]=useState(''),[error,setError]=useState('');
  const [result,setResult]=useState<Blob|null>(null),[resultUrl,setResultUrl]=useState(''),[resultSize,setResultSize]=useState(0),[resultType,setResultType]=useState('');
- const inputRef=useRef<HTMLInputElement>(null);const [dragging,setDragging]=useState(false);
+ const inputRef=useRef<HTMLInputElement>(null);const loadedUrlRef=useRef('');const resultUrlRef=useRef('');const [dragging,setDragging]=useState(false);
  const tr=(en:string,h:string)=>hi?h:en;const targetBytes=Math.max(1,Number(target||0))*(unit==='MB'?1048576:1024);
- useEffect(()=>{const old=document.body.style.overflow;document.body.style.overflow='hidden';return()=>{document.body.style.overflow=old;if(loaded?.url)URL.revokeObjectURL(loaded.url);if(resultUrl)URL.revokeObjectURL(resultUrl)};},[]);
- const clearResult=()=>{if(resultUrl)URL.revokeObjectURL(resultUrl);setResult(null);setResultUrl('');setResultSize(0);setResultType('');};
+ useEffect(()=>{const old=document.body.style.overflow;document.body.style.overflow='hidden';return()=>{document.body.style.overflow=old;if(loadedUrlRef.current)URL.revokeObjectURL(loadedUrlRef.current);if(resultUrlRef.current)URL.revokeObjectURL(resultUrlRef.current)};},[]);
+ const clearResult=()=>{if(resultUrlRef.current)URL.revokeObjectURL(resultUrlRef.current);resultUrlRef.current='';setResult(null);setResultUrl('');setResultSize(0);setResultType('');};
  const load=async(file?:File)=>{
   if(!file)return;setError('');setStatus('');clearResult();
   if(!['image/jpeg','image/png','image/webp'].includes(file.type)){setError(tr('Please choose a JPG, PNG or WebP image.','कृपया JPG, PNG या WebP फोटो चुनें।'));return;}
-  if(loaded?.url)URL.revokeObjectURL(loaded.url);
-  const url=URL.createObjectURL(file);setBusy(true);
+  if(loadedUrlRef.current)URL.revokeObjectURL(loadedUrlRef.current);
+  const url=URL.createObjectURL(file);loadedUrlRef.current=url;setBusy(true);
   try{const img=new Image();img.src=url;await new Promise<void>((resolve,reject)=>{img.onload=()=>resolve();img.onerror=()=>reject(new Error('Image could not be opened.'));});const bytes=await file.arrayBuffer();setLoaded({file,url,width:img.naturalWidth,height:img.naturalHeight,bytes});setStatus(tr('Image ready. Choose your target size.','फोटो तैयार है। अपना टारगेट साइज चुनें।'));}
-  catch(e:any){URL.revokeObjectURL(url);setLoaded(null);setError(e?.message||tr('This image could not be opened.','यह फोटो नहीं खुल सकी।'));}
+  catch(e:any){URL.revokeObjectURL(url);loadedUrlRef.current='';setLoaded(null);setError(e?.message||tr('This image could not be opened.','यह फोटो नहीं खुल सकी।'));}
   finally{setBusy(false);}
  };
  const compress=async()=>{
@@ -29,7 +29,7 @@ export default function PhotoCompressor({hi=false,onBack=()=>{}}:{hi?:boolean;on
   if(!Number.isFinite(targetBytes)||targetBytes<1024){setError(tr('Please enter a target size of at least 1 KB.','कम से कम 1 KB का टारगेट साइज डालें।'));return;}
   setBusy(true);setError('');setStatus(tr('Optimizing your image…','फोटो ऑप्टिमाइज़ हो रही है…'));setProgress(0);clearResult();
   try{
-   if(loaded.bytes.byteLength<=targetBytes){const blob=new Blob([loaded.bytes],{type:loaded.file.type});const url=URL.createObjectURL(blob);setResult(blob);setResultUrl(url);setResultSize(blob.size);setResultType(loaded.file.type);setProgress(100);setStatus(tr('Your original image is already within the selected target size.','आपकी मूल फोटो पहले से चुने गए टारगेट साइज में है।'));return;}
+   if(loaded.bytes.byteLength<=targetBytes){const blob=new Blob([loaded.bytes],{type:loaded.file.type});const url=URL.createObjectURL(blob);resultUrlRef.current=url;setResult(blob);setResultUrl(url);setResultSize(blob.size);setResultType(loaded.file.type);setProgress(100);setStatus(tr('Your original image is already within the selected target size.','आपकी मूल फोटो पहले से चुने गए टारगेट साइज में है।'));return;}
    const img=new Image();img.src=loaded.url;await new Promise<void>((resolve,reject)=>{img.onload=()=>resolve();img.onerror=()=>reject(new Error('Image could not be decoded.'));});
    const mime=loaded.file.type;let best:Blob|null=null;let bestSize=loaded.bytes.byteLength;let chosen='';
    const total=scales.length*(mime==='image/png'?1:qualities.length);let step=0;
@@ -49,7 +49,7 @@ export default function PhotoCompressor({hi=false,onBack=()=>{}}:{hi?:boolean;on
     if(best&&best.size<=targetBytes)break;
    }
    if(!best)throw new Error(tr('The image could not be reduced further.','फोटो का साइज और कम नहीं हो सका।'));
-   const url=URL.createObjectURL(best);setResult(best);setResultUrl(url);setResultSize(best.size);setResultType(mime);
+   const url=URL.createObjectURL(best);resultUrlRef.current=url;setResult(best);setResultUrl(url);setResultSize(best.size);setResultType(mime);
    setStatus(best.size<=targetBytes?tr('Target size achieved. Your compressed image is ready.','टारगेट साइज हासिल। आपकी कंप्रेस फोटो तैयार है।'):tr('The smallest available result is ready, but this image could not reach your exact target.','सबसे छोटा उपलब्ध रिजल्ट तैयार है, लेकिन फोटो आपका exact टारगेट हासिल नहीं कर सकी।')+' · '+chosen);
   }catch(e:any){setError(e?.message||tr('Compression failed. Please try another image.','कंप्रेशन नहीं हो सका। दूसरी फोटो से कोशिश करें।'));}
   finally{setBusy(false);setProgress(100);}
