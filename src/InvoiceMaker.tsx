@@ -4,7 +4,7 @@ type Item={description:string;hsn:string;qty:number;rate:number;gst:number};
 type Props={hi:boolean;onBack:()=>void};
 const papers:Record<string,[number,number]>={A4:[210,297],A5:[148,210],A3:[297,420],Letter:[215.9,279.4],Legal:[215.9,355.6]};
 const InvoiceMaker=({hi,onBack}:Props)=>{
- const [kind,setKind]=useState('GST Tax Invoice'),[template,setTemplate]=useState('Classic'),[paper,setPaper]=useState('A4'),[orientation,setOrientation]=useState('portrait');
+ const [kind,setKind]=useState('GST Tax Invoice'),[template,setTemplate]=useState(()=>{try{return window.localStorage.getItem('tdt-invoice-default-template')||'Classic'}catch{return 'Classic'}}),[paper,setPaper]=useState('A4'),[orientation,setOrientation]=useState('portrait');
  const [business,setBusiness]=useState({name:'Your Business Name',address:'Shop address, City, State - PIN',gstin:'',phone:'',email:''});
  const [customer,setCustomer]=useState({name:'Customer Name',address:'',gstin:'',phone:''});
  const today=new Date();const localDate=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;const [meta,setMeta]=useState({number:'INV-001',date:localDate,due:'',place:'',terms:'Payment due within 15 days',notes:'Thank you for your business.'});
