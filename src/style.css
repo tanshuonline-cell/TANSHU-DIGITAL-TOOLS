@@ -2022,3 +2022,8 @@
 .category-shortcut-nav .nav-item:nth-child(18)>svg{color:#a3e635}
 .category-shortcut-nav .nav-item:nth-child(19)>svg{color:#f59e0b}
 @media(prefers-reduced-motion:reduce){.sidebar nav .nav-item>svg{transition:none}.sidebar nav .nav-item:hover>svg,.sidebar nav .nav-item.active>svg{transform:none}}
+
+
+/* A4 Multiple Photo Sheet must escape the generic 640px tool-page content width. */
+.tool-page-panel.a4-multiple-photo-sheet-panel{align-items:stretch;justify-content:flex-start;padding:0;overflow:hidden}
+.tool-page-panel.a4-multiple-photo-sheet-panel>*{max-width:none;width:100%;min-width:0}
