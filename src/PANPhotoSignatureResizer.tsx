@@ -39,14 +39,14 @@ export default function PANPhotoSignatureResizer({onBack}:{onBack?:()=>void}){
    const dw=img.width*scale,dh=img.height*scale;
    ctx.drawImage(img,(canvas.width-dw)/2,(canvas.height-dh)/2,dw,dh);
    URL.revokeObjectURL(img.src);
-   const maxBytes=current.kb*1024;let lo=.35,hi=.96,best:Blob|null=null;
+   const maxBytes=current.kb*1024;if(current.w<=0||current.h<=0||current.kb<=0||dpi<=0)throw new Error('Enter valid positive dimensions, KB and DPI.');let lo=.35,hi=.96,best:Blob|null=null;
    for(let i=0;i<14;i++){const q=(lo+hi)/2;const b=await new Promise<Blob|null>(r=>canvas.toBlob(r,'image/jpeg',q));if(!b)throw new Error('JPEG export failed');if(b.size<=maxBytes){best=b;lo=q;}else hi=q;}
    if(!best){const b=await new Promise<Blob|null>(r=>canvas.toBlob(r,'image/jpeg',.25));if(!b||b.size>maxBytes)throw new Error('इस फोटो को चुनी गई KB सीमा में साफ गुणवत्ता के साथ फिट नहीं किया जा सका। कम आकार की मूल फोटो चुनें या Custom में KB सीमा बढ़ाएँ।');best=b;}
-   const outUrl=URL.createObjectURL(best);setOutputs(v=>({...v,[kind]:{url:outUrl,blob:best!,width:px.w,height:px.h,kb:best!.size/1024,dpi}}));
+   const raw=new Uint8Array(await best.arrayBuffer());if(raw[0]===0xff&&raw[1]===0xd8&&raw[2]===0xff&&raw[3]===0xe0&&raw[6]===0x4a&&raw[7]===0x46&&raw[8]===0x49&&raw[9]===0x46){raw[13]=1;raw[14]=(dpi>>8)&255;raw[15]=dpi&255;raw[16]=(dpi>>8)&255;raw[17]=dpi&255;}best=new Blob([raw],{type:'image/jpeg'});const outUrl=URL.createObjectURL(best);setOutputs(v=>({...v,[kind]:{url:outUrl,blob:best!,width:px.w,height:px.h,kb:best!.size/1024,dpi}}));
   }catch(e){setError(e instanceof Error?e.message:'Processing failed');}finally{setBusy(false);}
  };
  const download=()=>{const o=outputs[kind];if(!o)return;const a=document.createElement('a');a.href=o.url;a.download='PAN-'+kind.toUpperCase()+'-RESIZED.jpg';a.click();};
- const print=()=>{const o=outputs[kind];if(!o)return;const w=kind==='photo'?2.5:4.5,h=kind==='photo'?3.5:2;const win=window.open('','_blank');if(!win)return;win.document.write('<html><head><title>PAN '+kind+' print</title><style>@page{size:A4;margin:15mm}body{margin:0;display:flex;align-items:flex-start}img{width:'+w+'cm;height:'+h+'cm;object-fit:fill}</style></head><body><img src="'+o.url+'"></body></html>');win.document.close();win.onload=()=>{win.focus();win.print();};};
+ const print=()=>{const o=outputs[kind];if(!o)return;const w=current.w,h=current.h;const win=window.open('','_blank');if(!win)return;win.document.write('<html><head><title>PAN '+kind+' print</title><style>@page{size:A4;margin:15mm}body{margin:0;display:flex;align-items:flex-start}img{width:'+w+'cm;height:'+h+'cm;object-fit:fill}</style></head><body><img src="'+o.url+'"></body></html>');win.document.close();win.onload=()=>{win.focus();win.print();};};
  const title=kind==='photo'?'Applicant Photo':'Applicant Signature';
  return <div className="panrs-page">
   <header className="panrs-head"><button onClick={onBack} className="panrs-back"><ArrowLeft size={17}/> Back</button><div><b>PAN PHOTO & SIGNATURE RESIZER</b><small>ACTUAL SIZE · Portal-ready image preparation</small></div><span className="panrs-tag">LOCAL PROCESSING</span></header>
