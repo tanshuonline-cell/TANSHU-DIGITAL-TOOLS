@@ -1986,15 +1986,15 @@
 .sidebar nav .nav-item>svg{width:18px;height:18px;flex:0 0 18px;stroke-width:2.15;filter:drop-shadow(0 1px 2px currentColor);transition:color .2s ease,filter .2s ease,transform .2s ease}
 .sidebar nav .nav-item:hover>svg,.sidebar nav .nav-item.active>svg{transform:scale(1.09);filter:drop-shadow(0 2px 4px currentColor)}
 /* Main workspace navigation: Overview, Maker, CSC, Cyber, PDF, Calculator, Popular, Tutorials, All */
-.sidebar>nav:not(.category-shortcut-nav):not(.records-nav) .nav-item:nth-child(1)>svg{color:#60a5fa}
-.sidebar>nav:not(.category-shortcut-nav):not(.records-nav) .nav-item:nth-child(2)>svg{color:#a78bfa}
-.sidebar>nav:not(.category-shortcut-nav):not(.records-nav) .nav-item:nth-child(3)>svg{color:#34d399}
-.sidebar>nav:not(.category-shortcut-nav):not(.records-nav) .nav-item:nth-child(4)>svg{color:#22d3ee}
-.sidebar>nav:not(.category-shortcut-nav):not(.records-nav) .nav-item:nth-child(5)>svg{color:#fb7185}
-.sidebar>nav:not(.category-shortcut-nav):not(.records-nav) .nav-item:nth-child(6)>svg{color:#60a5fa}
-.sidebar>nav:not(.category-shortcut-nav):not(.records-nav) .nav-item:nth-child(7)>svg{color:#fbbf24}
-.sidebar>nav:not(.category-shortcut-nav):not(.records-nav) .nav-item:nth-child(8)>svg{color:#f87171}
-.sidebar>nav:not(.category-shortcut-nav):not(.records-nav) .nav-item:nth-child(9)>svg{color:#2dd4bf}
+.sidebar>nav:first-of-type .nav-item:nth-child(1)>svg{color:#60a5fa}
+.sidebar>nav:first-of-type .nav-item:nth-child(2)>svg{color:#a78bfa}
+.sidebar>nav:first-of-type .nav-item:nth-child(3)>svg{color:#34d399}
+.sidebar>nav:first-of-type .nav-item:nth-child(4)>svg{color:#22d3ee}
+.sidebar>nav:first-of-type .nav-item:nth-child(5)>svg{color:#fb7185}
+.sidebar>nav:first-of-type .nav-item:nth-child(6)>svg{color:#60a5fa}
+.sidebar>nav:first-of-type .nav-item:nth-child(7)>svg{color:#fbbf24}
+.sidebar>nav:first-of-type .nav-item:nth-child(8)>svg{color:#f87171}
+.sidebar>nav:first-of-type .nav-item:nth-child(9)>svg{color:#2dd4bf}
 /* Quick Access category shortcuts, following the category list order */
 .category-shortcut-nav .nav-item:nth-child(1)>svg{color:#fbbf24}
 .category-shortcut-nav .nav-item:nth-child(2)>svg{color:#38bdf8}
