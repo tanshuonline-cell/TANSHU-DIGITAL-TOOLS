@@ -56,3 +56,75 @@
  .rsd-quick-export button{padding:0 6px}
  .rsd-header-warning{margin:0 0 12px!important}
 }
+
+
+/* Final viewport containment: the stamp designer must fully cover the site beneath it. */
+html:has(body .rubber-stamp-tool-panel),
+body:has(.rubber-stamp-tool-panel){
+  overflow:hidden!important;
+  height:100dvh!important;
+}
+.tool-page-panel.rubber-stamp-tool-panel{
+  position:fixed!important;
+  inset:0!important;
+  z-index:10000!important;
+  width:100vw!important;
+  height:100dvh!important;
+  min-height:100dvh!important;
+  max-height:100dvh!important;
+  box-sizing:border-box!important;
+  padding:0!important;
+  overflow:hidden!important;
+  background:#f4f6ff!important;
+}
+.tool-page-panel.rubber-stamp-tool-panel>.rsd-shell{
+  width:100%!important;
+  height:100dvh!important;
+  min-height:100dvh!important;
+  max-height:100dvh!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+  background:linear-gradient(135deg,#f4f6ff 0%,#f7f8fc 52%,#f2f5fb 100%)!important;
+}
+.tool-page-panel.rubber-stamp-tool-panel .rsd-workspace{
+  height:calc(100dvh - 76px)!important;
+  max-height:calc(100dvh - 76px)!important;
+  min-height:0!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+}
+.tool-page-panel.rubber-stamp-tool-panel .rsd-settings,
+.tool-page-panel.rubber-stamp-tool-panel .rsd-preview-panel{
+  height:100%!important;
+  min-height:0!important;
+  max-height:100%!important;
+  overflow-y:auto!important;
+  overscroll-behavior:contain;
+}
+@media(max-width:760px){
+  .tool-page-panel.rubber-stamp-tool-panel{
+    height:100dvh!important;
+    min-height:100dvh!important;
+    max-height:100dvh!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    -webkit-overflow-scrolling:touch;
+  }
+  .tool-page-panel.rubber-stamp-tool-panel>.rsd-shell{
+    height:auto!important;
+    min-height:100dvh!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  .tool-page-panel.rubber-stamp-tool-panel .rsd-workspace{
+    height:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  .tool-page-panel.rubber-stamp-tool-panel .rsd-settings,
+  .tool-page-panel.rubber-stamp-tool-panel .rsd-preview-panel{
+    height:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+}
