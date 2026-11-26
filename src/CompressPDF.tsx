@@ -36,7 +36,7 @@ export default function CompressPDF({hi=false,onBack=()=>{}}:{hi?:boolean;onBack
  const releaseDocs=()=>{try{previewDoc.current?.destroy()}catch{}try{resultDoc.current?.destroy()}catch{}previewDoc.current=null;resultDoc.current=null;};
  const loadFile=useCallback(async(file?:File)=>{
   if(!file)return;
-  setError('');setStatus('');setResult(null);setResultSize(0);setPage(1);releaseDocs();
+  setError('');setStatus('');setLoaded(null);setResult(null);setResultSize(0);setPage(1);releaseDocs();
   if(file.type!=='application/pdf'&&!file.name.toLowerCase().endsWith('.pdf')){setError(tr('Please select a PDF file.','कृपया PDF फाइल चुनें।'));return;}
   setBusy(true);
   try{
@@ -88,7 +88,7 @@ export default function CompressPDF({hi=false,onBack=()=>{}}:{hi?:boolean;onBack
      const blob=await blobFromCanvas(canvas,profile.quality);const jpg=new Uint8Array(await blob.arrayBuffer());
      const embedded=await out.embedJpg(jpg);const pageOut=out.addPage([natural.width,natural.height]);
      pageOut.drawImage(embedded,{x:0,y:0,width:natural.width,height:natural.height});
-     canvas.width=1;canvas.height=1;
+     canvas.width=1;canvas.height=1;try{srcPage.cleanup()}catch{}
      setProgress(Math.round(((pass*loaded.pages+i)/(profiles.length*loaded.pages))*100));
      setStatus(tr('Optimizing page ','पेज ऑप्टिमाइज़ हो रहा है ')+i+'/'+loaded.pages+' · '+tr('pass ','चरण ')+(pass+1)+'/'+profiles.length);
     }
