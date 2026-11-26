@@ -121,3 +121,11 @@ html body #root .tool-page-panel.bg-tool-panel:has(.bg-remover)>.bg-remover{posi
 .bg-remover .bg-preview-stage{flex:1!important;min-height:0!important;width:100%!important}
 .bg-remover .bg-compare-view{width:100%!important;height:100%!important}
 @media(max-width:760px){html body #root .tool-page-panel.bg-tool-panel:has(.bg-remover){overflow:auto!important}.bg-remover-head{flex-basis:64px!important}.bg-remover .bg-main{overflow:visible!important;padding:12px!important}.bg-remover .bg-workspace{display:flex!important;flex-direction:column!important;overflow:visible!important}.bg-remover .bg-left,.bg-remover .bg-right{height:auto!important;max-height:none!important;overflow:visible!important}.bg-remover .bg-preview-stage{min-height:300px!important;flex:none!important}}
+
+/* Hard override: the app's tool panel may not be nested under #root in all builds. */
+.tool-page-panel.bg-tool-panel:has(.bg-remover){position:fixed!important;inset:0!important;z-index:10000!important;width:100vw!important;height:100dvh!important;max-width:none!important;min-width:100vw!important;margin:0!important;padding:0!important;overflow:hidden!important;transform:none!important;box-sizing:border-box!important}
+.tool-page-panel.bg-tool-panel:has(.bg-remover)>.bg-remover{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;min-width:0!important;margin:0!important;padding:0!important;overflow:hidden!important;box-sizing:border-box!important}
+.tool-page-panel.bg-tool-panel:has(.bg-remover) .bg-remover-head{width:100%!important;box-sizing:border-box!important}
+.tool-page-panel.bg-tool-panel:has(.bg-remover) .bg-main{width:100%!important;max-width:none!important;flex:1 1 auto!important;min-height:0!important;margin:0!important;box-sizing:border-box!important}
+.tool-page-panel.bg-tool-panel:has(.bg-remover) .bg-workspace{width:100%!important;max-width:none!important;grid-template-columns:minmax(340px,34%) minmax(0,1fr)!important;flex:1 1 auto!important;min-height:0!important}
+.tool-page-panel.bg-tool-panel:has(.bg-remover) .bg-right{min-width:0!important;width:auto!important}
