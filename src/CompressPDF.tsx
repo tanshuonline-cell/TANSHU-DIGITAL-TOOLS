@@ -148,7 +148,7 @@ export default function CompressPDF({hi=false,onBack=()=>{}}:{hi?:boolean;onBack
      </div>
      <div className="cpdf-pagebar"><button disabled={page<=1} onClick={()=>setPage(p=>Math.max(1,p-1))}><ChevronLeft size={17}/></button><span>{tr('Page','पेज')} {page} / {loaded.pages}</span><button disabled={page>=loaded.pages} onClick={()=>setPage(p=>Math.min(loaded.pages,p+1))}><ChevronRight size={17}/></button><span className="cpdf-preview-size">{displayedSize?formatBytes(displayedSize):''}</span></div>
      <div className="cpdf-canvas-scroll"><div className="cpdf-paper"><canvas ref={previewMode==='original'?originalCanvas:resultCanvas}/>{previewMode==='result'&&!result&&<div className="cpdf-paper-placeholder">{tr('Compress the PDF to preview the result','रिजल्ट देखने के लिए PDF कंप्रेस करें')}</div>}</div></div>
-     {result&&<div className="cpdf-result-footer"><span><CheckCircle2 size={16}/>{tr('Compressed PDF ready','कंप्रेस PDF तैयार')}</span><button onClick={download}><Download size={16}/>{tr('Download PDF','PDF डाउनलोड करें')}</button></div>}
+     {result&&<div className="cpdf-result-footer"><span><CheckCircle2 size={16}/>{tr('Compressed PDF ready','कंप्रेस PDF तैयार')}{qualityLabel?' · '+qualityLabel:''}</span><button onClick={download}><Download size={16}/>{tr('Download PDF','PDF डाउनलोड करें')}</button></div>}
     </>}
    </main>
   </div>
