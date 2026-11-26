@@ -50,7 +50,7 @@ export const makers=[
 
 {en:'PDF 4 Pages Per Sheet',hi:'PDF एक शीट पर 4 पेज',sub:'Fit four PDF pages on one A4 sheet',icon:Grid2X2,tag:'STUDENT PICK'},
 {en:'CSC & Cyber Cafe Customer Service Forms',hi:'CSC और साइबर कैफे ग्राहक सेवा फॉर्म',sub:'Customer intake, online application, service charges, payment proof and consent — print shop and customer copies',icon:Landmark,tag:'NEW'},
-{en:'Photo & Signature Resizer',hi:'फोटो और सिग्नेचर रिसाइज़र',sub:'Prepare form-ready photo and signature',icon:Image,tag:'MOST USED'},
+{en:'PAN PHOTO & SIGNATURE RESIZER – ACTUAL SIZE',hi:'PAN फोटो और सिग्नेचर रिसाइज़र – वास्तविक साइज',sub:'Prepare PAN application photos and signatures to the selected portal’s required dimensions, format and maximum file size. Automatically resize and compress files for quick upload.',subHi:'PAN आवेदन के फोटो और सिग्नेचर को चुने गए पोर्टल के तय साइज, फॉर्मेट और अधिकतम KB में तैयार करें। ऑटोमैटिक रिसाइज़ और कंप्रेस करके अपलोड के लिए फाइल डाउनलोड करें।',details:'• Prepare a PAN applicant photo and signature separately\n• Choose the application portal / specification profile before processing\n• Crop, resize and compress to the selected dimensions and maximum KB\n• Preview the result and check its dimensions and file size\n• Download separate, upload-ready JPEG files',detailsHi:'• PAN आवेदन का फोटो और सिग्नेचर अलग-अलग तैयार करें\n• प्रोसेस करने से पहले आवेदन पोर्टल / स्पेसिफिकेशन चुनें\n• चुने गए पिक्सेल साइज और अधिकतम KB के अनुसार क्रॉप, रिसाइज़ और कंप्रेस करें\n• डाउनलोड से पहले फोटो का साइज और फाइल KB जाँचें\n• अपलोड के लिए तैयार अलग-अलग JPEG फाइलें डाउनलोड करें',icon:Image,tag:'MOST USED'},
 {en:'JPG to PDF Maker',hi:'JPG से PDF मेकर',sub:'Combine photos and scans into PDF',icon:FileText,tag:'POPULAR'},
 {en:'PDF Compress & Resize',hi:'PDF कंप्रेस और रिसाइज़',sub:'Reduce size for online applications',icon:Zap,tag:'POPULAR'},
 {en:'PDF Merge & Split',hi:'PDF मर्ज और स्प्लिट',sub:'Combine or separate document pages',icon:FolderOpen,tag:''},
@@ -213,7 +213,7 @@ export const tools=[
 ['education','CGPA & GPA Calculator','CGPA और GPA कैलकुलेटर','Convert grades and calculate semester averages',GraduationCap],
 ['finance','Gold & Silver Rate Calculator','सोना और चाँदी कैलकुलेटर','Estimate metal value by weight, purity and entered rate',Landmark],
 ['education','MPESB Exam Form & Document Helper','MPESB परीक्षा फॉर्म और डॉक्यूमेंट हेल्पर','Organize application details and supporting documents for MP exams',FileText],
-['photo','PAN Application Photo & Signature Presets','PAN आवेदन फोटो और सिग्नेचर प्रीसेट','Prepare photo and signature files to selected PAN form specifications',Image],
+['photo','PAN PHOTO & SIGNATURE RESIZER – ACTUAL SIZE','PAN फोटो और सिग्नेचर रिसाइज़र – वास्तविक साइज','Resize PAN application photo and signature to the selected portal dimensions and file-size limits. Save ready-to-upload files and save counter time.',Image],
 ['web','WhatsApp Media & Print Toolkit','व्हाट्सऐप मीडिया और प्रिंट टूलकिट','Prepare customer-shared images and documents for printing',Printer],
 ['graphics','Notebook Name Sticker Designer','कॉपी नाम स्टिकर डिजाइनर','Create school notebook labels with name, class and subject',GraduationCap],
 ['stamp','Stamp Paper Document Formatter','स्टाम्प पेपर डॉक्यूमेंट फॉर्मेटर','Format user-provided legal text for authorised stamp-paper use; does not issue e-stamps',FileText],
