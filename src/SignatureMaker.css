@@ -57,3 +57,6 @@ html:has(.sig-shell),body:has(.sig-shell){overflow:hidden!important;height:100dv
  .sig-export{margin:17px -17px -17px;padding:17px;display:flex;flex-direction:column;align-items:stretch}
  .sig-export button{width:100%;white-space:normal}
 }
+
+.sig-zoom{display:flex;align-items:center;gap:7px;margin-left:auto;margin-right:14px}.sig-zoom button{min-width:30px;height:30px;border:1px solid #dfe2e8;border-radius:8px;background:#fff;color:#b50035;font-weight:800;cursor:pointer}.sig-zoom span{min-width:42px;text-align:center;font-size:11px;color:#555d69}.sig-preview-head{display:flex;gap:12px}.sig-pad{overflow:auto;align-items:flex-start;justify-content:flex-start}.sig-pad canvas{flex-shrink:0;max-width:none!important;max-height:none!important}
+@media(max-width:760px){.sig-zoom{margin:0 0 0 auto;gap:4px}.sig-zoom button{min-width:27px;height:27px}.sig-preview-head{flex-wrap:wrap}.sig-pad{overflow:auto}.sig-pad canvas{max-width:none!important}}
