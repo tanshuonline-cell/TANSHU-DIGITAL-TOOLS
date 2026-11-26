@@ -106,3 +106,18 @@
 @keyframes bg-scan-glide{0%{left:0}100%{left:100%}}
 @media(max-width:900px){.bg-remover{height:auto;min-height:100dvh;overflow:visible;display:block}.bg-main{display:block;padding:18px}.bg-workspace{display:grid;grid-template-columns:1fr;min-height:0}.bg-left,.bg-right{height:auto;max-height:none;overflow:visible}.bg-preview-stage{height:clamp(300px,60vw,480px);flex:none}.bg-compare-view{height:100%}}
 @media(max-width:540px){.bg-main{padding:14px}.bg-left,.bg-right{padding:15px}.bg-compare-controls{gap:7px}.bg-compare-controls button{padding:8px 9px}}
+
+
+/* Match Signature Background Remover's fullscreen two-pane workspace; retain Photo tool palette. */
+html:has(.bg-remover),body:has(.bg-remover){overflow:hidden!important;height:100dvh!important}
+html body #root .tool-page-panel.bg-tool-panel:has(.bg-remover){position:fixed!important;inset:0!important;z-index:9999!important;width:100vw!important;height:100dvh!important;max-width:none!important;min-width:100vw!important;margin:0!important;padding:0!important;overflow:hidden!important;transform:none!important;display:block!important;box-sizing:border-box!important}
+html body #root .tool-page-panel.bg-tool-panel:has(.bg-remover)>.bg-remover{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;display:flex!important;flex-direction:column!important;overflow:hidden!important;box-sizing:border-box!important}
+.bg-remover-head{flex:0 0 76px!important}
+.bg-remover .bg-main{flex:1!important;display:flex!important;flex-direction:column!important;width:100%!important;max-width:none!important;min-width:0!important;min-height:0!important;height:auto!important;margin:0!important;padding:22px 20px!important;box-sizing:border-box!important;overflow:hidden!important}
+.bg-remover .bg-intro{display:none!important}
+.bg-remover .bg-workspace{flex:1!important;min-height:0!important;width:100%!important;max-width:none!important;grid-template-columns:minmax(340px,.34fr) minmax(0,.66fr)!important;align-items:stretch!important;gap:14px!important;overflow:hidden!important}
+.bg-remover .bg-left,.bg-remover .bg-right{height:100%!important;max-height:100%!important;min-height:0!important;box-sizing:border-box!important;overflow-y:auto!important}
+.bg-remover .bg-right{display:flex!important;flex-direction:column!important;overflow:hidden!important}
+.bg-remover .bg-preview-stage{flex:1!important;min-height:0!important;width:100%!important}
+.bg-remover .bg-compare-view{width:100%!important;height:100%!important}
+@media(max-width:760px){html body #root .tool-page-panel.bg-tool-panel:has(.bg-remover){overflow:auto!important}.bg-remover-head{flex-basis:64px!important}.bg-remover .bg-main{overflow:visible!important;padding:12px!important}.bg-remover .bg-workspace{display:flex!important;flex-direction:column!important;overflow:visible!important}.bg-remover .bg-left,.bg-remover .bg-right{height:auto!important;max-height:none!important;overflow:visible!important}.bg-remover .bg-preview-stage{min-height:300px!important;flex:none!important}}
