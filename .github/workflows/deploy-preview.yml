@@ -1,7 +1,7 @@
 name: Deploy premium UI preview
 on:
   push:
-    branches: [design/premium-ui]
+    branches: [design/premium-ui, design/premium-final-v3]
   workflow_dispatch:
 permissions:
   contents: read
