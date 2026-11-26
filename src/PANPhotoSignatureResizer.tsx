@@ -22,7 +22,9 @@ export default function PANPhotoSignatureResizer({onBack}:{onBack?:()=>void}){
  const [busy,setBusy]=useState(false);
  const [error,setError]=useState('');
  const [custom,setCustom]=useState({photoW:2.5,photoH:3.5,photoKB:20,sigW:4.5,sigH:2,sigKB:10,dpi:200});
- const [removeBg,setRemoveBg]=useState(false);
+ const [processedBgUrls,setProcessedBgUrls]=useState<Record<Kind,string|null>>({photo:null,signature:null});
+ const [bgBusy,setBgBusy]=useState(false);
+ const [bgStatus,setBgStatus]=useState('');
  const [bgColor,setBgColor]=useState('#ffffff');
  const [tolerance,setTolerance]=useState(42);
  const fileRef=useRef<HTMLInputElement>(null);
@@ -36,9 +38,34 @@ export default function PANPhotoSignatureResizer({onBack}:{onBack?:()=>void}){
  const ratio=px.w/Math.max(1,px.h);
  useEffect(()=>{return ()=>{Object.values(urls).forEach(u=>u&&URL.revokeObjectURL(u));Object.values(outputs).forEach(o=>o&&URL.revokeObjectURL(o.url));};},[]);
  useEffect(()=>{setZoom(100);setOffset({x:0,y:0});},[kind,profile]);
- useEffect(()=>{const url=urls[kind];if(!url){imageRef.current=null;return;}const img=new Image();img.onload=()=>{imageRef.current=img;setZoom(100);setOffset({x:0,y:0});};img.src=url;return()=>{imageRef.current=null;};},[urls,kind]);
- const setFile=(f:File|null)=>{setError('');const old=urls[kind];if(old)URL.revokeObjectURL(old);const next=f?URL.createObjectURL(f):null;setFiles(v=>({...v,[kind]:f}));setOutputs(v=>({...v,[kind]:null}));setUrls(v=>({...v,[kind]:next}));setZoom(100);setOffset({x:0,y:0});};
+ useEffect(()=>{const url=processedBgUrls[kind]||urls[kind];if(!url){imageRef.current=null;return;}const img=new Image();img.onload=()=>{imageRef.current=img;setZoom(100);setOffset({x:0,y:0});};img.src=url;return()=>{imageRef.current=null;};},[urls,processedBgUrls,kind]);
+ const setFile=(f:File|null)=>{setError('');setBgStatus('');const old=urls[kind];if(old)URL.revokeObjectURL(old);const oldBg=processedBgUrls[kind];if(oldBg)URL.revokeObjectURL(oldBg);const next=f?URL.createObjectURL(f):null;setFiles(v=>({...v,[kind]:f}));setOutputs(v=>({...v,[kind]:null}));setUrls(v=>({...v,[kind]:next}));setProcessedBgUrls(v=>({...v,[kind]:null}));setZoom(100);setOffset({x:0,y:0});};
  const frameSize=()=>{const stage=stageRef.current;if(!stage)return {w:260,h:Math.round(260/ratio)};const maxW=Math.max(120,stage.clientWidth-48),maxH=Math.max(150,stage.clientHeight-48);let w=Math.min(maxW,kind==='photo'?280:360),h=w/ratio;if(h>maxH){h=maxH;w=h*ratio;}return {w,h};};
+ const removeBackground=async()=>{
+  const source=urls[kind];if(!source){setError('पहले फोटो अपलोड करें।');return;}
+  setBgBusy(true);setError('');setBgStatus('Background अलग किया जा रहा है…');
+  try{
+   const img=new Image();img.src=source;await new Promise<void>((resolve,reject)=>{img.onload=()=>resolve();img.onerror=()=>reject(new Error('Image load नहीं हो सकी।'));});
+   const canvas=document.createElement('canvas');canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;
+   const ctx=canvas.getContext('2d',{willReadFrequently:true});if(!ctx)throw new Error('Canvas उपलब्ध नहीं है।');
+   ctx.drawImage(img,0,0);const image=ctx.getImageData(0,0,canvas.width,canvas.height),d=image.data,w=canvas.width,h=canvas.height;
+   const corners=[[0,0],[w-1,0],[0,h-1],[w-1,h-1],[Math.floor(w/2),0],[Math.floor(w/2),h-1],[0,Math.floor(h/2)],[w-1,Math.floor(h/2)]];
+   const samples=corners.map(([x,y])=>{const i=(y*w+x)*4;return [d[i],d[i+1],d[i+2]];});
+   const base=samples.reduce((a,s)=>a.map((v,i)=>v+s[i]/samples.length),[0,0,0]);
+   const threshold=Math.max(18,tolerance*1.35),feather=threshold+34,total=w*h,seen=new Uint8Array(total),queue=new Int32Array(total);let head=0,tail=0;
+   const matches=(p:number)=>{const i=p*4,dr=d[i]-base[0],dg=d[i+1]-base[1],db=d[i+2]-base[2];return Math.sqrt(dr*dr+dg*dg+db*db)<feather;};
+   const add=(p:number)=>{if(p<0||p>=total||seen[p]||!matches(p))return;seen[p]=1;queue[tail++]=p;};
+   for(let x=0;x<w;x++){add(x);add((h-1)*w+x);}for(let y=1;y<h-1;y++){add(y*w);add(y*w+w-1);}
+   while(head<tail){const p=queue[head++],x=p%w,y=(p/w)|0;if(x>0)add(p-1);if(x<w-1)add(p+1);if(y>0)add(p-w);if(y<h-1)add(p+w);}
+   let removed=0;
+   for(let p=0;p<total;p++){if(!seen[p])continue;const i=p*4,dr=d[i]-base[0],dg=d[i+1]-base[1],db=d[i+2]-base[2],dist=Math.sqrt(dr*dr+dg*dg+db*db);const alpha=Math.max(0,Math.min(1,(dist-threshold)/(feather-threshold)));d[i+3]=Math.round(d[i+3]*alpha);if(alpha<.95)removed++;}
+   if(removed<total*.002)throw new Error('किनारों पर साफ़ background नहीं मिला। साफ़/एकसमान background वाली फोटो चुनें या Skip करें।');
+   ctx.putImageData(image,0,0);const blob=await new Promise<Blob|null>(r=>canvas.toBlob(r,'image/png'));if(!blob)throw new Error('Transparent PNG नहीं बन सकी।');
+   const next=URL.createObjectURL(blob),old=processedBgUrls[kind];if(old)URL.revokeObjectURL(old);
+   setProcessedBgUrls(v=>({...v,[kind]:next}));setBgStatus('Background हट गया। अब नीचे नया रंग चुनें और crop frame में फोटो सेट करें।');setZoom(100);setOffset({x:0,y:0});
+  }catch(e){setBgStatus('');setError(e instanceof Error?e.message:'Background removal असफल रहा।');}finally{setBgBusy(false);}
+ };
+ const skipBackground=()=>{const old=processedBgUrls[kind];if(old)URL.revokeObjectURL(old);setProcessedBgUrls(v=>({...v,[kind]:null}));setBgStatus('Background removal skip किया गया। Original photo इस्तेमाल होगी।');setError('');setZoom(100);setOffset({x:0,y:0});};
  const drawCrop=(canvas:HTMLCanvasElement)=>{
   const img=imageRef.current;if(!img)throw new Error('पहले फोटो अपलोड करें।');
   canvas.width=px.w;canvas.height=px.h;const ctx=canvas.getContext('2d');if(!ctx)throw new Error('Canvas unavailable');
@@ -49,15 +76,6 @@ export default function PANPhotoSignatureResizer({onBack}:{onBack?:()=>void}){
   const dy=(px.h-dh)/2+(offset.y/Math.max(1,frameSize().h))*px.h;
   const temp=document.createElement('canvas');temp.width=px.w;temp.height=px.h;const t=temp.getContext('2d');if(!t)throw new Error('Canvas unavailable');
   t.drawImage(img,dx,dy,dw,dh);
-  if(removeBg){
-   const data=t.getImageData(0,0,px.w,px.h),d=data.data;
-   const corners=[[0,0],[px.w-1,0],[0,px.h-1],[px.w-1,px.h-1]];
-   const samples=corners.map(([x,y])=>{const i=(y*px.w+x)*4;return [d[i],d[i+1],d[i+2]];});
-   const sample=samples.reduce((a,c)=>a.map((v,i)=>v+c[i]/samples.length),[0,0,0]);
-   const hex=bgColor.replace('#','');const rgb=[parseInt(hex.slice(0,2),16),parseInt(hex.slice(2,4),16),parseInt(hex.slice(4,6),16)];
-   for(let i=0;i<d.length;i+=4){const dist=Math.sqrt((d[i]-sample[0])**2+(d[i+1]-sample[1])**2+(d[i+2]-sample[2])**2);if(dist<tolerance*2.2){const alpha=Math.max(0,Math.min(1,(dist-tolerance*.7)/(tolerance*1.5)));d[i]=rgb[0];d[i+1]=rgb[1];d[i+2]=rgb[2];d[i+3]=Math.round(d[i+3]*alpha);}}
-   t.putImageData(data,0,0);
-  }
   ctx.drawImage(temp,0,0);
  };
  const process=async()=>{
@@ -91,13 +109,13 @@ export default function PANPhotoSignatureResizer({onBack}:{onBack?:()=>void}){
      <button className="panrs-upload" onClick={()=>fileRef.current?.click()}><Upload size={17}/> {files[kind]?'Change image':'Upload '+(kind==='photo'?'Photo':'Signature')}</button><input ref={fileRef} hidden type="file" accept="image/jpeg,image/png,image/webp" onChange={e=>setFile(e.target.files?.[0]||null)}/>{files[kind]&&<small className="panrs-file">{files[kind]?.name}</small>}
      <div className="panrs-crop-help"><Move size={15}/> फोटो को फ्रेम के अंदर उँगली / माउस से पकड़कर खिसकाएँ। फ्रेम के बाहर का हिस्सा crop होगा।</div>
      <label className="panrs-zoom-label">Crop zoom <b>{zoom}%</b></label><input className="panrs-range" type="range" min="50" max="250" value={zoom} onChange={e=>setZoom(Number(e.target.value))}/><div className="panrs-zoom-btns"><button onClick={()=>setZoom(v=>Math.max(50,v-10))}><ZoomOut size={15}/> Zoom out</button><button onClick={()=>setZoom(v=>Math.min(250,v+10))}><ZoomIn size={15}/> Zoom in</button><button onClick={()=>{setZoom(100);setOffset({x:0,y:0});}}><RotateCcw size={14}/> Reset</button></div>
-     <div className="panrs-bg-tools"><label><input type="checkbox" checked={removeBg} onChange={e=>setRemoveBg(e.target.checked)}/> Background remove / replace</label><div className="panrs-bg-row"><label>New background <input type="color" value={bgColor} onChange={e=>setBgColor(e.target.value)}/></label><label>Removal strength <input type="range" min="10" max="100" value={tolerance} onChange={e=>setTolerance(Number(e.target.value))}/></label></div><small>यह simple colour-based removal है। साफ़, एक-जैसे background पर बेहतर काम करता है; बालों/जटिल background पर manual जाँच करें।</small></div>
+     <div className="panrs-bg-tools"><b className="panrs-bg-title">Background tools</b><p className="panrs-bg-desc">पहले चाहें तो background हटाएँ। नहीं हटाना है तो Skip करें।</p><div className="panrs-bg-actions"><button type="button" onClick={removeBackground} disabled={bgBusy||!files[kind]}>{bgBusy?'Removing…':'Remove Background'}</button><button type="button" onClick={skipBackground} disabled={!files[kind]}>Skip Background Removal</button></div><div className="panrs-bg-row"><label>New background colour <input type="color" value={bgColor} onChange={e=>setBgColor(e.target.value)}/></label><label>Edge sensitivity <input type="range" min="10" max="100" value={tolerance} onChange={e=>setTolerance(Number(e.target.value))}/></label></div>{bgStatus&&<small className="panrs-bg-status">{bgStatus}</small>}<small>Removal किनारों से जुड़े समान रंग के background को अलग करता है। बहुत जटिल या बालों के आसपास के background में नतीजा जाँचें।</small></div>
      <button className="panrs-primary" disabled={busy||!files[kind]} onClick={process}>{busy?'Preparing…':'Crop, Resize & Compress'}</button>{error&&<p className="panrs-error"><AlertCircle size={15}/>{error}</p>}
     </section>
     <section className="panrs-card"><h3>3. Download / Print</h3>{outputs[kind]?<><p className="panrs-success"><CheckCircle2 size={15}/> Ready · {outputs[kind]!.kb.toFixed(1)} KB</p><button className="panrs-primary" onClick={download}><Download size={16}/> Download JPG</button><button className="panrs-secondary" onClick={print}><Printer size={16}/> Print at actual size</button></>:<p className="panrs-muted">Crop the photo in the frame, then prepare it to enable download.</p>}</section>
    </aside>
    <main className="panrs-preview"><div className="panrs-preview-top"><div><b>PAN ACTUAL-SIZE CROP FRAME</b><small>{kind==='photo'?'Photo':'Signature'} · {current.w} × {current.h} cm · {px.w} × {px.h} px</small></div><div className="panrs-zoom-btns"><button onClick={()=>setZoom(v=>Math.max(50,v-10))}><ZoomOut size={15}/></button><button onClick={()=>setZoom(v=>Math.min(250,v+10))}><ZoomIn size={15}/></button><button onClick={()=>{setZoom(100);setOffset({x:0,y:0});}}><RotateCcw size={14}/></button></div></div>
-    <div className="panrs-stage" ref={stageRef}><div className={'panrs-paper panrs-crop-frame'+(dragging?' is-dragging':'')} style={liveStyle} onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={endDrag} onPointerCancel={endDrag}>{outputs[kind]?<img src={outputs[kind]!.url} alt="Final PAN crop"/>:urls[kind]?<img src={urls[kind]!} alt="Crop preview" style={{width:'100%',height:'100%',objectFit:'contain',transform:'translate('+((offset.x/Math.max(1,frameSize().w))*100)+'%,'+((offset.y/Math.max(1,frameSize().h))*100)+'%) scale('+zoom/100+')'}}/>:<div className="panrs-empty"><ImageIcon size={40}/><b>Preview will appear here</b><span>Upload a {kind} to position it in PAN frame</span></div>}<span className="panrs-frame-label">PAN ACTUAL CROP</span></div></div>
+    <div className="panrs-stage" ref={stageRef}><div className={'panrs-paper panrs-crop-frame'+(dragging?' is-dragging':'')} style={{...liveStyle,background:bgColor}} onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={endDrag} onPointerCancel={endDrag}>{outputs[kind]?<img src={outputs[kind]!.url} alt="Final PAN crop"/>:urls[kind]?<img src={urls[kind]!} alt="Crop preview" style={{width:'100%',height:'100%',objectFit:'contain',transform:'translate('+((offset.x/Math.max(1,frameSize().w))*100)+'%,'+((offset.y/Math.max(1,frameSize().h))*100)+'%) scale('+zoom/100+')'}}/>:<div className="panrs-empty"><ImageIcon size={40}/><b>Preview will appear here</b><span>Upload a {kind} to position it in PAN frame</span></div>}<span className="panrs-frame-label">PAN ACTUAL CROP</span></div></div>
     <div className="panrs-metrics"><div><small>Output dimensions</small><b>{px.w} × {px.h} px</b></div><div><small>Target file size</small><b>≤ {current.kb} KB</b></div><div><small>Resolution target</small><b>{dpi} DPI</b></div><div><small>Output format</small><b>JPEG</b></div></div>
     <p className="panrs-disclaimer">फ्रेम के अंदर दिखने वाला हिस्सा ही crop होगा। Final output तय pixel dimensions में बनेगा। Background removal एक अनुमानित colour-key प्रक्रिया है; डाउनलोड से पहले चेहरा, बाल और किनारे जाँचें।</p>
    </main>
