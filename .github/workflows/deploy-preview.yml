@@ -29,7 +29,7 @@ jobs:
         with:
           path: dist
   deploy:
-    if: github.ref == 'refs/heads/design/premium-ui'
+    if: github.ref == 'refs/heads/design/premium-ui' || github.ref == 'refs/heads/design/premium-final-v3'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
