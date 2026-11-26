@@ -1,1 +1,59 @@
 .sig-shell{position:fixed;inset:0;z-index:10000;background:#100d10;color:#f8edf0;font-family:Inter,'Noto Sans Devanagari',sans-serif;overflow:auto}.sig-header{height:76px;display:flex;align-items:center;gap:22px;padding:0 28px;border-bottom:1px solid #39232a;background:#171014}.sig-back,.sig-reset{display:flex;align-items:center;gap:8px;border:1px solid #50313a;border-radius:10px;background:#21151a;color:#e9d8dd;padding:10px 13px;font-size:12px;font-weight:700;cursor:pointer}.sig-brand{display:flex;align-items:center;gap:11px}.sig-brand>span{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#a52b43,#681326);color:white}.sig-brand b,.sig-brand small{display:block}.sig-brand b{font-size:14px;letter-spacing:.04em}.sig-brand small{font-size:10px;color:#b89ba4;margin-top:4px}.sig-reset{margin-left:auto}.sig-workspace{display:grid;grid-template-columns:minmax(290px,.36fr) minmax(0,.64fr);gap:22px;max-width:1600px;margin:0 auto;padding:24px}.sig-settings,.sig-preview{border:1px solid #3c252d;border-radius:18px;background:#1a1216;min-width:0}.sig-settings{padding:24px}.sig-eyebrow,.sig-preview-head>div>span{font-size:10px;letter-spacing:.15em;font-weight:800;color:#d66a80}.sig-settings h2,.sig-preview h2{font-size:22px;margin:9px 0;letter-spacing:-.03em}.sig-settings p{font-size:12px;line-height:1.7;color:#bdaab0;margin:0 0 23px}.sig-settings label{display:block;font-size:11px;font-weight:700;color:#d9c4cb;margin:18px 0 9px}.sig-settings input[type=color]{width:100%;height:35px;border:1px solid #4a3038;border-radius:8px;background:#26191e;padding:3px}.sig-settings input[type=range]{width:100%;accent-color:#b72e4a}.sig-swatches{display:flex;gap:10px;flex-wrap:wrap}.sig-swatches button{width:27px;height:27px;border:2px solid #1a1216;border-radius:50%;outline:1px solid #60404a;cursor:pointer}.sig-swatches button.selected{outline:2px solid #d95772;outline-offset:2px}.sig-swatches .sig-paper{border-radius:7px}.sig-custom{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#cbb6bd;margin-top:10px}.sig-custom input{width:60px!important;height:30px!important}.sig-actions{display:flex;gap:9px;margin-top:24px}.sig-actions button{display:flex;align-items:center;gap:7px;border:1px solid #50313a;border-radius:9px;background:#281920;color:#e8d7dc;padding:10px;font-size:11px;font-weight:700;cursor:pointer}.sig-note{display:flex;gap:10px;margin-top:24px;padding:13px;border-radius:10px;background:#25171d;color:#c8aab4;font-size:10px;line-height:1.6}.sig-note svg{flex-shrink:0;color:#df6b83}.sig-preview{padding:26px;display:flex;flex-direction:column}.sig-preview-head{display:flex;justify-content:space-between;align-items:center}.sig-preview-head h2{margin:6px 0 0}.sig-preview-head small{font-size:10px;color:#b99ca5}.sig-pad{margin-top:24px;border:1px solid #55313b;border-radius:13px;overflow:hidden;touch-action:none;min-height:280px;display:flex;align-items:center}.sig-pad canvas{display:block;width:100%;height:auto;aspect-ratio:3/1;touch-action:none;cursor:crosshair}.sig-pad-footer{display:flex;justify-content:space-between;gap:10px;color:#987d87;font-size:10px;margin-top:10px}.sig-export{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:auto;padding-top:25px}.sig-export b{font-size:13px}.sig-export p{font-size:11px;color:#b69ca5;margin:6px 0 0}.sig-export button{display:flex;align-items:center;gap:9px;border:0;border-radius:10px;background:linear-gradient(135deg,#bd3551,#81172f);color:#fff;padding:13px 17px;font-size:12px;font-weight:800;white-space:nowrap;cursor:pointer;box-shadow:0 8px 22px #9e244133}.sig-message{font-size:11px;color:#e7a4b2;margin:15px 0 0}@media(max-width:760px){.sig-header{height:64px;padding:0 10px;gap:8px}.sig-back{font-size:0;padding:9px}.sig-back svg{width:18px}.sig-brand{gap:7px}.sig-brand>span{width:33px;height:33px}.sig-brand b{font-size:11px}.sig-brand small{font-size:8px}.sig-reset{font-size:0;padding:9px;margin-left:auto}.sig-reset svg{width:17px}.sig-workspace{display:flex;flex-direction:column;padding:12px;gap:12px}.sig-settings,.sig-preview{padding:16px;border-radius:14px}.sig-preview{min-height:390px}.sig-pad{min-height:160px;margin-top:16px}.sig-pad canvas{min-height:160px}.sig-export{align-items:flex-start;flex-direction:column}.sig-export button{width:100%;justify-content:center}.sig-pad-footer{font-size:9px}.sig-settings h2,.sig-preview h2{font-size:19px}}
+
+/* Signature Maker: polished two-pane workspace, matching the reference layout with original styling */
+html:has(.sig-shell),body:has(.sig-shell){overflow:hidden!important;height:100dvh!important}
+.sig-shell{position:fixed!important;inset:0!important;z-index:10000!important;width:100vw!important;height:100dvh!important;min-height:0!important;overflow:hidden!important;background:#f5f6f8!important;color:#171923!important;font-family:Inter,'Noto Sans Devanagari',sans-serif}
+.sig-header{height:76px;flex-shrink:0;box-sizing:border-box;padding:0 22px;gap:18px;background:linear-gradient(105deg,#bd0037 0%,#a5002b 58%,#870022 100%);border-bottom:1px solid #8f1230;box-shadow:0 3px 14px #7b00231a}
+.sig-back,.sig-reset{background:transparent;border:1px solid #ffffff65;color:#fff;border-radius:11px;padding:11px 15px;font-size:12px}
+.sig-brand>span{width:44px;height:44px;background:linear-gradient(145deg,#ed174b,#c00036);box-shadow:0 5px 14px #65001f38}
+.sig-brand b{font-size:17px;color:#fff;letter-spacing:-.015em}
+.sig-brand small{font-size:11px;color:#ffe0e8}
+.sig-workspace{height:calc(100dvh - 76px);max-height:calc(100dvh - 76px);min-height:0;box-sizing:border-box;display:grid;grid-template-columns:minmax(340px,.34fr) minmax(0,.66fr);gap:14px;padding:22px 20px;max-width:none;overflow:hidden;align-items:stretch}
+.sig-settings,.sig-preview{height:100%;max-height:100%;min-height:0;box-sizing:border-box;border:1px solid #e4e6eb;border-radius:16px;background:#fff;color:#171923;box-shadow:0 5px 18px #1820330b}
+.sig-settings{padding:24px 27px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#c9cbd1 transparent}
+.sig-eyebrow,.sig-preview-head>div>span{font-size:12px;letter-spacing:.09em;color:#d20b45}
+.sig-settings h2,.sig-preview h2{font-size:24px;color:#171923;letter-spacing:-.035em;margin:10px 0}
+.sig-settings p{font-size:14px;line-height:1.65;color:#525866;margin:0 0 24px}
+.sig-settings label{font-size:13px;color:#252936;margin:20px 0 11px}
+.sig-settings input[type=color]{border:1px solid #dfe2e8;background:#fff}
+.sig-settings input[type=range]{accent-color:#c50039}
+.sig-swatches{gap:12px}
+.sig-swatches button{width:31px;height:31px;border-color:#fff;outline:1px solid #e1e3e8}
+.sig-swatches button.selected{outline:2px solid #d20b45;outline-offset:3px}
+.sig-custom{font-size:12px;color:#414754}
+.sig-custom input{width:62px!important;height:34px!important}
+.sig-actions{margin-top:22px;flex-wrap:wrap}
+.sig-actions button{background:#fff;border-color:#e1e3e8;color:#c00039;padding:11px 13px;font-size:12px;box-shadow:0 1px 2px #1418240b}
+.sig-note{background:#fff3f6;border:1px solid #ffe0e8;color:#454b57;font-size:11px;padding:14px;margin-top:22px}
+.sig-note svg{color:#d20b45}
+.sig-preview{padding:24px;display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#c9cbd1 transparent}
+.sig-preview-head{align-items:center;flex-shrink:0}
+.sig-preview-head h2{display:none}
+.sig-preview-head small{font-size:12px;color:#747b87}
+.sig-pad{flex:1;min-height:260px;margin-top:16px;border:1px solid #e3e5e9;border-radius:14px;background:#fff;box-shadow:0 2px 4px #1519230c;display:flex;align-items:center;justify-content:center}
+.sig-pad canvas{width:100%;height:auto;aspect-ratio:3/1;max-height:100%;object-fit:contain}
+.sig-pad-footer{justify-content:center;gap:30px;color:#656b76;font-size:12px;margin:13px 0 0;flex-shrink:0}
+.sig-pad-footer span+span{border-left:1px solid #e0e2e6;padding-left:30px}
+.sig-export{flex-shrink:0;margin:18px -24px -24px;padding:20px 24px 24px;border-top:1px solid #eceef1;display:grid;grid-template-columns:minmax(0,.85fr) minmax(220px,1.15fr);gap:18px}
+.sig-export b{font-size:17px;color:#171923}
+.sig-export p{font-size:13px;line-height:1.6;color:#545b67}
+.sig-export button{justify-content:center;background:linear-gradient(110deg,#d0003d,#a6002e);padding:16px 18px;font-size:14px;box-shadow:0 6px 14px #a9003030}
+.sig-message{color:#a90030}
+@media(max-width:900px) and (min-width:761px){.sig-workspace{grid-template-columns:minmax(290px,.38fr) minmax(0,.62fr);padding:14px;gap:12px}.sig-settings,.sig-preview{padding:18px}.sig-export{margin:16px -18px -18px;padding:16px 18px 18px;grid-template-columns:1fr}.sig-export button{width:100%}}
+@media(max-width:760px){
+ .sig-shell{height:100dvh!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch}
+ .sig-header{height:64px;padding:0 10px;gap:8px}
+ .sig-back{font-size:0;padding:9px}.sig-back svg{width:18px}
+ .sig-brand{gap:7px}.sig-brand>span{width:34px;height:34px}.sig-brand b{font-size:12px}.sig-brand small{font-size:8px;max-width:190px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .sig-reset{font-size:0;padding:9px;margin-left:auto}.sig-reset svg{width:17px}
+ .sig-workspace{height:auto;max-height:none;min-height:0;display:flex;flex-direction:column;padding:12px;gap:12px;overflow:visible}
+ .sig-settings,.sig-preview{height:auto;max-height:none;overflow:visible;padding:17px;border-radius:14px}
+ .sig-settings h2{font-size:21px}.sig-settings p{font-size:13px}
+ .sig-preview{min-height:0}
+ .sig-pad{flex:none;min-height:0;margin-top:13px}
+ .sig-pad canvas{height:auto;min-height:0}
+ .sig-pad-footer{font-size:10px;gap:12px;justify-content:space-around}
+ .sig-pad-footer span+span{padding-left:12px}
+ .sig-export{margin:17px -17px -17px;padding:17px;display:flex;flex-direction:column;align-items:stretch}
+ .sig-export button{width:100%;white-space:normal}
+}
