@@ -2027,3 +2027,7 @@
 /* A4 Multiple Photo Sheet must escape the generic 640px tool-page content width. */
 .tool-page-panel.a4-multiple-photo-sheet-panel{align-items:stretch;justify-content:flex-start;padding:0;overflow:hidden}
 .tool-page-panel.a4-multiple-photo-sheet-panel>*{max-width:none;width:100%;min-width:0}
+
+/* Signature Maker occupies the complete viewport, independent of the site's centered page layout. */
+.tool-page-panel.signature-maker-tool-panel{inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;min-width:0!important;padding:0!important;margin:0!important;align-items:stretch!important;justify-content:flex-start!important;overflow:hidden!important}
+.tool-page-panel.signature-maker-tool-panel>.sig-shell{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important}
