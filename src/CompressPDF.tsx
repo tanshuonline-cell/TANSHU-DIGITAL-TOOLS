@@ -1,7 +1,7 @@
 import React,{useCallback,useEffect,useRef,useState} from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 import {PDFDocument} from 'pdf-lib';
-import {ArrowLeft,Upload,FileText,Download,Minimize2,CheckCircle2,AlertCircle,Loader2,Target,ShieldCheck,FileCheck2,RefreshCw,HardDrive,Layers3} from 'lucide-react';
+import {ArrowLeft,Upload,FileText,Download,Minimize2,CheckCircle2,AlertCircle,Loader2,Target,ShieldCheck,FileCheck2,HardDrive,Layers3} from 'lucide-react';
 import './CompressPDF.css';
 
 (pdfjsLib as any).GlobalWorkerOptions.workerSrc=new URL('pdfjs-dist/build/pdf.worker.min.mjs',import.meta.url).toString();
@@ -117,7 +117,7 @@ export default function CompressPDF({hi=false,onBack=()=>{}}:{hi?:boolean;onBack
     {error&&<div className="cpdf-message error"><AlertCircle size={17}/>{error}</div>}
     {status&&!busy&&!error&&<div className="cpdf-message"><CheckCircle2 size={17}/>{status}</div>}
     {result&&<div className="cpdf-result">
-      <div className="cpdf-result-top"><div className="cpdf-result-icon"><FileCheck2 size={25}/></div><div><b>{tr('Your compressed PDF is ready','आपकी कंप्रेस PDF तैयार है')}</b><small>{achieved?tr('Target size reached','टारगेट साइज हासिल'):tr('Best available compression result','सबसे बेहतर उपलब्ध कंप्रेशन रिजल्ट')}</small></div><span className={achieved?'cpdf-result-state':'cpdf-result-state warning'}>{achieved?tr('SUCCESS','सफल'):tr('CLOSEST','करीबी')}</span></div>
+      <div className="cpdf-result-top"><div className="cpdf-result-icon"><FileCheck2 size={25}/></div><div><b>{tr('Your compressed PDF is ready','आपकी कंप्रेस PDF तैयार है')}</b><small>{achieved?tr('Target size reached','टारगेट साइज हासिल'):tr('Best available compression result','सबसे बेहतर उपलब्ध कंप्रेशन रिजल्ट')} · {qualityLabel}</small></div><span className={achieved?'cpdf-result-state':'cpdf-result-state warning'}>{achieved?tr('SUCCESS','सफल'):tr('CLOSEST','करीबी')}</span></div>
       <div className="cpdf-result-stats"><div><small>{tr('Original','ओरिजिनल')}</small><b>{formatBytes(loaded!.bytes.length)}</b></div><div><small>{tr('Compressed','कंप्रेस्ड')}</small><b>{formatBytes(resultSize)}</b></div><div><small>{tr('Size reduced','साइज कम हुआ')}</small><b>{reduction.toFixed(1)}%</b></div></div>
       <button className="cpdf-download-btn" onClick={download}><Download size={19}/>{tr('DOWNLOAD COMPRESSED PDF','कंप्रेस PDF डाउनलोड करें')}</button>
     </div>}
