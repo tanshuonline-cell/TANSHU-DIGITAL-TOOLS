@@ -254,7 +254,7 @@ export const tools=[
 ['govt','Passport Seva Portal','पासपोर्ट सेवा पोर्टल','Open official Passport Seva services',Globe2],
 ['govt','Driving Licence / Sarathi Portal','ड्राइविंग लाइसेंस / सारथी पोर्टल','Open official Parivahan Sarathi services',Globe2],
 ['govt','UMANG Government Services','उमंग सरकारी सेवाएँ','Open the official UMANG services platform',Globe2],
-['pdf','PNG TO PDF CONVERTER','PNG से PDF कन्वर्टर','Convert one or multiple PNG images into a clean PDF document',FileText],
+['maker','PNG TO PDF CONVERTER','PNG से PDF कन्वर्टर','Convert one or multiple PNG images into a clean PDF document',FileText],
 ['pdf','PDF Page Crop & Margins','PDF पेज क्रॉप और मार्जिन','Adjust page boundaries and print margins',FileText],
 ['pdf','PDF Metadata Viewer','PDF मेटाडेटा व्यूअर','Inspect basic metadata in your PDF files',FileText],
 ['pdf','PDF Image Extractor','PDF इमेज एक्सट्रैक्टर','Extract embedded images from supported PDFs',Image],
