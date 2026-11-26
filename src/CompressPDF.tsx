@@ -1,4 +1,5 @@
 import React,{useCallback,useEffect,useRef,useState} from 'react';
+import {createPortal} from 'react-dom';
 import * as pdfjsLib from 'pdfjs-dist';
 import {PDFDocument} from 'pdf-lib';
 import {ArrowLeft,Upload,FileText,Download,Minimize2,CheckCircle2,AlertCircle,Loader2,Target,ShieldCheck,FileCheck2,HardDrive,Layers3} from 'lucide-react';
@@ -97,7 +98,7 @@ export default function CompressPDF({hi=false,onBack=()=>{}}:{hi?:boolean;onBack
  const choosePreset=(v:string)=>{setPreset(v);if(v==='custom')return;const n=parseFloat(v);setTarget(String(n));setUnit(v.endsWith('MB')?'MB':'KB');};
  const reduction=loaded&&resultSize?Math.max(0,100-(resultSize/loaded.bytes.length*100)):0;
  const achieved=!!result&&resultSize<=targetBytes;
- return <div className="compress-pdf-tool">
+ return createPortal(<div className="compress-pdf-tool">
   <header className="cpdf-topbar"><button className="cpdf-back" onClick={onBack}><ArrowLeft size={18}/>{tr('Back to tools','टूल्स पर वापस')}</button><div className="cpdf-brand"><span className="cpdf-brand-icon"><Minimize2 size={19}/></span><div><b>COMPRESS PDF</b><small>{tr('A smarter way to make PDFs smaller','PDF का साइज कम करने का स्मार्ट तरीका')}</small></div></div><span className="cpdf-local"><ShieldCheck size={15}/>{tr('Private · Browser-based','प्राइवेट · ब्राउज़र में प्रोसेस')}</span></header>
   <main className="cpdf-main">
    <section className="cpdf-hero"><div className="cpdf-hero-copy"><span className="cpdf-kicker">{tr('PDF SIZE OPTIMIZER','PDF साइज ऑप्टिमाइज़र')}</span><h1>{tr('Make your PDF lighter.','अपनी PDF का साइज घटाएँ।')}</h1><p>{tr('Upload, choose the size you need, compress and download. Simple, quick and right here in your browser.','PDF अपलोड करें, मनचाहा साइज चुनें, कंप्रेस करें और डाउनलोड करें। आसान, तेज़ और सीधे आपके ब्राउज़र में।')}</p></div><div className="cpdf-hero-art"><div className="cpdf-art-sheet"><FileText size={42}/><b>PDF</b><i/></div><div className="cpdf-art-arrow"><Minimize2 size={24}/></div><div className="cpdf-art-sheet small"><FileCheck2 size={31}/><b>PDF</b><i/></div></div></section>
@@ -125,5 +126,5 @@ export default function CompressPDF({hi=false,onBack=()=>{}}:{hi?:boolean;onBack
    <section className="cpdf-benefits"><div><HardDrive size={20}/><b>{tr('Actual file size','वास्तविक फाइल साइज')}</b><span>{tr('See the real output size before downloading.','डाउनलोड से पहले असली आउटपुट साइज देखें।')}</span></div><div><Layers3 size={20}/><b>{tr('Single or multi-page','एक या कई पेज')}</b><span>{tr('Compress PDFs with many pages in one go.','कई पेज वाली PDF भी एक बार में कंप्रेस करें।')}</span></div><div><ShieldCheck size={20}/><b>{tr('Browser-based processing','ब्राउज़र में प्रोसेसिंग')}</b><span>{tr('Your document is processed on your device.','आपका डॉक्यूमेंट आपके डिवाइस पर प्रोसेस होता है।')}</span></div></section>
    <p className="cpdf-quality-note">{tr('Note: Very small target sizes may not be possible for every PDF. Strong compression converts page content into images, so selectable text, links and form fields may not be preserved.','नोट: हर PDF को बहुत छोटे साइज तक लाना संभव नहीं होता। अधिक कंप्रेशन में पेज इमेज में बदलते हैं, इसलिए टेक्स्ट सिलेक्शन, लिंक और फॉर्म फील्ड सुरक्षित नहीं रह सकते।')}</p>
   </main>
- </div>;
+ </div>,document.body);
 }
