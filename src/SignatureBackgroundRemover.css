@@ -43,3 +43,36 @@ html:has(.sbr-shell),body:has(.sbr-shell){overflow:hidden!important;height:100dv
  .sbr-downloads button{width:100%!important;min-height:42px!important;white-space:normal!important}
  .sbr-shadow-controls{grid-template-columns:1fr 1fr!important}
 }
+
+
+/* Verified mobile flow: settings first, preview and export after settings. */
+@media(max-width:760px){
+ html:has(.sbr-shell),body:has(.sbr-shell){height:100dvh!important;min-height:100dvh!important;overflow:hidden!important}
+ .tool-page-panel.signature-background-remover-tool-panel{
+  position:fixed!important;inset:0!important;z-index:1400!important;display:block!important;
+  width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;
+  margin:0!important;padding:0!important;overflow-x:hidden!important;overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;overscroll-behavior-y:contain!important
+ }
+ .tool-page-panel.signature-background-remover-tool-panel>.sbr-shell,.sbr-shell{
+  position:relative!important;inset:auto!important;width:100%!important;height:auto!important;
+  min-height:100dvh!important;max-height:none!important;overflow:visible!important;
+  display:flex!important;flex-direction:column!important;padding-bottom:calc(16px + env(safe-area-inset-bottom))!important
+ }
+ .sbr-header{position:sticky!important;top:0!important;z-index:30!important;flex:0 0 auto!important;min-height:60px!important;height:auto!important}
+ .sbr-workspace{display:flex!important;flex:0 0 auto!important;flex-direction:column!important;align-items:stretch!important;
+  width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;
+  padding:10px 10px 20px!important;gap:12px!important}
+ .sbr-settings,.sbr-preview{position:relative!important;inset:auto!important;order:initial!important;
+  display:flex!important;flex-direction:column!important;flex:0 0 auto!important;width:100%!important;height:auto!important;
+  min-height:0!important;max-height:none!important;overflow:visible!important;padding:14px!important;margin:0!important;z-index:auto!important}
+ .sbr-settings{order:0!important}
+ .sbr-preview{order:1!important;gap:12px!important}
+ .sbr-settings label{position:static!important;display:block!important;float:none!important;clear:both!important;margin:14px 0 7px!important;line-height:1.45!important}
+ .sbr-settings input[type=range],.sbr-settings input[type=color]{position:relative!important;display:block!important;width:100%!important;max-width:100%!important}
+ .sbr-pad{position:relative!important;flex:0 0 auto!important;width:100%!important;height:clamp(220px,42vh,360px)!important;min-height:220px!important;max-height:360px!important;overflow:auto!important}
+ .sbr-compare-controls{position:relative!important;display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:10px!important}
+ .sbr-downloads{position:relative!important;display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:8px!important;width:100%!important;margin:0!important}
+ .sbr-downloads button{position:relative!important;display:flex!important;width:100%!important;min-height:44px!important;white-space:normal!important}
+ .sbr-message{position:relative!important;margin:0!important}
+}
