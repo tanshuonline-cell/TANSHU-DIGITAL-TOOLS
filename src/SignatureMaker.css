@@ -148,3 +148,21 @@ html:has(.sig-shell),body:has(.sig-shell){overflow:hidden!important;height:100dv
 .sig-effect-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px}
 .sig-pad{transition:border-color .15s ease,box-shadow .15s ease}
 @media(max-width:760px){.sig-effect-line{grid-template-columns:80px 1fr}.sig-effects{padding:12px}}
+
+/* Mobile: keep the complete settings stack reachable, including the border and export controls. */
+@media(max-width:760px){
+ html:has(.sig-shell),body:has(.sig-shell){height:100%!important;min-height:100%!important;overflow:hidden!important}
+ .tool-page-panel.signature-maker-tool-panel{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;overflow:hidden!important}
+ .tool-page-panel.signature-maker-tool-panel>.sig-shell,.sig-shell{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important;padding-bottom:env(safe-area-inset-bottom)!important}
+ .sig-header{position:sticky!important;top:0!important;z-index:50!important;min-height:60px!important;height:auto!important;background:#171014!important;box-shadow:0 5px 18px #12090d40!important}
+ .tool-page-panel.signature-maker-tool-panel .sig-workspace,.sig-workspace{display:flex!important;flex-direction:column!important;align-items:stretch!important;width:100%!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;padding:10px!important;gap:12px!important}
+ .tool-page-panel.signature-maker-tool-panel .sig-settings,.tool-page-panel.signature-maker-tool-panel .sig-preview,.sig-settings,.sig-preview{position:relative!important;inset:auto!important;width:100%!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;padding:14px!important;z-index:auto!important}
+ .sig-settings{order:0!important}.sig-preview{order:1!important;min-height:0!important}
+ .sig-settings label{margin:14px 0 8px!important;line-height:1.45!important}
+ .sig-effects,.sig-photo-workflow{display:block!important;position:relative!important;overflow:visible!important;margin:14px 0!important;padding:13px!important}
+ .sig-effect-grid,.sig-effect-line{min-width:0!important}
+ .sig-pad{width:100%!important;min-height:190px!important;height:auto!important;max-height:42vh!important;overflow:auto!important}
+ .sig-pad canvas{min-height:0!important;max-width:100%!important;height:auto!important}
+ .sig-export{display:flex!important;flex-direction:column!important;margin:14px 0 0!important;padding:14px 0 0!important;gap:10px!important}
+ .sig-export button,.sig-downloads button{width:100%!important;white-space:normal!important}
+}
