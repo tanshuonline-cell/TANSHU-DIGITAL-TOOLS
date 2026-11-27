@@ -19,7 +19,7 @@ export default function AdminPortal({ onBack }: AdminPortalProps) {
       if (!supabaseUrl || !publishableKey) {
         throw new Error('Admin login is not configured for this preview build. Supabase URL or publishable key is missing.');
       }
-      const response = await fetch(`${supabaseUrl.replace(/\\/$/, '')}/functions/v1/admin-login`, {
+      const response = await fetch(`${supabaseUrl.endsWith('/') ? supabaseUrl.slice(0, -1) : supabaseUrl}/functions/v1/admin-login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', apikey: publishableKey },
         body: JSON.stringify({ username, password }),
