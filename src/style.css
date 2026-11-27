@@ -2122,3 +2122,7 @@
     height:70dvh!important;min-height:460px!important;
   }
 }
+
+
+/* Mobile app viewport guard: prevent accidental page-width overflow while preserving accessible pinch zoom. */
+@media(max-width:760px){html,body,#root{width:100%;max-width:100%;}body{overflow-x:hidden;}.app{width:100%;min-width:0;max-width:100%;overflow-x:clip;}.main-area,main{min-width:0;max-width:100%;}}
