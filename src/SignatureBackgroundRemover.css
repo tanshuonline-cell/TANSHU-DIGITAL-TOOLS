@@ -2,7 +2,7 @@
 
 /* Fullscreen two-pane layout, aligned with Signature Maker */
 html:has(.sbr-shell),body:has(.sbr-shell){overflow:hidden!important;height:100dvh!important}
-.signature-maker-tool-panel:has(.sbr-shell){position:fixed!important;inset:0!important;z-index:9999!important;width:100vw!important;height:100dvh!important;max-width:none!important;margin:0!important;padding:0!important;overflow:hidden!important;transform:none!important}
+.tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell){position:fixed!important;inset:0!important;z-index:9999!important;width:100vw!important;height:100dvh!important;max-width:none!important;margin:0!important;padding:0!important;overflow:hidden!important;transform:none!important}
 .sbr-shell{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;min-height:0!important;overflow:hidden!important;box-sizing:border-box!important}
 .sbr-workspace{height:calc(100dvh - 76px)!important;max-height:calc(100dvh - 76px)!important;min-height:0!important;width:100%!important;box-sizing:border-box!important;grid-template-columns:minmax(340px,.34fr) minmax(0,.66fr)!important;align-items:stretch!important;overflow:hidden!important}
 .sbr-settings,.sbr-preview{height:100%!important;max-height:100%!important;min-height:0!important;box-sizing:border-box!important}
