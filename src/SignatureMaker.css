@@ -133,3 +133,5 @@ html:has(.sig-shell),body:has(.sig-shell){overflow:hidden!important;height:100dv
 .sig-compare-after{clip-path:inset(0 0 0 var(--sig-compare))}
 @keyframes sig-printer-scan{0%{box-shadow:inset 0 0 0 0 #c0003900}50%{box-shadow:inset 0 -4px 0 0 #c00039}100%{box-shadow:inset 0 -100px 0 -96px #c0003900}}
 .sig-scan-button:disabled{animation:sig-printer-scan 1.7s linear infinite}
+
+.sig-pad.sig-scanning{position:relative;overflow:hidden}.sig-pad.sig-scanning:after{content:'';position:absolute;left:0;right:0;top:-8%;height:8px;background:linear-gradient(90deg,transparent,#d0003d,#fff,#d0003d,transparent);box-shadow:0 0 18px #c0003977;animation:sig-scan-sweep 1.7s linear infinite;pointer-events:none}.sig-pad.sig-scanning:before{content:'';position:absolute;z-index:1;left:0;right:0;top:-15%;height:15%;background:linear-gradient(180deg,#d000391c,transparent);animation:sig-scan-wash 1.7s linear infinite;pointer-events:none}@keyframes sig-scan-sweep{to{top:105%}}@keyframes sig-scan-wash{to{top:100%}}
