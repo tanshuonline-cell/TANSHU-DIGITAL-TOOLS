@@ -136,13 +136,50 @@ export default function AdminDashboard() {
   const workspaceUrl=selected?'/?tool-preview='+encodeURIComponent(selected.label):'';
   const categories=[...new Set(toolOptions.map(t=>t.category))].sort((a,b)=>(categoryNames[a]||a).localeCompare(categoryNames[b]||b));
   const visibleConfigs=showAllConfigs?configs:configs.slice(0,5);
-  return <div className="admin-auth-page" style={{display:'block',padding:24,minHeight:'100vh'}}>
+  return <div className="admin-auth-page admin-dashboard-page" style={{display:'block',padding:24,minHeight:'100vh'}}>
+    <style>{`
+      .admin-dashboard-page{box-sizing:border-box;width:100%;max-width:100%;overflow-x:hidden}
+      .admin-dashboard-grid{width:100%;min-width:0}
+      .admin-dashboard-grid>section,.admin-dashboard-grid>div{min-width:0;max-width:100%;box-sizing:border-box}
+      .admin-dashboard-right{min-width:0;max-width:100%;width:100%}
+      .admin-dashboard-config{min-width:0;max-width:100%;overflow:hidden;scroll-margin-top:16px}
+      .admin-dashboard-config input[type=file]{display:block;width:100%;max-width:100%;box-sizing:border-box;margin-top:8px;color:#dce5f5;font-size:13px}
+      .admin-dashboard-config input[type=range]{display:block;width:100%;max-width:100%;margin:9px 0 3px;accent-color:#a9c7ff}
+      .admin-dashboard-config label{display:block;color:#dce5f5;font-size:13px;font-weight:700;line-height:1.45;overflow-wrap:anywhere}
+      .admin-dashboard-config select{max-width:100%;box-sizing:border-box}
+      .admin-dashboard-config button{max-width:100%;white-space:normal;line-height:1.35}
+      @media(max-width:900px){
+        .admin-dashboard-page{padding:12px!important;padding-bottom:calc(24px + env(safe-area-inset-bottom))!important}
+        .admin-dashboard-page>header{gap:10px!important;margin-bottom:14px!important}
+        .admin-dashboard-page>header h1{font-size:23px!important;line-height:1.2!important}
+        .admin-dashboard-page>header .admin-auth-copy{font-size:12px!important;line-height:1.45!important}
+        .admin-dashboard-grid{grid-template-columns:minmax(0,1fr)!important;gap:14px!important;align-items:stretch!important}
+        .admin-dashboard-grid>.admin-dashboard-left{order:0;position:relative;min-width:0}
+        .admin-dashboard-grid>.admin-dashboard-right{order:1;display:grid;grid-template-columns:minmax(0,1fr);gap:14px!important}
+        .admin-dashboard-left>div[style*="maxHeight"]{max-height:250px!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+        .admin-dashboard-config{padding:15px!important}
+        .admin-dashboard-config>div[style*="grid-template-columns"]{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+        .admin-dashboard-config>div[style*="grid-template-columns"]>div:last-child{width:100%;max-width:360px;justify-self:center;aspect-ratio:16/9!important}
+        .admin-dashboard-config>div[style*="display:flex"]{gap:8px!important}
+        .admin-dashboard-config button{min-height:40px;padding:9px 11px!important}
+      }
+      @media(max-width:480px){
+        .admin-dashboard-page{padding:9px!important}
+        .admin-dashboard-page>header{align-items:flex-start!important}
+        .admin-dashboard-page>header>div:last-child{width:100%;display:grid!important;grid-template-columns:1fr 1fr;gap:8px!important}
+        .admin-dashboard-page>header>div:last-child button{justify-content:center;min-height:40px}
+        .admin-dashboard-grid .admin-auth-card{padding:13px!important;border-radius:15px!important}
+        .admin-dashboard-config h2{font-size:19px!important;line-height:1.3!important}
+        .admin-dashboard-config input[type=file]{font-size:12px}
+        .admin-dashboard-config>div[style*="display:flex"] button{flex:1 1 100%;justify-content:center}
+      }
+    `}</style>
     <header style={{maxWidth:1320,margin:'0 auto 22px',display:'flex',justifyContent:'space-between',alignItems:'center',gap:16,flexWrap:'wrap'}}>
       <div><p className="admin-auth-eyebrow">TANSHU DIGITAL TOOLS · ADMIN WORKSPACE</p><h1 style={{marginBottom:4}}>Thumbnail Studio</h1><p className="admin-auth-copy" style={{margin:0}}>Find a website tool, inspect its thumbnail card and configure its image</p></div>
       <div style={{display:'flex',gap:9,flexWrap:'wrap'}}><button onClick={()=>setShowVideoStudio(true)}><MonitorPlay size={15}/> Video Studio</button><button className="admin-auth-back" onClick={()=>{sessionStorage.removeItem('tanshu_admin_session');window.location.assign('/admin-login')}}><LogOut size={15}/> Sign out</button></div>
     </header>
-    <div style={{maxWidth:1320,margin:'auto',display:'grid',gridTemplateColumns:'minmax(280px,0.95fr) minmax(0,1.55fr)',gap:20,alignItems:'start'}}>
-      <section className="admin-auth-card" style={{width:'100%',padding:18}}>
+    <div className="admin-dashboard-grid" style={{maxWidth:1320,margin:'auto',display:'grid',gridTemplateColumns:'minmax(280px,0.95fr) minmax(0,1.55fr)',gap:20,alignItems:'start'}}>
+      <section className="admin-auth-card admin-dashboard-left" style={{width:'100%',padding:18}}>
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',gap:10}}><h2 style={{margin:0}}>Website tools</h2><span className="admin-auth-copy">{toolOptions.length} available</span></div>
         <div style={{position:'relative',marginTop:14}}><Search size={17} style={{position:'absolute',left:12,top:13,color:'#9db7e9'}}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search tool name..." aria-label="Search website tools" style={{width:'100%',boxSizing:'border-box',padding:'12px 12px 12px 38px',background:'#0b1220',color:'white',border:'1px solid #3a4861',borderRadius:10}}/></div>
         <div style={{display:'flex',gap:8,marginTop:10,alignItems:'center'}}><select aria-label="Filter by category" value={category} onChange={e=>setCategory(e.target.value)} style={{flex:1,minWidth:0,padding:10,background:'#0b1220',color:'white',border:'1px solid #3a4861',borderRadius:9}}><option value="all">All categories</option>{categories.map(c=><option key={c} value={c}>{categoryNames[c]||c}</option>)}</select><button type="button" onClick={()=>setView(v=>v==='grid'?'list':'grid')} title="Toggle list or grid" style={{padding:10,background:'#17243a',color:'white',border:'1px solid #3a4861',borderRadius:9}}>{view==='grid'?<List size={17}/>:<Grid2X2 size={17}/>}</button></div>
@@ -160,7 +197,7 @@ export default function AdminDashboard() {
           {!filtered.length&&<p className="admin-auth-copy">No tools match that search. Try a shorter name.</p>}
         </div>
       </section>
-      <div style={{display:'grid',gap:20,minWidth:0}}>
+      <div className="admin-dashboard-right" style={{display:'grid',gap:20,minWidth:0}}>
         <section className="admin-auth-card" style={{width:'100%',padding:22}}>
           <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',gap:12,flexWrap:'wrap'}}><div><p className="admin-auth-eyebrow" style={{marginBottom:5}}>SELECTED TOOL</p><h2 style={{margin:0}}>{selected?.label||'Choose a website tool'}</h2><p className="admin-auth-copy" style={{margin:'6px 0 0'}}>{selected?.description||'Search or select a tool from the directory to see its thumbnail preview.'}</p></div>{selected&&<span style={{fontSize:11,color:'#a9c9ff',border:'1px solid #3d5d86',borderRadius:20,padding:'6px 10px'}}> {selected.ready?'READY TOOL':'DIRECTORY TOOL'}</span>}</div>
           <div style={{marginTop:18,border:'1px solid #34415b',borderRadius:14,overflow:'hidden',background:'#0b1220'}}>
@@ -180,7 +217,7 @@ export default function AdminDashboard() {
           {selected?<iframe key={selected.key} title={selected.label+' actual workspace preview'} src={workspaceUrl} style={{display:'block',width:'100%',height:780,border:'1px solid #34415b',borderRadius:12,background:'#fff'}}/>:<div style={{padding:40,textAlign:'center',border:'1px dashed #52627b',borderRadius:12,color:'#9db7e9'}}>पहले बाईं ओर से कोई website tool चुनें।</div>}
           <p className="admin-auth-copy" style={{margin:'10px 0 0'}}>नोट: जो tool अभी वेबसाइट पर निर्माणाधीन है, उसका वही उपलब्ध status screen दिखेगा। यह preview tool की मौजूदा functionality को नहीं बदलता।</p>
         </section>
-        <section ref={configSectionRef} className="admin-auth-card" style={{width:'100%',padding:22}}>
+        <section ref={configSectionRef} className="admin-auth-card admin-dashboard-config" style={{width:'100%',padding:22}}>
           <h2 style={{marginTop:0}}>Thumbnail configuration</h2>
           <label>Configuration environment</label><select value={environment} onChange={e=>{setEnvironment(e.target.value as 'preview'|'live');const c=configFor(toolKey,e.target.value as 'preview'|'live');if(c){setPath(c.storage_path||'');setFit(c.fit||'cover');setX(c.position_x??50);setY(c.position_y??50);setZoom((c.zoom??1)*100);}else{setPath('');setFit('cover');setX(50);setY(50);setZoom(100);}setFile(null);}} style={{width:'100%',padding:11,marginTop:8,background:'#0b1220',color:'white',border:'1px solid #3a4861',borderRadius:9}}><option value="preview">Preview (safe draft)</option><option value="live">Live</option></select>
           <label style={{display:'block',marginTop:16}}>Upload thumbnail image</label><input ref={fileInputRef} type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>setFile(e.target.files?.[0]||null)}/>
