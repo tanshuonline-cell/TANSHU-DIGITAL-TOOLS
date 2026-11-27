@@ -82,3 +82,83 @@
   touch-action:pan-y;
  }
 }
+
+/* Restored before/after, scan and history workflow styles */
+.bg-compare-view{position:relative;width:100%;height:100%;min-height:220px;overflow:hidden;touch-action:pan-y;cursor:ew-resize;user-select:none}
+.bg-compare-view img{position:absolute;inset:0;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain}
+.bg-compare-view .bg-before-img{clip-path:inset(0 calc(100% - var(--bg-compare)) 0 0)}
+/* Keep the original-photo wipe in the foreground; Auto Compare moves only this overlay, never the preview canvas/background. */
+.bg-compare-view .bg-after-img{z-index:1}
+.bg-compare-view .bg-before-img{z-index:2;will-change:clip-path}
+.bg-compare-view .bg-compare-divider{position:absolute;z-index:3;top:0;bottom:0;left:var(--bg-compare);width:2px;transform:translateX(-1px);background:#fff;box-shadow:0 0 0 1px #1d293522,0 0 14px #18251f55;pointer-events:none}
+.bg-compare-view .bg-compare-divider:after{content:"";position:absolute;left:50%;top:50%;width:26px;height:26px;transform:translate(-50%,-50%);border:2px solid #fff;border-radius:50%;background:#315b3d;box-shadow:0 2px 8px #0003}
+.bg-compare-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 0 2px}
+.bg-compare-controls button{border:1px solid #d9e2da;background:#f3f8f4;color:#315b3d;border-radius:9px;padding:9px 12px;font-size:10px;font-weight:800;cursor:pointer}
+.bg-compare-controls button:disabled{opacity:.55;cursor:wait}
+.bg-compare-controls label{display:flex;align-items:center;gap:8px;flex:1;min-width:130px;font-size:10px;font-weight:800;color:#59616d}
+.bg-compare-controls input{flex:1;min-width:60px;accent-color:#53785c}
+.bg-remover .bg-preview-stage.bg-scan-running{position:relative;isolation:isolate}.bg-remover .bg-preview-stage.bg-scan-running:after{content:"";position:absolute;z-index:5;left:0;right:0;top:-5px;height:5px;background:linear-gradient(90deg,transparent 0%,#d7ad54 12%,#fff8d9 50%,#d7ad54 88%,transparent 100%);box-shadow:0 0 10px 3px #d7ad5488,0 8px 24px #d7ad5444;animation:bg-printer-scan 1.9s linear both;pointer-events:none}.bg-remover .bg-preview-stage.bg-scan-running:before{content:"";position:absolute;z-index:4;inset:0;background:linear-gradient(180deg,transparent 0%,#d7ad5409 48%,#d7ad5420 50%,#d7ad5409 52%,transparent 100%);animation:bg-printer-wash 1.9s linear both;pointer-events:none}@keyframes bg-printer-scan{0%{top:-5px;opacity:0}5%{opacity:1}95%{opacity:1}100%{top:100%;opacity:0}}@keyframes bg-printer-wash{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+@media(max-width:900px){.bg-remover{height:auto;min-height:100dvh;overflow:visible;display:block}.bg-main{display:block;padding:18px}.bg-workspace{display:grid;grid-template-columns:1fr;min-height:0}.bg-left,.bg-right{height:auto;max-height:none;overflow:visible}.bg-preview-stage{height:clamp(300px,60vw,480px);flex:none}.bg-compare-view{height:100%}}
+@media(max-width:540px){.bg-main{padding:14px}.bg-left,.bg-right{padding:15px}.bg-compare-controls{gap:7px}.bg-compare-controls button{padding:8px 9px}}
+.bg-remover .bg-compare-view{width:100%!important;height:100%!important}
+.bg-preview-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.bg-preview-toolbar .bg-panel-title{margin:0}
+.bg-history-controls{display:flex;align-items:center;gap:7px}
+.bg-history-controls button{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid #d9e2da;background:#f3f8f4;color:#315b3d;border-radius:9px;padding:8px 11px;font-size:10px;font-weight:800;cursor:pointer}
+.bg-history-controls button:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:540px){.bg-preview-toolbar{align-items:flex-start}.bg-history-controls{width:100%}.bg-history-controls button{flex:1}}
+
+
+/* Signature Maker: full-screen photo-processing studio with an oversized compare preview. */
+.tool-page-panel.signature-maker-tool-panel{
+  position:fixed!important;inset:0!important;z-index:1400!important;
+  display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:stretch!important;
+  width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;
+  margin:0!important;padding:0!important;overflow:hidden!important;border-radius:0!important;
+}
+.tool-page-panel.signature-maker-tool-panel>.bg-remover.sig-photo-studio{
+  position:relative!important;display:flex!important;flex:1 1 auto!important;flex-direction:column!important;
+  width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;
+  max-width:none!important;max-height:none!important;margin:0!important;overflow:hidden!important;
+}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-remover-head{flex:0 0 70px!important}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-main{
+  display:flex!important;flex:1 1 auto!important;flex-direction:column!important;
+  width:100%!important;max-width:none!important;min-width:0!important;min-height:0!important;
+  margin:0!important;padding:clamp(14px,1.5vw,24px) clamp(18px,2.4vw,38px)!important;overflow:hidden!important;
+}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-intro{flex:0 0 auto!important;margin-bottom:14px!important}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-workspace{
+  display:grid!important;flex:1 1 auto!important;min-width:0!important;min-height:0!important;
+  width:100%!important;max-width:none!important;grid-template-columns:minmax(340px,38%) minmax(0,62%)!important;
+  gap:clamp(14px,1.5vw,24px)!important;align-items:stretch!important;
+}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-left,
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-right{
+  min-width:0!important;min-height:0!important;overflow-y:auto!important;box-sizing:border-box!important;
+}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-right{display:flex!important;flex-direction:column!important}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-preview-stage{
+  flex:1 1 auto!important;height:auto!important;min-height:420px!important;max-height:68vh!important;
+}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-compare-view{width:100%!important;height:100%!important}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-compare-view img{width:100%!important;height:100%!important;object-fit:contain!important}
+@media(max-width:900px){
+  .tool-page-panel.signature-maker-tool-panel{height:100dvh!important;overflow:hidden!important}
+  .tool-page-panel.signature-maker-tool-panel>.bg-remover.sig-photo-studio{height:100dvh!important;overflow-y:auto!important}
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-main{
+    display:block!important;height:auto!important;min-height:calc(100dvh - 70px)!important;overflow:visible!important;padding:16px!important;
+  }
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-workspace{
+    display:grid!important;grid-template-columns:minmax(0,1fr)!important;min-height:0!important;
+  }
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-left,
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-right{width:100%!important;max-width:none!important;overflow:visible!important}
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-preview-stage{height:clamp(320px,55vh,560px)!important;min-height:320px!important}
+}
+@media(max-width:560px){
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-main{padding:12px!important}
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-remover-head{padding:0 10px!important;gap:8px!important}
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-brand b{font-size:11px!important}
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-private{font-size:0!important}
+}
