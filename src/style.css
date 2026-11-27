@@ -2368,3 +2368,58 @@
 @media(prefers-reduced-motion:reduce){
  .topbar,.top-actions .theme-toggle,.top-auth-link,.language,.sidebar nav .nav-item,.sidebar nav .nav-item:before,.sidebar nav .nav-item>svg,.mobile-bottom button,.mobile-bottom button:before,.mobile-bottom button svg{transition:none!important}
 }
+
+
+/* Document Studio mobile: a single vertical scroll surface for every step and field. */
+@media(max-width:760px){
+ .tool-page-panel.document-tool-panel:has(>.document-studio){
+  position:fixed!important;inset:0!important;z-index:1400!important;display:flex!important;flex-direction:column!important;
+  width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;
+  margin:0!important;padding:0!important;overflow:hidden!important;align-items:stretch!important
+ }
+ .tool-page-panel.document-tool-panel>.document-studio{
+  position:relative!important;display:flex!important;flex:1 1 auto!important;flex-direction:column!important;
+  width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;overflow:hidden!important
+ }
+ .document-studio>.document-studio-top{position:relative!important;top:auto!important;z-index:20!important;flex:0 0 auto!important}
+ .document-studio>.document-editor-shell{
+  position:relative!important;display:block!important;flex:1 1 0%!important;width:100%!important;
+  height:0!important;min-height:0!important;max-height:none!important;overflow-x:hidden!important;overflow-y:auto!important;
+  padding:10px 10px calc(28px + env(safe-area-inset-bottom))!important;
+  -webkit-overflow-scrolling:touch!important;overscroll-behavior-y:contain!important
+ }
+ .document-editor-heading{position:relative!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;width:100%!important}
+ .document-workspace-grid{
+  position:relative!important;display:flex!important;flex:0 0 auto!important;flex-direction:column!important;
+  align-items:stretch!important;gap:12px!important;width:100%!important;height:auto!important;min-height:0!important;
+  max-height:none!important;overflow:visible!important;margin:0!important
+ }
+ .document-controls{
+  position:relative!important;display:block!important;flex:0 0 auto!important;width:100%!important;
+  height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;
+  padding:12px!important;margin:0!important;z-index:1!important
+ }
+ .document-steps{position:sticky!important;top:0!important;z-index:15!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .document-form-intro{position:relative!important;display:block!important;margin:0 0 14px!important}
+ .document-fields{position:relative!important;display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:12px!important;width:100%!important}
+ .document-fields label,.document-fields label.wide,.document-rich-field{
+  position:relative!important;display:flex!important;flex-direction:column!important;grid-column:1/-1!important;
+  width:100%!important;min-width:0!important;height:auto!important;min-height:0!important;overflow:visible!important
+ }
+ .document-fields label>span,.document-field-label{position:static!important;display:block!important;white-space:normal!important;line-height:1.45!important}
+ .document-fields input,.document-fields select,.document-fields textarea{position:relative!important;display:block!important;width:100%!important;max-width:100%!important}
+ .document-fields textarea{min-height:170px!important}
+ .document-rich-toolbar{position:relative!important;display:flex!important;flex-wrap:wrap!important;width:100%!important}
+ .document-rich-editor{position:relative!important;display:block!important;width:100%!important;min-height:240px!important;height:auto!important;max-height:none!important;overflow:auto!important}
+ .document-design-choices{position:relative!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .document-next-row{position:relative!important;display:flex!important;flex-wrap:wrap!important;width:100%!important;margin:14px 0 4px!important}
+ .document-preview-panel{
+  position:relative!important;display:flex!important;flex:0 0 auto!important;flex-direction:column!important;
+  width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;
+  margin:0!important;padding:11px!important;z-index:0!important
+ }
+ .document-preview-stage{position:relative!important;display:flex!important;flex:0 0 auto!important;width:100%!important;
+  height:clamp(390px,58vh,560px)!important;min-height:390px!important;max-height:560px!important;overflow:auto!important}
+ .document-preview-footer,.document-privacy-note{position:relative!important;flex:0 0 auto!important}
+ .document-editor-foot{position:relative!important;display:flex!important;flex-wrap:wrap!important;gap:8px!important;padding:14px 0!important}
+}
