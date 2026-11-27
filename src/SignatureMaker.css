@@ -103,3 +103,9 @@ html:has(.sig-shell),body:has(.sig-shell){overflow:hidden!important;height:100dv
     width:100%!important;max-width:none!important;box-sizing:border-box!important;
   }
 }
+
+/* Signature image upload / replace controls, styled to match the original burgundy workspace. */
+.sig-upload-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 18px}
+.sig-upload-tools button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:38px;padding:9px 14px;border:1px solid #e2e4e9;border-radius:9px;background:#fff;color:#c00039;font-size:12px;font-weight:800;cursor:pointer;box-shadow:0 1px 2px #1418240b}
+.sig-upload-tools button:hover{border-color:#d20b45;background:#fff7f9}
+.sig-upload-tools small{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#69707c;font-size:11px}
