@@ -1,0 +1,10 @@
+{
+  "name": "TANSHU DIGITAL TOOLS",
+  "short_name": "Tanshu Tools",
+  "description": "All in One Digital Workspace",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#101b35",
+  "theme_color": "#101b35"
+}
