@@ -135,3 +135,16 @@ html:has(.sig-shell),body:has(.sig-shell){overflow:hidden!important;height:100dv
 .sig-scan-button:disabled{animation:sig-printer-scan 1.7s linear infinite}
 
 .sig-pad.sig-scanning{position:relative;overflow:hidden}.sig-pad.sig-scanning:after{content:'';position:absolute;left:0;right:0;top:-8%;height:8px;background:linear-gradient(90deg,transparent,#d0003d,#fff,#d0003d,transparent);box-shadow:0 0 18px #c0003977;animation:sig-scan-sweep 1.7s linear infinite;pointer-events:none}.sig-pad.sig-scanning:before{content:'';position:absolute;z-index:1;left:0;right:0;top:-15%;height:15%;background:linear-gradient(180deg,#d000391c,transparent);animation:sig-scan-wash 1.7s linear infinite;pointer-events:none}@keyframes sig-scan-sweep{to{top:105%}}@keyframes sig-scan-wash{to{top:100%}}
+
+/* Drawing-first Signature Maker effects */
+.sig-effects{margin-top:22px;padding:14px 15px;border:1px solid #eceef2;border-radius:11px;background:#fff}
+.sig-effects>b{display:block;margin-bottom:12px;color:#252936;font-size:13px}
+.sig-effects .sig-effect-check{display:flex;align-items:center;gap:9px;margin:12px 0!important;font-size:12px!important;font-weight:700}
+.sig-effects .sig-effect-check input{width:16px;height:16px;accent-color:#c50039}
+.sig-effect-line{display:grid;grid-template-columns:90px 1fr;align-items:end;gap:12px}
+.sig-effect-line label,.sig-effect-grid label{display:block;margin:8px 0!important;font-size:11px!important}
+.sig-effect-line input[type=color],.sig-effect-grid input[type=color]{display:block;width:100%;height:32px;margin-top:6px}
+.sig-effect-line input[type=range],.sig-effect-grid input[type=range]{display:block;width:100%;margin-top:7px}
+.sig-effect-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px}
+.sig-pad{transition:border-color .15s ease,box-shadow .15s ease}
+@media(max-width:760px){.sig-effect-line{grid-template-columns:80px 1fr}.sig-effects{padding:12px}}
