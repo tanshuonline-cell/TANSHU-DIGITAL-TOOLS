@@ -2022,3 +2022,43 @@
 .category-shortcut-nav .nav-item:nth-child(18)>svg{color:#a3e635}
 .category-shortcut-nav .nav-item:nth-child(19)>svg{color:#f59e0b}
 @media(prefers-reduced-motion:reduce){.sidebar nav .nav-item>svg{transition:none}.sidebar nav .nav-item:hover>svg,.sidebar nav .nav-item.active>svg{transform:none}}
+
+
+/* PHOTO BACKGROUND REMOVER — full-screen studio workspace.
+   Override the generic 640px tool content rail so the preview can use the full right side. */
+.tool-page-panel.bg-tool-panel{
+  position:fixed!important;inset:0!important;z-index:1400!important;
+  display:flex!important;flex-direction:column!important;
+  align-items:stretch!important;justify-content:stretch!important;
+  width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;
+  margin:0!important;padding:0!important;overflow:hidden!important;border-radius:0!important;
+}
+.tool-page-panel.bg-tool-panel>.bg-remover{
+  display:flex!important;flex:1 1 auto!important;align-self:stretch!important;
+  width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;
+  max-width:none!important;max-height:none!important;overflow:hidden!important;
+}
+.tool-page-panel.bg-tool-panel .bg-main{
+  width:100%!important;max-width:none!important;min-width:0!important;
+  padding-left:clamp(18px,2.4vw,38px)!important;
+  padding-right:clamp(18px,2.4vw,38px)!important;
+}
+.tool-page-panel.bg-tool-panel .bg-workspace{
+  grid-template-columns:minmax(340px,40%) minmax(0,60%)!important;
+  gap:clamp(14px,1.5vw,24px)!important;
+}
+.tool-page-panel.bg-tool-panel .bg-right{min-width:0!important}
+@media(max-width:900px){
+  .tool-page-panel.bg-tool-panel{height:100dvh!important;overflow-y:auto!important}
+  .tool-page-panel.bg-tool-panel>.bg-remover{
+    height:auto!important;min-height:100dvh!important;overflow:visible!important;
+  }
+  .tool-page-panel.bg-tool-panel .bg-main{display:block!important;padding:20px 16px 32px!important}
+  .tool-page-panel.bg-tool-panel .bg-workspace{display:grid!important;grid-template-columns:minmax(0,1fr)!important}
+  .tool-page-panel.bg-tool-panel .bg-left,.tool-page-panel.bg-tool-panel .bg-right{
+    width:100%!important;max-width:none!important;box-sizing:border-box!important;
+  }
+}
+@media(max-width:560px){
+  .tool-page-panel.bg-tool-panel .bg-main{padding:16px 12px 28px!important}
+}
