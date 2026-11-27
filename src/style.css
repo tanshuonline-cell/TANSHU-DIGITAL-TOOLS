@@ -2246,3 +2246,34 @@
  .tool-page-panel.a4-multiple-photo-tool-panel .a4ms-pdf{height:48svh!important;min-height:300px!important;max-height:520px!important;flex:none!important}
  .tool-page-panel.a4-multiple-photo-tool-panel .a4ms-empty{min-height:190px!important}
 }
+
+
+/* Document & Certificate Studio: prevent mobile editor, helper text and preview from overlapping. */
+@media(max-width:760px){
+ .tool-page-panel.document-tool-panel{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;margin:0!important;padding:0!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;align-items:stretch!important}
+ .tool-page-panel.document-tool-panel>.document-studio{position:relative!important;display:flex!important;flex:1 1 auto!important;flex-direction:column!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;overflow:hidden!important}
+ .document-studio-top{position:relative!important;z-index:40!important;flex:0 0 auto!important;display:grid!important;grid-template-columns:auto minmax(0,1fr)!important;gap:8px!important;padding:9px 10px!important;background:#fff!important;box-shadow:0 5px 16px #163d2918!important;isolation:isolate!important}
+ .document-studio-top>div:nth-child(2){min-width:0!important}.document-studio-top h1{font-size:12px!important;line-height:1.3!important}.document-studio-top p{display:none!important}
+ .document-editor-shell{display:flex!important;flex:1 1 auto!important;flex-direction:column!important;width:100%!important;min-height:0!important;height:auto!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;padding:10px!important;-webkit-overflow-scrolling:touch!important}
+ .document-editor-heading{position:relative!important;z-index:2!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:9px!important;width:100%!important;margin:0 0 10px!important;padding:10px!important;background:#f7faf7!important;border:1px solid #dce7df!important;border-radius:12px!important;box-shadow:0 3px 10px #163d290b!important}
+ .document-editor-heading h2{font-size:15px!important;line-height:1.35!important}.document-editor-heading small{display:block!important;line-height:1.5!important}
+ .document-editor-actions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}
+ .document-editor-actions button{min-width:0!important;min-height:36px!important;padding:6px 4px!important;font-size:8px!important;line-height:1.25!important;white-space:normal!important}
+ .document-workspace-grid{display:flex!important;flex:0 0 auto!important;flex-direction:column!important;align-items:stretch!important;gap:12px!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;margin:0!important}
+ .document-controls{position:relative!important;inset:auto!important;display:flex!important;flex:0 0 auto!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding:12px!important;border-radius:13px!important;z-index:1!important}
+ .document-steps{position:sticky!important;top:-12px!important;z-index:15!important;background:#fff!important;box-shadow:0 4px 10px #163d2910!important}
+ .document-fields{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:12px!important;width:100%!important}
+ .document-fields label,.document-fields label.wide,.document-rich-field{position:relative!important;display:flex!important;flex-direction:column!important;grid-column:1/-1!important;min-width:0!important;width:100%!important;gap:7px!important;overflow:visible!important;line-height:1.45!important}
+ .document-fields label>span,.document-studio .document-field-label{position:static!important;display:block!important;z-index:auto!important;white-space:normal!important;line-height:1.4!important;margin:0!important}
+ .document-studio .document-rich-toolbar{position:relative!important;display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:6px!important;width:100%!important;margin:0!important;padding:8px!important;z-index:1!important;background:#f6faf7!important}
+ .document-studio .document-rich-editor{position:relative!important;display:block!important;width:100%!important;min-height:260px!important;height:auto!important;max-height:none!important;overflow:auto!important;margin:0!important;padding:14px!important;font-size:14px!important;line-height:1.7!important;white-space:normal!important;z-index:0!important}
+ .document-fields textarea{min-height:170px!important;line-height:1.6!important}
+ .document-next-row{position:relative!important;display:flex!important;flex-wrap:wrap!important;gap:8px!important;margin-top:14px!important}
+ .document-preview-panel{position:relative!important;inset:auto!important;display:flex!important;flex:0 0 auto!important;width:100%!important;height:auto!important;min-height:460px!important;max-height:none!important;overflow:visible!important;padding:11px!important;z-index:0!important}
+ .document-preview-head{position:relative!important;z-index:1!important;flex-wrap:wrap!important;background:#f9fbf9!important;padding:5px!important}
+ .document-preview-stage{position:relative!important;display:flex!important;flex:0 0 auto!important;width:100%!important;min-height:390px!important;height:56vh!important;max-height:620px!important;overflow:auto!important;align-items:flex-start!important;justify-content:flex-start!important;padding:10px!important}
+ .document-preview-zoom{flex:0 0 auto!important;transform-origin:top left!important}
+ .document-preview-footer{position:relative!important;display:flex!important;flex-wrap:wrap!important;gap:8px!important;padding-top:10px!important}
+ .document-privacy-note{position:relative!important;line-height:1.5!important}
+ .document-studio-certificate{position:relative!important;height:auto!important;min-height:100dvh!important;overflow:visible!important}
+}
