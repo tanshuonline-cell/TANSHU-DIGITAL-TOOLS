@@ -2062,3 +2062,63 @@
 @media(max-width:560px){
   .tool-page-panel.bg-tool-panel .bg-main{padding:16px 12px 28px!important}
 }
+
+
+/* A4 MULTIPLE PHOTO SHEET — dedicated full-viewport workspace.
+   Keep this scoped to this tool so the shared 640px content rail and every
+   other tool retain their existing layout. */
+.tool-page-panel.a4-multiple-photo-tool-panel{
+  position:fixed!important;inset:0!important;z-index:1450!important;
+  display:flex!important;flex-direction:column!important;
+  align-items:stretch!important;justify-content:stretch!important;
+  width:100vw!important;height:100dvh!important;
+  max-width:none!important;max-height:none!important;
+  margin:0!important;padding:0!important;
+  overflow:hidden!important;border-radius:0!important;
+}
+.tool-page-panel.a4-multiple-photo-tool-panel>*{
+  display:flex!important;flex:1 1 auto!important;align-self:stretch!important;
+  width:100%!important;height:100%!important;
+  min-width:0!important;min-height:0!important;
+  max-width:none!important;max-height:none!important;
+}
+.tool-page-panel.a4-multiple-photo-tool-panel .a4ms{
+  position:relative!important;inset:auto!important;
+  width:100%!important;height:100%!important;
+  min-width:0!important;min-height:0!important;
+  max-width:none!important;max-height:none!important;
+}
+.tool-page-panel.a4-multiple-photo-tool-panel .a4ms-body{
+  grid-template-columns:minmax(360px,38vw) minmax(0,1fr)!important;
+}
+.tool-page-panel.a4-multiple-photo-tool-panel .a4ms-controls{
+  min-width:0!important;max-width:620px;
+}
+.tool-page-panel.a4-multiple-photo-tool-panel .a4ms-preview{
+  min-width:0!important;width:100%!important;
+}
+.tool-page-panel.a4-multiple-photo-tool-panel .a4ms-pdf{
+  width:100%!important;min-width:0!important;
+  height:calc(100dvh - 190px)!important;min-height:520px!important;
+}
+@media(max-width:900px){
+  .tool-page-panel.a4-multiple-photo-tool-panel{height:100dvh!important;overflow-y:auto!important}
+  .tool-page-panel.a4-multiple-photo-tool-panel>*{
+    height:auto!important;min-height:100dvh!important;overflow:visible!important;
+  }
+  .tool-page-panel.a4-multiple-photo-tool-panel .a4ms{
+    height:auto!important;min-height:100dvh!important;overflow:visible!important;
+  }
+  .tool-page-panel.a4-multiple-photo-tool-panel .a4ms-body{
+    grid-template-columns:minmax(0,1fr)!important;overflow:visible!important;
+  }
+  .tool-page-panel.a4-multiple-photo-tool-panel .a4ms-controls{
+    max-width:none!important;overflow:visible!important;
+  }
+  .tool-page-panel.a4-multiple-photo-tool-panel .a4ms-preview{
+    min-height:520px!important;overflow:auto!important;
+  }
+  .tool-page-panel.a4-multiple-photo-tool-panel .a4ms-pdf{
+    height:70dvh!important;min-height:460px!important;
+  }
+}
