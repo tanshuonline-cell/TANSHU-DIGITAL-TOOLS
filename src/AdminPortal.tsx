@@ -14,9 +14,14 @@ export default function AdminPortal({ onBack }: AdminPortalProps) {
     setError('');
     setBusy(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-login`, {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+      const publishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined;
+      if (!supabaseUrl || !publishableKey) {
+        throw new Error('Admin login is not configured for this preview build. Supabase URL or publishable key is missing.');
+      }
+      const response = await fetch(`${supabaseUrl.replace(/\\/$/, '')}/functions/v1/admin-login`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
+        headers: { 'Content-Type': 'application/json', apikey: publishableKey },
         body: JSON.stringify({ username, password }),
       });
       const result = await response.json().catch(() => ({}));
@@ -25,7 +30,9 @@ export default function AdminPortal({ onBack }: AdminPortalProps) {
       sessionStorage.setItem('tanshu_admin_session', JSON.stringify(result));
       window.location.assign('/admin');
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Unable to sign in.');
+      setError(e instanceof TypeError
+        ? 'The admin server could not be reached from this preview. Its exact preview URL may need to be added to the Supabase admin-login CORS allow-list.'
+        : e instanceof Error ? e.message : 'Unable to sign in.');
     } finally { setBusy(false); }
   }
 
