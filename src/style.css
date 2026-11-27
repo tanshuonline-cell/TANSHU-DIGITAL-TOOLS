@@ -2311,3 +2311,60 @@
  .pdf-editor-root .pdf-quick-actions .pdf-action{font-size:8px!important}
  .pdf-editor-root .pdf-page-view{height:68dvh!important;min-height:390px!important}
 }
+
+
+/* Premium app navigation polish: keep the full header action row visible on phones. */
+.topbar{gap:14px;transition:background .22s ease,border-color .22s ease}
+.topbar .crumb{min-width:0}
+.top-actions{flex:0 0 auto;min-width:0;gap:9px}
+.top-actions .theme-toggle{display:inline-flex!important;flex:0 0 36px;width:36px;height:36px;min-width:36px;min-height:36px;align-items:center;justify-content:center;padding:0;border-radius:12px;border:1px solid var(--border);background:linear-gradient(145deg,var(--panel),var(--panel2));color:var(--accent);box-shadow:0 2px 7px #11182712;transition:transform .2s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease}
+.top-actions .theme-toggle:hover,.top-actions .theme-toggle:focus-visible{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 6px 16px #6657dc24;outline:none}
+.top-actions .theme-toggle:active{transform:scale(.94)}
+.top-auth-link,.language,.top-actions .social-mini>a,.top-actions .social-youtube>summary{transition:transform .2s ease,background .2s ease,border-color .2s ease,color .2s ease,box-shadow .2s ease}
+.top-auth-link:hover,.language:hover{transform:translateY(-1px);border-color:var(--accent)!important;box-shadow:0 5px 14px #6657dc18}
+.topbar{background:color-mix(in srgb,var(--bg) 91%,transparent);backdrop-filter:blur(18px) saturate(1.25)}
+.topbar:after{content:"";position:absolute;left:4.3%;right:4.3%;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--accent) 22%,var(--accent2) 78%,transparent);opacity:.28;pointer-events:none}
+.sidebar nav .nav-item{isolation:isolate;overflow:hidden;transition:background .22s ease,color .22s ease,transform .22s cubic-bezier(.2,.8,.2,1),border-color .22s ease; border:1px solid transparent}
+.sidebar nav .nav-item:before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,color-mix(in srgb,var(--accent) 16%,transparent),color-mix(in srgb,var(--accent2) 10%,transparent));opacity:0;transform:translateX(-8px);transition:opacity .22s ease,transform .22s ease;z-index:-1;pointer-events:none}
+.sidebar nav .nav-item:hover:before,.sidebar nav .nav-item:focus-visible:before,.sidebar nav .nav-item.active:before{opacity:1;transform:translateX(0)}
+.sidebar nav .nav-item:hover,.sidebar nav .nav-item:focus-visible{transform:translateX(3px);border-color:color-mix(in srgb,var(--accent) 26%,transparent);outline:none}
+.sidebar nav .nav-item.active{border-color:color-mix(in srgb,var(--accent) 34%,transparent);background:color-mix(in srgb,var(--accent) 11%,var(--panel));box-shadow:inset 3px 0 0 var(--accent)}
+.sidebar nav .nav-item>svg{filter:none!important;stroke-width:2.05;transition:transform .22s cubic-bezier(.2,.8,.2,1),color .22s ease,opacity .22s ease}
+.sidebar nav .nav-item:hover>svg,.sidebar nav .nav-item:focus-visible>svg{transform:translateY(-1px) scale(1.08);filter:none!important}
+.sidebar nav .nav-item.active>svg{transform:scale(1.06);filter:none!important}
+.mobile-bottom{padding:7px max(12px,env(safe-area-inset-right)) calc(7px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));gap:6px;background:color-mix(in srgb,var(--panel) 94%,transparent);backdrop-filter:blur(18px) saturate(1.3);border-top:1px solid var(--border);box-shadow:0 -8px 24px #10182710}
+.mobile-bottom button{position:relative;isolation:isolate;overflow:hidden;min-height:48px;border:1px solid transparent;border-radius:14px;background:transparent;color:var(--muted);transition:background .2s ease,color .2s ease,transform .2s cubic-bezier(.2,.8,.2,1),border-color .2s ease,box-shadow .2s ease}
+.mobile-bottom button:before{content:"";position:absolute;inset:3px;border-radius:11px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 17%,transparent),color-mix(in srgb,var(--accent2) 12%,transparent));opacity:0;transform:scale(.88);transition:opacity .2s ease,transform .2s ease;z-index:-1}
+.mobile-bottom button.selected{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 25%,transparent);background:color-mix(in srgb,var(--accent) 8%,var(--panel));box-shadow:inset 0 1px 0 #ffffff12,0 3px 12px #1018270b}
+.mobile-bottom button.selected:before,.mobile-bottom button:active:before{opacity:1;transform:scale(1)}
+.mobile-bottom button.selected svg{transform:translateY(-1px) scale(1.12)}
+.mobile-bottom button:active{transform:scale(.95)}
+.mobile-bottom button svg{transition:transform .22s cubic-bezier(.2,.8,.2,1),color .22s ease;filter:none!important}
+.mobile-bottom button small{font-weight:750;letter-spacing:.01em}
+@media(max-width:760px){
+ .topbar{height:58px;min-height:58px;padding:0 10px;gap:5px}
+ .topbar .crumb{display:none!important}
+ .top-actions{margin-left:auto;flex:0 1 auto;gap:4px}
+ .top-actions .social-mini{gap:3px}
+ .top-actions .social-mini>a,.top-actions .social-mini .social-youtube>summary{width:25px;height:25px;flex-basis:25px;border-radius:8px}
+ .top-actions .social-mini svg{width:14px;height:14px}
+ .top-actions .top-auth-link{font-size:9px;padding:6px 7px;white-space:nowrap;border-radius:8px}
+ .top-actions .language{gap:4px;font-size:9px;padding:6px 7px;white-space:nowrap;border-radius:8px}
+ .top-actions .language svg{width:13px;height:13px}
+ .top-actions .language .lang-chevron{display:none}
+ .top-actions .theme-toggle{width:30px;height:30px;min-width:30px;min-height:30px;flex-basis:30px;border-radius:9px}
+ .top-actions .theme-toggle svg{width:16px;height:16px}
+ .top-actions .top-avatar{display:none}
+ .mobile-bottom{display:flex!important}
+}
+@media(max-width:370px){
+ .topbar{padding-left:8px;padding-right:8px}
+ .top-actions{gap:3px}
+ .top-actions .social-mini>a,.top-actions .social-mini .social-youtube>summary{width:22px;height:22px;flex-basis:22px}
+ .top-actions .top-auth-link{font-size:8px;padding:5px 5px}
+ .top-actions .language{font-size:8px;padding:5px 5px}
+ .top-actions .theme-toggle{width:28px;height:28px;min-width:28px;min-height:28px;flex-basis:28px}
+}
+@media(prefers-reduced-motion:reduce){
+ .topbar,.top-actions .theme-toggle,.top-auth-link,.language,.sidebar nav .nav-item,.sidebar nav .nav-item:before,.sidebar nav .nav-item>svg,.mobile-bottom button,.mobile-bottom button:before,.mobile-bottom button svg{transition:none!important}
+}
