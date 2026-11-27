@@ -1,4 +1,5 @@
 const CACHE_NAME = 'tanshu-app-shell-v1';
+const CACHE_PREFIX = 'tanshu-app-shell-';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -12,7 +13,8 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys()
       .then((keys) => Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+        keys.filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME)
+          .map((key) => caches.delete(key))
       ))
       .then(() => self.clients.claim())
   );
