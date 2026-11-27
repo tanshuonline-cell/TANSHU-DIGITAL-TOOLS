@@ -107,3 +107,58 @@
 .bg-history-controls button{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid #d9e2da;background:#f3f8f4;color:#315b3d;border-radius:9px;padding:8px 11px;font-size:10px;font-weight:800;cursor:pointer}
 .bg-history-controls button:disabled{opacity:.4;cursor:not-allowed}
 @media(max-width:540px){.bg-preview-toolbar{align-items:flex-start}.bg-history-controls{width:100%}.bg-history-controls button{flex:1}}
+
+
+/* Signature Maker: full-screen photo-processing studio with an oversized compare preview. */
+.tool-page-panel.signature-maker-tool-panel{
+  position:fixed!important;inset:0!important;z-index:1400!important;
+  display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:stretch!important;
+  width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;
+  margin:0!important;padding:0!important;overflow:hidden!important;border-radius:0!important;
+}
+.tool-page-panel.signature-maker-tool-panel>.bg-remover.sig-photo-studio{
+  position:relative!important;display:flex!important;flex:1 1 auto!important;flex-direction:column!important;
+  width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;
+  max-width:none!important;max-height:none!important;margin:0!important;overflow:hidden!important;
+}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-remover-head{flex:0 0 70px!important}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-main{
+  display:flex!important;flex:1 1 auto!important;flex-direction:column!important;
+  width:100%!important;max-width:none!important;min-width:0!important;min-height:0!important;
+  margin:0!important;padding:clamp(14px,1.5vw,24px) clamp(18px,2.4vw,38px)!important;overflow:hidden!important;
+}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-intro{flex:0 0 auto!important;margin-bottom:14px!important}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-workspace{
+  display:grid!important;flex:1 1 auto!important;min-width:0!important;min-height:0!important;
+  width:100%!important;max-width:none!important;grid-template-columns:minmax(340px,38%) minmax(0,62%)!important;
+  gap:clamp(14px,1.5vw,24px)!important;align-items:stretch!important;
+}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-left,
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-right{
+  min-width:0!important;min-height:0!important;overflow-y:auto!important;box-sizing:border-box!important;
+}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-right{display:flex!important;flex-direction:column!important}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-preview-stage{
+  flex:1 1 auto!important;height:auto!important;min-height:420px!important;max-height:68vh!important;
+}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-compare-view{width:100%!important;height:100%!important}
+.tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-compare-view img{width:100%!important;height:100%!important;object-fit:contain!important}
+@media(max-width:900px){
+  .tool-page-panel.signature-maker-tool-panel{height:100dvh!important;overflow:hidden!important}
+  .tool-page-panel.signature-maker-tool-panel>.bg-remover.sig-photo-studio{height:100dvh!important;overflow-y:auto!important}
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-main{
+    display:block!important;height:auto!important;min-height:calc(100dvh - 70px)!important;overflow:visible!important;padding:16px!important;
+  }
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-workspace{
+    display:grid!important;grid-template-columns:minmax(0,1fr)!important;min-height:0!important;
+  }
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-left,
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-right{width:100%!important;max-width:none!important;overflow:visible!important}
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-preview-stage{height:clamp(320px,55vh,560px)!important;min-height:320px!important}
+}
+@media(max-width:560px){
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-main{padding:12px!important}
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-remover-head{padding:0 10px!important;gap:8px!important}
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-brand b{font-size:11px!important}
+  .tool-page-panel.signature-maker-tool-panel .bg-remover.sig-photo-studio .bg-private{font-size:0!important}
+}
