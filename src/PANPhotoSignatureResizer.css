@@ -24,3 +24,19 @@
 .panrs-bg-actions button:disabled{opacity:.45;cursor:not-allowed}
 .panrs-bg-status{display:block;margin-top:8px;padding:7px 8px;border-radius:7px;background:#eef7f1;color:#247247;font-size:10px;line-height:1.4}
 .panrs-crop-frame{background-image:linear-gradient(45deg,#e9edf5 25%,transparent 25%),linear-gradient(-45deg,#e9edf5 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#e9edf5 75%),linear-gradient(-45deg,transparent 75%,#e9edf5 75%);background-size:12px 12px;background-position:0 0,0 6px,6px -6px,-6px 0}
+
+/* Mobile workspace: keep every control in the normal document flow; never let preview cover settings. */
+@media(max-width:760px){
+ .panrs-page{position:fixed!important;inset:0!important;height:100dvh!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important;padding-bottom:env(safe-area-inset-bottom)!important}
+ .panrs-head{position:sticky!important;top:0!important;z-index:30!important;min-height:60px!important;flex:0 0 auto!important;background:linear-gradient(100deg,#25265f,#4338a8 58%,#3156a5)!important;box-shadow:0 5px 18px #17255430!important}
+ .panrs-layout{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:12px!important;padding:10px!important;overflow:visible!important;min-height:0!important;flex:0 0 auto!important}
+ .panrs-settings{display:flex!important;flex-direction:column!important;gap:10px!important;order:0!important;width:100%!important;min-width:0!important;max-height:none!important;height:auto!important;overflow:visible!important;padding:0!important}
+ .panrs-card{position:relative!important;z-index:1!important;width:100%!important;min-width:0!important;overflow:visible!important;padding:14px!important}
+ .panrs-preview{order:1!important;width:100%!important;min-width:0!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding:12px!important;position:relative!important;z-index:0!important}
+ .panrs-stage{flex:none!important;width:100%!important;min-height:260px!important;height:auto!important;max-height:none!important;padding:16px!important;overflow:auto!important}
+ .panrs-crop-frame{max-width:calc(100vw - 76px)!important;max-height:none!important;flex:0 0 auto!important}
+ .panrs-metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .panrs-bg-actions{grid-template-columns:1fr!important}
+ .panrs-bg-actions button{min-height:42px!important;white-space:normal!important;line-height:1.35!important}
+ .panrs-card h3{line-height:1.4!important}
+}
