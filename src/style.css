@@ -2126,3 +2126,67 @@
 
 /* Mobile app viewport guard: prevent accidental page-width overflow while preserving accessible pinch zoom. */
 @media(max-width:760px){html,body,#root{width:100%;max-width:100%;}body{overflow-x:hidden;}.app{width:100%;min-width:0;max-width:100%;overflow-x:clip;}.main-area,main{min-width:0;max-width:100%;}}
+
+/* Mobile app workspace fixes: keep controls reachable before preview. */
+@media(max-width:900px){
+  .tool-page-panel.pvc-card-tool-panel:has(>.newpvc){
+    position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;
+    min-height:0!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;
+    display:block!important;padding:0!important;
+  }
+  .tool-page-panel.pvc-card-tool-panel:has(>.newpvc)>.newpvc{
+    width:100%!important;max-width:none!important;min-height:100dvh!important;height:auto!important;
+    margin:0!important;padding:14px!important;border:0!important;border-radius:0!important;
+    overflow:visible!important;box-sizing:border-box!important;
+  }
+  .tool-page-panel.pvc-card-tool-panel:has(>.newpvc) .np-layout{
+    display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:14px!important;
+  }
+  .tool-page-panel.pvc-card-tool-panel:has(>.newpvc) .np-settings{
+    order:1!important;position:static!important;top:auto!important;max-height:none!important;
+    overflow:visible!important;padding:0!important;min-width:0!important;
+  }
+  .tool-page-panel.pvc-card-tool-panel:has(>.newpvc) .np-preview{
+    order:2!important;position:static!important;top:auto!important;grid-row:auto!important;
+    max-height:none!important;overflow:visible!important;min-width:0!important;
+  }
+  .tool-page-panel.pvc-card-tool-panel:has(>.newpvc) .np-upload{
+    position:relative!important;min-height:116px!important;touch-action:manipulation;
+  }
+  .tool-page-panel.pvc-card-tool-panel:has(>.newpvc) .np-upload input{
+    display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+    opacity:0!important;cursor:pointer!important;
+  }
+  .tool-page-panel.pvc-card-tool-panel:has(>.newpvc) .np-paper-wrap{
+    width:100%!important;max-height:60svh!important;min-height:220px!important;
+    overflow:auto!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-x pan-y!important;
+  }
+  .tool-page-panel.pvc-card-tool-panel:has(>.newpvc) .np-paper-wrap canvas{max-width:none!important}
+}
+@media(max-width:900px){
+  .tool-page-panel.a4-multiple-photo-tool-panel{
+    height:auto!important;min-height:100dvh!important;max-height:none!important;
+    overflow-y:auto!important;overflow-x:hidden!important;
+  }
+  .tool-page-panel.a4-multiple-photo-tool-panel>*{
+    height:auto!important;min-height:100dvh!important;max-height:none!important;overflow:visible!important;
+  }
+  .tool-page-panel.a4-multiple-photo-tool-panel .a4ms{
+    height:auto!important;min-height:100dvh!important;max-height:none!important;overflow:visible!important;
+  }
+  .tool-page-panel.a4-multiple-photo-tool-panel .a4ms-body{
+    display:flex!important;flex-direction:column!important;overflow:visible!important;min-height:0!important;
+  }
+  .tool-page-panel.a4-multiple-photo-tool-panel .a4ms-controls{
+    order:1!important;width:100%!important;max-width:none!important;max-height:none!important;
+    overflow:visible!important;padding:12px!important;box-sizing:border-box!important;
+  }
+  .tool-page-panel.a4-multiple-photo-tool-panel .a4ms-preview{
+    order:2!important;width:100%!important;min-height:340px!important;max-height:none!important;
+    overflow:visible!important;padding:12px!important;box-sizing:border-box!important;
+  }
+  .tool-page-panel.a4-multiple-photo-tool-panel .a4ms-empty{min-height:240px!important}
+  .tool-page-panel.a4-multiple-photo-tool-panel .a4ms-pdf{
+    display:block!important;width:100%!important;height:62svh!important;min-height:360px!important;max-height:620px!important;
+  }
+}
