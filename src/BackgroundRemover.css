@@ -87,6 +87,11 @@
 .bg-compare-view{position:relative;width:100%;height:100%;min-height:220px;overflow:hidden;touch-action:pan-y;cursor:ew-resize;user-select:none}
 .bg-compare-view img{position:absolute;inset:0;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain}
 .bg-compare-view .bg-before-img{clip-path:inset(0 calc(100% - var(--bg-compare)) 0 0)}
+/* Keep the original-photo wipe in the foreground; Auto Compare moves only this overlay, never the preview canvas/background. */
+.bg-compare-view .bg-after-img{z-index:1}
+.bg-compare-view .bg-before-img{z-index:2;will-change:clip-path}
+.bg-compare-view .bg-compare-divider{position:absolute;z-index:3;top:0;bottom:0;left:var(--bg-compare);width:2px;transform:translateX(-1px);background:#fff;box-shadow:0 0 0 1px #1d293522,0 0 14px #18251f55;pointer-events:none}
+.bg-compare-view .bg-compare-divider:after{content:"";position:absolute;left:50%;top:50%;width:26px;height:26px;transform:translate(-50%,-50%);border:2px solid #fff;border-radius:50%;background:#315b3d;box-shadow:0 2px 8px #0003}
 .bg-compare-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 0 2px}
 .bg-compare-controls button{border:1px solid #d9e2da;background:#f3f8f4;color:#315b3d;border-radius:9px;padding:9px 12px;font-size:10px;font-weight:800;cursor:pointer}
 .bg-compare-controls button:disabled{opacity:.55;cursor:wait}
