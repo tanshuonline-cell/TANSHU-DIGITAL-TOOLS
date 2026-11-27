@@ -101,8 +101,6 @@ export const makers=[
 {en:'Bulk Certificate Maker',hi:'बल्क सर्टिफिकेट मेकर',sub:'Import a recipient CSV and prepare a batch of certificates',icon:GraduationCap,tag:'',ready:true,},
 {en:'PDF Page Organizer',hi:'PDF पेज ऑर्गनाइज़र',sub:'Rotate, reorder or remove PDF pages',icon:FolderOpen,tag:'',ready:true,},
 {en:'PDF Text & Annotation Tools',hi:'PDF टेक्स्ट और एनोटेशन टूल्स',sub:'Select text blocks and add replacement or additional text',icon:FileText,tag:'',ready:true,},
-{en:'PDF Merge & Split',hi:'PDF मर्ज और स्प्लिट',sub:'Combine multiple PDF files or split selected pages',icon:FolderOpen,tag:'IN DEVELOPMENT',ready:true,},
-{en:'PDF Compress & Resize',hi:'PDF कंप्रेस और रिसाइज़',sub:'Reduce PDF file size for online forms and sharing',icon:Zap,tag:'IN DEVELOPMENT',ready:true,},
 {en:'Image to PDF Maker',hi:'इमेज से PDF मेकर',sub:'Convert JPG and PNG scans into a PDF document',icon:Image,tag:'READY',ready:true},
 {en:'PDF Page Numbers & Watermark',hi:'PDF पेज नंबर और वॉटरमार्क',sub:'Add page numbers, labels and watermarks to your PDF',icon:FileText,tag:'IN DEVELOPMENT',ready:true,},
 {en:'PDF Form Filler',hi:'PDF फॉर्म फिलर',sub:'Type into supported PDF form fields and prepare a copy',icon:FileText,tag:'IN DEVELOPMENT',ready:true,},
