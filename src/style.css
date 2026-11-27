@@ -2201,3 +2201,48 @@
   .ipm-preview-panel .ipm-photo,
   .ipm-preview-panel .ipm-photo img{pointer-events:none!important}
 }
+
+/* App-like logo-only launch screen */
+.app-splash{position:fixed;inset:0;z-index:20000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#101b35;color:#fff;font-family:Inter,Arial,sans-serif;animation:app-splash-in .22s ease-out both}
+.app-splash-mark{width:78px;height:78px;border-radius:22px;display:grid;place-items:center;background:#fff;box-shadow:0 14px 38px #0005;animation:app-splash-mark 1.1s ease-in-out infinite alternate}
+.app-splash-mark img{width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box}
+.app-splash strong{font-size:15px;letter-spacing:1.7px;font-weight:850}
+.app-splash>span{font-size:9px;letter-spacing:2px;color:#bdcbe2}
+.app-splash>i{width:34px;height:3px;margin-top:8px;border-radius:8px;background:linear-gradient(90deg,#8db7ff 0 45%,#ffffff35 45%);animation:app-splash-progress 1.25s ease-in-out infinite}
+@keyframes app-splash-in{from{opacity:0}to{opacity:1}}
+@keyframes app-splash-mark{from{transform:scale(.96)}to{transform:scale(1.04)}}
+@keyframes app-splash-progress{0%{transform:scaleX(.55);opacity:.5}50%{transform:scaleX(1);opacity:1}100%{transform:scaleX(.55);opacity:.5}}
+.tool-loading-screen{min-height:100dvh!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:12px!important;color:#24476e!important;background:#f7f9fc!important;font-weight:700}
+.tool-loading-screen:before{content:'';width:22px;height:22px;border:3px solid #cbd8e8;border-top-color:#2563eb;border-radius:50%;animation:tool-loading-spin .8s linear infinite}
+@keyframes tool-loading-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.app-splash,.app-splash-mark,.app-splash>i,.tool-loading-screen:before{animation:none!important}}
+/* Invoice Maker: single-column, naturally scrollable mobile workspace */
+@media(max-width:850px){
+ .tool-page-panel.invoice-maker-panel{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;padding:0!important;display:block!important;overflow-y:auto!important;overflow-x:hidden!important;align-items:stretch!important}
+ .tool-page-panel.invoice-maker-panel>.im-root{width:100%!important;height:auto!important;min-height:100dvh!important;max-height:none!important;border:0!important;border-radius:0!important;overflow:visible!important;display:flex!important}
+ .tool-page-panel.invoice-maker-panel .im-top{position:sticky!important;top:0!important;z-index:10!important;flex-wrap:wrap!important;padding:12px!important}
+ .tool-page-panel.invoice-maker-panel .im-actions{width:100%!important;display:flex!important;flex-wrap:wrap!important}
+ .tool-page-panel.invoice-maker-panel .im-work{display:flex!important;flex-direction:column!important;overflow:visible!important;min-height:0!important}
+ .tool-page-panel.invoice-maker-panel .im-form{max-height:none!important;overflow:visible!important;padding:12px!important}
+ .tool-page-panel.invoice-maker-panel .im-preview{min-height:360px!important;max-height:none!important;overflow:visible!important;padding:14px!important}
+ .tool-page-panel.invoice-maker-panel .im-page{width:100%!important;max-width:100%!important;box-sizing:border-box!important}
+}
+/* Card Cover Maker: keep controls and preview in separate vertical sections */
+@media(max-width:900px){
+ .tool-page-panel.card-cover-tool-panel{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;padding:0!important;display:block!important;overflow-y:auto!important;overflow-x:hidden!important;align-items:stretch!important}
+ .tool-page-panel.card-cover-tool-panel>.card-cover-studio{width:100%!important;max-width:none!important;min-width:0!important;height:auto!important;min-height:100dvh!important;overflow:visible!important;box-sizing:border-box!important;margin:0!important}
+ .tool-page-panel.card-cover-tool-panel .cc-head{position:sticky!important;top:0!important;z-index:15!important;flex-wrap:wrap!important}
+ .tool-page-panel.card-cover-tool-panel .cc-workspace{display:flex!important;flex-direction:column!important;min-height:0!important;overflow:visible!important}
+ .tool-page-panel.card-cover-tool-panel .cc-controls{order:1!important;width:100%!important;height:auto!important;max-height:none!important;overflow:visible!important;min-width:0!important}
+ .tool-page-panel.card-cover-tool-panel .cc-preview{order:2!important;width:100%!important;height: min(62svh,560px)!important;min-height:360px!important;max-height:none!important;overflow:hidden!important}
+ .tool-page-panel.card-cover-tool-panel .cc-canvas-wrap{overflow:auto!important;overscroll-behavior:contain!important;touch-action:pan-x pan-y!important}
+}
+/* A4 sheet: show every layout and print control before the output preview */
+@media(max-width:900px){
+ .tool-page-panel.a4-multiple-photo-tool-panel .a4ms-body{display:flex!important;flex-direction:column!important;align-items:stretch!important;overflow:visible!important}
+ .tool-page-panel.a4-multiple-photo-tool-panel .a4ms-controls{order:1!important;display:block!important;width:100%!important;height:auto!important;max-height:none!important;overflow:visible!important;flex:none!important}
+ .tool-page-panel.a4-multiple-photo-tool-panel .a4ms-controls>.a4ms-sec{display:block!important;visibility:visible!important}
+ .tool-page-panel.a4-multiple-photo-tool-panel .a4ms-preview{order:2!important;display:flex!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;flex:none!important}
+ .tool-page-panel.a4-multiple-photo-tool-panel .a4ms-pdf{height:48svh!important;min-height:300px!important;max-height:520px!important;flex:none!important}
+ .tool-page-panel.a4-multiple-photo-tool-panel .a4ms-empty{min-height:190px!important}
+}
