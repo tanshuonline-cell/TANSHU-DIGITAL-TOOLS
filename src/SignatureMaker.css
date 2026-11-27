@@ -67,3 +67,39 @@ html:has(.sig-shell),body:has(.sig-shell){overflow:hidden!important;height:100dv
 .sig-export .sig-confirm{display:inline-flex;align-items:center;justify-content:center;min-width:90px;margin-top:10px;padding:10px 22px;border:0;border-radius:9px;background:#16803c;color:#fff;font-weight:800;cursor:pointer}
 .sig-downloads{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.sig-downloads button{display:flex;align-items:center;gap:8px;border:0;border-radius:10px;background:linear-gradient(110deg,#d0003d,#a6002e);color:#fff;padding:13px 16px;font-size:13px;font-weight:800;cursor:pointer}
 @media(max-width:760px){.sig-downloads{width:100%;flex-direction:column}.sig-downloads button{width:100%;justify-content:center}}
+
+
+/* Signature Maker full-viewport integration: escape the generic 640px tool-page content rail. */
+.tool-page-panel.signature-maker-tool-panel{
+  position:fixed!important;inset:0!important;z-index:1400!important;
+  display:flex!important;flex-direction:column!important;
+  align-items:stretch!important;justify-content:stretch!important;
+  width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;
+  margin:0!important;padding:0!important;overflow:hidden!important;border-radius:0!important;
+}
+.tool-page-panel.signature-maker-tool-panel>.sig-shell{
+  position:fixed!important;inset:0!important;z-index:1401!important;
+  display:flex!important;flex-direction:column!important;
+  width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;
+  min-width:0!important;min-height:0!important;margin:0!important;overflow:hidden!important;
+}
+.tool-page-panel.signature-maker-tool-panel .sig-workspace{
+  width:100%!important;max-width:none!important;min-width:0!important;
+  grid-template-columns:minmax(340px,38%) minmax(0,62%)!important;
+  gap:clamp(14px,1.5vw,24px)!important;
+  padding:clamp(14px,1.8vw,26px)!important;
+}
+.tool-page-panel.signature-maker-tool-panel .sig-preview{min-width:0!important}
+.tool-page-panel.signature-maker-tool-panel .sig-pad{width:100%!important;min-width:0!important}
+@media(max-width:760px){
+  .tool-page-panel.signature-maker-tool-panel{height:100dvh!important;overflow:hidden!important}
+  .tool-page-panel.signature-maker-tool-panel>.sig-shell{height:100dvh!important;overflow-y:auto!important;overflow-x:hidden!important}
+  .tool-page-panel.signature-maker-tool-panel .sig-workspace{
+    display:flex!important;flex-direction:column!important;width:100%!important;
+    height:auto!important;max-height:none!important;padding:12px!important;gap:12px!important;overflow:visible!important;
+  }
+  .tool-page-panel.signature-maker-tool-panel .sig-settings,
+  .tool-page-panel.signature-maker-tool-panel .sig-preview{
+    width:100%!important;max-width:none!important;box-sizing:border-box!important;
+  }
+}
