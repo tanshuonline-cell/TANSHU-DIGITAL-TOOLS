@@ -2190,3 +2190,14 @@
     display:block!important;width:100%!important;height:62svh!important;min-height:360px!important;max-height:620px!important;
   }
 }
+
+/* Passport Photo Maker: let vertical swipes on the preview image reach its scroll area. */
+@media(max-width:900px){
+  .ipm-preview-panel>.ipm-preview-bg{
+    overflow:auto!important;overflow-x:hidden!important;overflow-y:auto!important;
+    -webkit-overflow-scrolling:touch!important;overscroll-behavior:contain!important;
+    touch-action:pan-y!important;
+  }
+  .ipm-preview-panel .ipm-photo,
+  .ipm-preview-panel .ipm-photo img{pointer-events:none!important}
+}
