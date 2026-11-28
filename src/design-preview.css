@@ -815,3 +815,141 @@
     padding: 10px !important;
   }
 }
+
+
+/* MULTI-COLOUR CATEGORY PICTOGRAMS — mapped to each real category type. */
+.design-preview-shell .app.light .category-card > .category-icon,
+.design-preview-shell .app.dark .category-card > .category-icon {
+  position: relative !important;
+  overflow: hidden !important;
+  font-size: 0 !important;
+  line-height: 1 !important;
+  color: transparent !important;
+}
+.design-preview-shell .app.light .category-card > .category-icon svg,
+.design-preview-shell .app.dark .category-card > .category-icon svg {
+  display: none !important;
+}
+.design-preview-shell .app.light .category-card > .category-icon::after,
+.design-preview-shell .app.dark .category-card > .category-icon::after {
+  content: "🧰";
+  display: block !important;
+  font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif !important;
+  font-size: 17px !important;
+  line-height: 1 !important;
+  color: initial !important;
+  transform: translateY(-.3px) !important;
+}
+
+/* CSC / cyber / creative / document / print / photo */
+.design-preview-shell .app.light .category-icon.csc,
+.design-preview-shell .app.dark .category-icon.csc { background: linear-gradient(145deg,#fff0ce,#f5dca7) !important; border-color:#f1e1bd !important; }
+.design-preview-shell .app.light .category-icon.csc::after,
+.design-preview-shell .app.dark .category-icon.csc::after { content:"🏛️" !important; }
+.design-preview-shell .app.light .category-icon.cyber,
+.design-preview-shell .app.dark .category-icon.cyber { background: linear-gradient(145deg,#e4f1fb,#d0e4f4) !important; border-color:#dae9f4 !important; }
+.design-preview-shell .app.light .category-icon.cyber::after,
+.design-preview-shell .app.dark .category-icon.cyber::after { content:"💻" !important; }
+.design-preview-shell .app.light .category-icon.maker,
+.design-preview-shell .app.dark .category-icon.maker { background: linear-gradient(145deg,#f5e8fb,#e8dafa) !important; border-color:#eadcf2 !important; }
+.design-preview-shell .app.light .category-icon.maker::after,
+.design-preview-shell .app.dark .category-icon.maker::after { content:"✨" !important; }
+.design-preview-shell .app.light .category-icon.docs,
+.design-preview-shell .app.dark .category-icon.docs { background: linear-gradient(145deg,#e8f0fa,#d8e4f3) !important; border-color:#dce7f2 !important; }
+.design-preview-shell .app.light .category-icon.docs::after,
+.design-preview-shell .app.dark .category-icon.docs::after { content:"📑" !important; }
+.design-preview-shell .app.light .category-icon.print,
+.design-preview-shell .app.dark .category-icon.print { background: linear-gradient(145deg,#e0f3f3,#cce8e8) !important; border-color:#d6eceb !important; }
+.design-preview-shell .app.light .category-icon.print::after,
+.design-preview-shell .app.dark .category-icon.print::after { content:"🖨️" !important; }
+.design-preview-shell .app.light .category-icon.photo,
+.design-preview-shell .app.dark .category-icon.photo { background: linear-gradient(145deg,#fce9ef,#f5d6e2) !important; border-color:#f3dfe7 !important; }
+.design-preview-shell .app.light .category-icon.photo::after,
+.design-preview-shell .app.dark .category-icon.photo::after { content:"📸" !important; }
+
+/* PVC / PDF / business / shop records / education / typing */
+.design-preview-shell .app.light .category-icon.pvc,
+.design-preview-shell .app.dark .category-icon.pvc { background: linear-gradient(145deg,#e7f5ed,#d4eadc) !important; border-color:#dceee3 !important; }
+.design-preview-shell .app.light .category-icon.pvc::after,
+.design-preview-shell .app.dark .category-icon.pvc::after { content:"💳" !important; }
+.design-preview-shell .app.light .category-icon.pdf,
+.design-preview-shell .app.dark .category-icon.pdf { background: linear-gradient(145deg,#fbe6e4,#f2d2d0) !important; border-color:#f3dcda !important; }
+.design-preview-shell .app.light .category-icon.pdf::after,
+.design-preview-shell .app.dark .category-icon.pdf::after { content:"📕" !important; }
+.design-preview-shell .app.light .category-icon.business,
+.design-preview-shell .app.dark .category-icon.business { background: linear-gradient(145deg,#e9f2e8,#d7e7d5) !important; border-color:#dfeade !important; }
+.design-preview-shell .app.light .category-icon.business::after,
+.design-preview-shell .app.dark .category-icon.business::after { content:"💼" !important; }
+.design-preview-shell .app.light .category-icon.recordform,
+.design-preview-shell .app.dark .category-icon.recordform { background: linear-gradient(145deg,#f4eee4,#e9dfd0) !important; border-color:#eee4d6 !important; }
+.design-preview-shell .app.light .category-icon.recordform::after,
+.design-preview-shell .app.dark .category-icon.recordform::after { content:"🗂️" !important; }
+.design-preview-shell .app.light .category-icon.education,
+.design-preview-shell .app.dark .category-icon.education { background: linear-gradient(145deg,#eee9fb,#ddd5f3) !important; border-color:#e4ddf4 !important; }
+.design-preview-shell .app.light .category-icon.education::after,
+.design-preview-shell .app.dark .category-icon.education::after { content:"🎓" !important; }
+.design-preview-shell .app.light .category-icon.typing,
+.design-preview-shell .app.dark .category-icon.typing { background: linear-gradient(145deg,#e6effb,#d4e2f4) !important; border-color:#dfe9f5 !important; }
+.design-preview-shell .app.light .category-icon.typing::after,
+.design-preview-shell .app.dark .category-icon.typing::after { content:"⌨️" !important; }
+
+/* QR / utility / banking / government / graphics / stamps */
+.design-preview-shell .app.light .category-icon.qr,
+.design-preview-shell .app.dark .category-icon.qr { background: linear-gradient(145deg,#e4f4ed,#cfe9dc) !important; border-color:#d9eee3 !important; }
+.design-preview-shell .app.light .category-icon.qr::after,
+.design-preview-shell .app.dark .category-icon.qr::after { content:"🔳" !important; }
+.design-preview-shell .app.light .category-icon.utility,
+.design-preview-shell .app.dark .category-icon.utility { background: linear-gradient(145deg,#f7ecd9,#eddfc6) !important; border-color:#f0e5d3 !important; }
+.design-preview-shell .app.light .category-icon.utility::after,
+.design-preview-shell .app.dark .category-icon.utility::after { content:"🧰" !important; }
+.design-preview-shell .app.light .category-icon.banking,
+.design-preview-shell .app.dark .category-icon.banking { background: linear-gradient(145deg,#e3f1e7,#cde4d5) !important; border-color:#d9ebdf !important; }
+.design-preview-shell .app.light .category-icon.banking::after,
+.design-preview-shell .app.dark .category-icon.banking::after { content:"🏦" !important; }
+.design-preview-shell .app.light .category-icon.govt,
+.design-preview-shell .app.dark .category-icon.govt { background: linear-gradient(145deg,#fff0d5,#f1ddb2) !important; border-color:#f1e3c9 !important; }
+.design-preview-shell .app.light .category-icon.govt::after,
+.design-preview-shell .app.dark .category-icon.govt::after { content:"🏛️" !important; }
+.design-preview-shell .app.light .category-icon.graphics,
+.design-preview-shell .app.dark .category-icon.graphics { background: linear-gradient(145deg,#fbe9ef,#f2d1df) !important; border-color:#f2dfe7 !important; }
+.design-preview-shell .app.light .category-icon.graphics::after,
+.design-preview-shell .app.dark .category-icon.graphics::after { content:"🎨" !important; }
+.design-preview-shell .app.light .category-icon.stamp,
+.design-preview-shell .app.dark .category-icon.stamp { background: linear-gradient(145deg,#f4eaf6,#e7d8ed) !important; border-color:#ebdfef !important; }
+.design-preview-shell .app.light .category-icon.stamp::after,
+.design-preview-shell .app.dark .category-icon.stamp::after { content:"🔖" !important; }
+
+/* Image / portrait / ID print / forms / web / finance */
+.design-preview-shell .app.light .category-icon.image,
+.design-preview-shell .app.dark .category-icon.image { background: linear-gradient(145deg,#eee9fb,#ded7f4) !important; border-color:#e4def4 !important; }
+.design-preview-shell .app.light .category-icon.image::after,
+.design-preview-shell .app.dark .category-icon.image::after { content:"🖼️" !important; }
+.design-preview-shell .app.light .category-icon.portrait,
+.design-preview-shell .app.dark .category-icon.portrait { background: linear-gradient(145deg,#f9e8ed,#f0d3dc) !important; border-color:#f1dfe4 !important; }
+.design-preview-shell .app.light .category-icon.portrait::after,
+.design-preview-shell .app.dark .category-icon.portrait::after { content:"👤" !important; }
+.design-preview-shell .app.light .category-icon.idprint,
+.design-preview-shell .app.dark .category-icon.idprint { background: linear-gradient(145deg,#e3eef9,#d0e1f1) !important; border-color:#dce8f4 !important; }
+.design-preview-shell .app.light .category-icon.idprint::after,
+.design-preview-shell .app.dark .category-icon.idprint::after { content:"🪪" !important; }
+.design-preview-shell .app.light .category-icon.forms,
+.design-preview-shell .app.dark .category-icon.forms { background: linear-gradient(145deg,#f9eddf,#f0dfc8) !important; border-color:#f0e5d7 !important; }
+.design-preview-shell .app.light .category-icon.forms::after,
+.design-preview-shell .app.dark .category-icon.forms::after { content:"📝" !important; }
+.design-preview-shell .app.light .category-icon.web,
+.design-preview-shell .app.dark .category-icon.web { background: linear-gradient(145deg,#e3f0fa,#d0e4f4) !important; border-color:#dceaf5 !important; }
+.design-preview-shell .app.light .category-icon.web::after,
+.design-preview-shell .app.dark .category-icon.web::after { content:"🌐" !important; }
+.design-preview-shell .app.light .category-icon.finance,
+.design-preview-shell .app.dark .category-icon.finance { background: linear-gradient(145deg,#e6f3eb,#d4e9dc) !important; border-color:#dceee3 !important; }
+.design-preview-shell .app.light .category-icon.finance::after,
+.design-preview-shell .app.dark .category-icon.finance::after { content:"📈" !important; }
+
+/* Keep the coloured pictogram square readable on the navy hover card. */
+.design-preview-shell .app.light .category-card:hover > .category-icon,
+.design-preview-shell .app.dark .category-card:hover > .category-icon,
+.design-preview-shell .app.light .category-card:focus-visible > .category-icon,
+.design-preview-shell .app.dark .category-card:focus-visible > .category-icon {
+  filter: saturate(1.12) !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.75), 0 3px 9px rgba(0,0,0,.16) !important;
+}
