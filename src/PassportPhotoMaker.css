@@ -643,3 +643,95 @@
   .ipm-sheet-scroll{padding:8px!important}
   .ipm-paper{width:min(100%,560px)!important}
 }
+
+/* Verified interaction model:
+   - the studio owns the viewport and the main workspace owns vertical scroll;
+   - sheet/photo surfaces allow vertical panning instead of capturing drags;
+   - moving/resizing is only possible through explicit selected-photo handles;
+   - crop preview uses the same natural-image crop rectangle as canvas export. */
+@media(max-width:900px){
+  .ipm{
+    position:fixed!important;inset:0!important;z-index:1000!important;
+    display:flex!important;flex-direction:column!important;
+    width:100vw!important;height:100vh!important;height:100dvh!important;
+    min-height:0!important;max-height:none!important;overflow:hidden!important;
+    overscroll-behavior:none!important;touch-action:auto!important;
+  }
+  .ipm-head{position:relative!important;flex:0 0 auto!important;width:100%!important}
+  .ipm-wrap{
+    display:block!important;flex:1 1 auto!important;min-height:0!important;
+    width:100%!important;height:auto!important;max-height:none!important;
+    margin:0!important;overflow-x:hidden!important;overflow-y:auto!important;
+    -webkit-overflow-scrolling:touch!important;overscroll-behavior-y:contain!important;
+    touch-action:pan-y!important;box-sizing:border-box!important;
+    padding:12px 10px calc(48px + env(safe-area-inset-bottom))!important;
+  }
+  .ipm-grid,.ipm-sheet-grid{
+    display:flex!important;flex:0 0 auto!important;flex-direction:column!important;
+    align-items:stretch!important;width:100%!important;height:auto!important;
+    min-height:0!important;max-height:none!important;overflow:visible!important;
+    gap:12px!important;
+  }
+  .ipm-control-panel,.ipm-controls,.ipm-sheet-panel,.ipm-preview-panel,.ipm-panel{
+    position:relative!important;display:block!important;flex:0 0 auto!important;
+    width:100%!important;height:auto!important;min-width:0!important;min-height:0!important;
+    max-width:none!important;max-height:none!important;overflow:visible!important;
+    box-sizing:border-box!important;touch-action:pan-y!important;
+  }
+  .ipm-preview-panel{order:1!important;padding:0!important}
+  .ipm-sheet-grid>.ipm-controls{order:0!important}
+  .ipm-sheet-grid>.ipm-sheet-panel{order:1!important}
+  .ipm-step-actions{position:static!important;margin-top:16px!important}
+  .ipm-crop-stage{
+    display:grid!important;place-items:center!important;width:100%!important;
+    min-height:260px!important;height:auto!important;max-height:none!important;
+    overflow:hidden!important;padding:12px!important;touch-action:pan-y!important;
+  }
+  .ipm-crop-stage .ipm-photo.crop{
+    display:block!important;position:relative!important;flex:none!important;
+    width:min(100%,280px)!important;height:auto!important;max-width:100%!important;
+    max-height:360px!important;overflow:hidden!important;isolation:isolate!important;
+  }
+  .ipm-crop-stage .ipm-photo.crop img{
+    position:absolute!important;display:block!important;max-width:none!important;
+    max-height:none!important;object-fit:fill!important;transform:none!important;
+    transform-origin:top left!important;will-change:auto!important;
+  }
+  .ipm-preview-panel>.ipm-preview-bg{
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    min-height:220px!important;height:36vh!important;max-height:460px!important;
+    margin:10px!important;overflow:hidden!important;
+  }
+  .ipm-sheet-scroll{
+    display:flex!important;justify-content:center!important;align-items:flex-start!important;
+    width:100%!important;max-height:none!important;min-height:0!important;
+    overflow-x:auto!important;overflow-y:hidden!important;padding:10px!important;
+    -webkit-overflow-scrolling:touch!important;overscroll-behavior-x:contain!important;
+    touch-action:pan-x pan-y pinch-zoom!important;
+  }
+  .ipm-sheet-photo{touch-action:pan-x pan-y pinch-zoom!important;cursor:default!important}
+  .ipm-sheet-photo:active{cursor:default!important}
+  .ipm-move-handle,.ipm-resize-handle{touch-action:none!important}
+  .ipm-paper{margin-inline:auto!important;touch-action:pan-x pan-y pinch-zoom!important}
+}
+@media(min-width:901px){
+  .ipm-crop-stage .ipm-photo.crop{
+    display:block!important;position:relative!important;flex:none!important;
+    width:min(100%,340px)!important;height:auto!important;max-height:440px!important;
+    overflow:hidden!important;isolation:isolate!important;
+  }
+  .ipm-crop-stage .ipm-photo.crop img{
+    position:absolute!important;display:block!important;max-width:none!important;
+    max-height:none!important;object-fit:fill!important;transform:none!important;
+    transform-origin:top left!important;
+  }
+  .ipm-sheet-photo{touch-action:pan-y pan-x pinch-zoom!important}
+}
+.ipm-move-handle{
+  position:absolute;left:2px;top:2px;z-index:6;width:20px;height:20px;
+  display:grid;place-items:center;padding:0;border:0;border-radius:5px;
+  background:#ffffffed;color:#244d38;box-shadow:0 1px 4px #10251b30;
+  cursor:grab;touch-action:none;
+}
+.ipm-sheet-photo:not(.selected) .ipm-move-handle,
+.ipm-sheet-photo:not(.selected) .ipm-resize-handle{display:none!important}
