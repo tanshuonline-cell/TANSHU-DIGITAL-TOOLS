@@ -813,3 +813,40 @@
     touch-action: pan-y !important;
   }
 }
+
+/* Keep the mobile Passport Photo Maker within the viewport; prevent width/padding
+   from pushing its workspace off the right edge. */
+@media (max-width: 900px) {
+  .ipm {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: clip !important;
+  }
+  .ipm-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  .ipm-wrap *,
+  .ipm-wrap *::before,
+  .ipm-wrap *::after {
+    box-sizing: border-box !important;
+    min-width: 0;
+  }
+  .ipm-grid,
+  .ipm-sheet-grid,
+  .ipm-panel,
+  .ipm-control-panel,
+  .ipm-controls,
+  .ipm-preview-panel,
+  .ipm-sheet-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+}
