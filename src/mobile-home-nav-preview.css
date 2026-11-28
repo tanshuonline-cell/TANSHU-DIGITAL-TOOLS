@@ -416,3 +416,81 @@
     align-items: flex-end !important;
   }
 }
+
+
+/* Mobile social shortcuts: show all three where they fit; always retain YouTube. */
+.social-youtube-mobile { display: none !important; }
+
+@media (max-width: 760px) {
+  .approved-app-design .app .top-actions .social-mini {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    width: auto !important;
+    min-width: 0 !important;
+    margin: 0 1px 0 0 !important;
+  }
+  .approved-app-design .app .top-actions .social-mini .social-youtube {
+    display: none !important;
+  }
+  .approved-app-design .app .top-actions .social-mini > a.social-facebook,
+  .approved-app-design .app .top-actions .social-mini > a.social-instagram,
+  .approved-app-design .app .top-actions .social-mini > a.social-youtube-mobile {
+    display: inline-flex !important;
+    flex: 0 0 23px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 23px !important;
+    height: 23px !important;
+    min-width: 23px !important;
+    min-height: 23px !important;
+    padding: 0 !important;
+    border: 1px solid #e7e2d9 !important;
+    border-radius: 8px !important;
+    background: #fff !important;
+    box-shadow: 0 2px 6px rgba(40,35,35,.045) !important;
+    text-decoration: none !important;
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease !important;
+  }
+  .approved-app-design .app .top-actions .social-mini > a.social-facebook svg {
+    color: #1877f2 !important;
+    stroke: #1877f2 !important;
+  }
+  .approved-app-design .app .top-actions .social-mini > a.social-instagram svg {
+    color: #d74778 !important;
+    stroke: #d74778 !important;
+  }
+  .approved-app-design .app .top-actions .social-mini > a.social-youtube-mobile svg {
+    color: #f00032 !important;
+    stroke: #f00032 !important;
+  }
+  .approved-app-design .app .top-actions .social-mini > a:hover,
+  .approved-app-design .app .top-actions .social-mini > a:focus-visible {
+    transform: translateY(-1px) scale(1.06) !important;
+    box-shadow: 0 4px 10px rgba(40,35,35,.10) !important;
+  }
+  .approved-app-design .app.dark .top-actions .social-mini > a {
+    background: #172239 !important;
+    border-color: #34415a !important;
+  }
+}
+
+/* Very narrow phones: keep YouTube visible; hide the two optional shortcuts
+   so Admin, language and theme controls never get squeezed or clipped. */
+@media (max-width: 370px) {
+  .approved-app-design .app .top-actions .social-mini > a.social-facebook,
+  .approved-app-design .app .top-actions .social-mini > a.social-instagram {
+    display: none !important;
+  }
+  .approved-app-design .app .top-actions .social-mini > a.social-youtube-mobile {
+    display: inline-flex !important;
+    flex: 0 0 20px !important;
+    width: 20px !important;
+    height: 22px !important;
+    min-width: 20px !important;
+    min-height: 22px !important;
+  }
+  .approved-app-design .app .top-actions .social-mini { gap: 2px !important; }
+}
