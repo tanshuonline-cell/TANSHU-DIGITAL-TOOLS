@@ -579,3 +579,12 @@
 @media (prefers-reduced-motion: reduce) {
   .pwa-install-wrap .pwa-install-symbol svg { animation: none !important; }
 }
+
+
+/* Keep the final home-page content scrollable above the floating mobile nav. */
+@media (max-width: 760px) {
+  .approved-app-design .app main {
+    padding-bottom: calc(150px + env(safe-area-inset-bottom)) !important;
+    scroll-padding-bottom: calc(150px + env(safe-area-inset-bottom));
+  }
+}
