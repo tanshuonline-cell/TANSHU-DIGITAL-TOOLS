@@ -2423,3 +2423,13 @@
  .document-preview-footer,.document-privacy-note{position:relative!important;flex:0 0 auto!important}
  .document-editor-foot{position:relative!important;display:flex!important;flex-wrap:wrap!important;gap:8px!important;padding:14px 0!important}
 }
+
+/* PDF Editor preview: keep the page fully inside a two-axis scroll surface on mobile. */
+.pdf-editor-root .pdf-canvas-scroller{position:relative!important;display:block!important;overflow:auto!important;overscroll-behavior:contain!important;justify-content:flex-start!important;align-items:flex-start!important;touch-action:pan-x pan-y!important;-webkit-overflow-scrolling:touch!important}
+.pdf-editor-root .pdf-canvas-wrap{width:max-content!important;max-width:none!important;margin:0 auto 24px!important;flex:0 0 auto!important;touch-action:pan-x pan-y!important}
+.pdf-editor-root .pdf-canvas-wrap canvas{max-width:none!important;flex:none!important}
+@media(max-width:900px){
+ .pdf-editor-root .pdf-page-view{min-width:0!important;width:100%!important;max-width:100%!important;overflow:hidden!important}
+ .pdf-editor-root .pdf-canvas-scroller{width:100%!important;max-width:100%!important;min-width:0!important;min-height:0!important;padding:10px!important;overflow:auto!important}
+ .pdf-editor-root .pdf-canvas-wrap{margin:0 0 24px!important}
+}
