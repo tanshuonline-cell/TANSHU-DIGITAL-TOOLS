@@ -4,6 +4,7 @@ import App from './App';
 import AdminPortal from './AdminPortal';
 import AdminDashboard from './AdminDashboard';
 import './style.css';
+import './approved-design.css';
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -16,6 +17,6 @@ if ('serviceWorker' in navigator) {
 const path = window.location.pathname;
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    {path === '/admin-login' ? <AdminPortal onBack={() => window.location.assign('/')} /> : path === '/admin' ? <AdminDashboard /> : <App />}
+    {path === '/admin-login' ? <AdminPortal onBack={() => window.location.assign('/')} /> : path === '/admin' ? <AdminDashboard /> : <div className="approved-app-design"><App /></div>}
   </React.StrictMode>
 );
