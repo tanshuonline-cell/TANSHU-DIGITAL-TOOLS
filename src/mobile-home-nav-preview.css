@@ -339,3 +339,80 @@
     display: none !important;
   }
 }
+
+
+/* Mobile header refinements requested from device review. */
+@media (max-width: 760px) {
+  /* Keep the header focused: no Facebook / Instagram / YouTube row on phones. */
+  .approved-app-design .app .top-actions .social-mini {
+    display: none !important;
+  }
+
+  /* Short Admin label remains fully inside a fixed, centered button. */
+  .approved-app-design .app .top-actions .top-auth-link {
+    display: inline-flex !important;
+    flex: 0 0 48px !important;
+    width: 48px !important;
+    min-width: 48px !important;
+    max-width: 48px !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 5px !important;
+    border: 1px solid #e8d6b6 !important;
+    border-radius: 9px !important;
+    background: #fffaf0 !important;
+    color: #604628 !important;
+    font-size: 9px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    text-overflow: clip !important;
+  }
+  .approved-app-design .app .top-actions .top-auth-link::after {
+    content: none !important;
+    display: none !important;
+  }
+  .approved-app-design .app.dark .top-actions .top-auth-link {
+    background: #30283a !important;
+    border-color: #66533c !important;
+    color: #f2d69b !important;
+  }
+
+  /* Install stays fixed at the lower-right, just above the Saved tab/nav bar. */
+  .approved-app-design .app ~ .pwa-install-wrap,
+  .approved-app-design .pwa-install-wrap {
+    position: fixed !important;
+    top: auto !important;
+    right: 14px !important;
+    bottom: calc(84px + env(safe-area-inset-bottom)) !important;
+    left: auto !important;
+    z-index: 70 !important;
+    align-items: flex-end !important;
+  }
+  .approved-app-design .pwa-install-pill {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+  }
+  .approved-app-design .pwa-install-help {
+    max-width: min(300px, calc(100vw - 28px)) !important;
+  }
+}
+@media (min-width: 761px) {
+  /* Desktop browser: keep the install button anchored at the bottom-right,
+     never floating halfway down the content while the page scrolls. */
+  .pwa-install-wrap {
+    position: fixed !important;
+    top: auto !important;
+    right: 24px !important;
+    bottom: 22px !important;
+    left: auto !important;
+    z-index: 70 !important;
+    align-items: flex-end !important;
+  }
+}
