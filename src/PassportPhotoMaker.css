@@ -782,3 +782,10 @@
 .ipm-crop-stage .ipm-photo.crop:active{
  box-shadow:0 0 0 4px rgba(143,38,56,.2),0 18px 36px rgba(24,32,42,.28),0 4px 10px rgba(24,32,42,.16)!important;
 }
+
+/* Compact crop movement selector; keep crop gestures on the photo itself. */
+.ipm-crop-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 10px;padding:8px 10px;border:1px solid #eadde0;border-radius:10px;background:#fff8f9;color:#54212c;font-size:12px}
+.ipm-crop-tools label{display:flex;align-items:center;gap:7px;font-weight:600}
+.ipm-crop-tools select{max-width:150px;padding:6px 8px;border:1px solid #d8b7bf;border-radius:7px;background:#fff;color:#54212c;font:inherit}
+.ipm-crop-tools small{color:#76545b;text-align:right}
+@media(max-width:520px){.ipm-crop-tools{align-items:flex-start;flex-direction:column}.ipm-crop-tools small{text-align:left}}
