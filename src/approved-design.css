@@ -346,3 +346,22 @@
     transition: none !important;
   }
 }
+
+
+/* ROOT CAUSE FIX:
+   The original stylesheet paints category cards green and adds a scroll-linked
+   green ::before overlay. Turn off that overlay only for Explore Categories.
+   Maker cards and tool rows keep their existing green styling/animations. */
+.approved-app-design .app.light .category-grid .category-card::before,
+.approved-app-design .app.dark .category-grid .category-card::before {
+  content: none !important;
+  display: none !important;
+  animation: none !important;
+  background: none !important;
+  transform: none !important;
+}
+
+/* Home spacing: keep the workspace panels and Start Creating visually separate. */
+.approved-app-design .app .home-maker-heading {
+  margin-top: 30px !important;
+}
