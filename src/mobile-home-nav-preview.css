@@ -331,3 +331,11 @@
   .approved-app-design .app .mobile-bottom button svg,
   .approved-app-design .app .top-actions .theme-toggle { transition: none !important; }
 }
+
+
+/* The extra mobile brand lockup is mobile-only; desktop already has the full sidebar brand. */
+@media (min-width: 761px) {
+  .approved-app-design .mobile-brand {
+    display: none !important;
+  }
+}
