@@ -359,3 +359,201 @@
  .ipm-fields{grid-template-columns:1fr 1fr!important}
  .ipm-step-actions{gap:6px!important}
 }
+
+
+/* Mobile workflow repair:
+   The .ipm root owns vertical scrolling; the old locked .ipm-wrap and
+   100%-height panels no longer clip the upload, crop, preview or print steps. */
+@media (max-width:900px) {
+  .ipm {
+    position:fixed!important;
+    inset:0!important;
+    z-index:1000!important;
+    display:block!important;
+    width:100vw!important;
+    height:100dvh!important;
+    min-height:0!important;
+    max-width:100vw!important;
+    max-height:none!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+    overscroll-behavior-y:contain!important;
+    touch-action:pan-y!important;
+    padding-bottom:env(safe-area-inset-bottom)!important;
+  }
+  .ipm-head {
+    position:relative!important;
+    z-index:25!important;
+    display:flex!important;
+    flex:0 0 auto!important;
+    width:100%!important;
+  }
+  .ipm-wrap {
+    display:block!important;
+    flex:0 0 auto!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+    padding:12px 10px calc(100px + env(safe-area-inset-bottom))!important;
+    box-sizing:border-box!important;
+  }
+  .ipm-intro,
+  .ipm-steps {
+    position:relative!important;
+    flex:0 0 auto!important;
+  }
+  .ipm-steps {
+    position:sticky!important;
+    top:0!important;
+    z-index:20!important;
+  }
+  .ipm-grid,
+  .ipm-sheet-grid {
+    display:flex!important;
+    flex:0 0 auto!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+    gap:10px!important;
+  }
+  .ipm-control-panel,
+  .ipm-controls,
+  .ipm-sheet-panel,
+  .ipm-preview-panel,
+  .ipm-panel {
+    position:relative!important;
+    display:block!important;
+    flex:0 0 auto!important;
+    order:0!important;
+    width:100%!important;
+    height:auto!important;
+    min-width:0!important;
+    min-height:0!important;
+    max-width:none!important;
+    max-height:none!important;
+    overflow:visible!important;
+    padding:13px!important;
+    box-sizing:border-box!important;
+  }
+  .ipm-preview-panel {
+    order:1!important;
+    padding:0!important;
+  }
+  .ipm-preview-panel>.ipm-preview-bg {
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:auto!important;
+    min-width:0!important;
+    min-height:240px!important;
+    height:40vh!important;
+    max-height:520px!important;
+    margin:10px!important;
+    padding:14px!important;
+    overflow:auto!important;
+    overscroll-behavior:contain!important;
+    -webkit-overflow-scrolling:touch!important;
+    box-sizing:border-box!important;
+  }
+  .ipm-photo,
+  .ipm-photo.crop {
+    flex:none!important;
+    max-width:min(100%,320px)!important;
+    max-height:340px!important;
+  }
+  .ipm-crop-stage {
+    width:100%!important;
+    min-height:260px!important;
+    height:40vh!important;
+    max-height:540px!important;
+    overflow:auto!important;
+    overscroll-behavior:contain!important;
+    -webkit-overflow-scrolling:touch!important;
+    touch-action:pan-y!important;
+  }
+  .ipm-control-panel>.ipm-upload,
+  .ipm-control-panel .ipm-upload {
+    position:relative!important;
+    z-index:1!important;
+    display:flex!important;
+    width:100%!important;
+    min-height:140px!important;
+    margin-bottom:12px!important;
+    pointer-events:auto!important;
+    touch-action:manipulation!important;
+  }
+  .ipm-control-panel .ipm-upload.compact {
+    min-height:110px!important;
+  }
+  .ipm-control-panel input[type=file] {
+    display:none!important;
+  }
+  .ipm-step-actions {
+    position:sticky!important;
+    bottom:0!important;
+    z-index:18!important;
+    margin-top:14px!important;
+    background:#ffffffed!important;
+    padding:10px!important;
+    border-top:1px solid #e5e9ed!important;
+    box-shadow:0 -5px 16px #172b1c12!important;
+  }
+  .ipm-sheet-scroll {
+    width:100%!important;
+    max-height:60vh!important;
+    min-height:0!important;
+    overflow:auto!important;
+    overscroll-behavior:contain!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  .ipm-message,
+  .ipm-footer {
+    position:relative!important;
+    flex:0 0 auto!important;
+  }
+}
+@media (max-width:520px) {
+  .ipm-wrap {
+    padding-left:9px!important;
+    padding-right:9px!important;
+  }
+  .ipm-preview-panel>.ipm-preview-bg,
+  .ipm-crop-stage {
+    min-height:220px!important;
+    height:40vh!important;
+  }
+  .ipm-fields {
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+
+
+/* Clean, compact Passport Photo Maker header hierarchy. */
+.ipm-head{gap:16px}
+.ipm-brand{flex:0 1 auto;min-width:0}
+.ipm-brand small{font-size:10px;letter-spacing:.12em;white-space:nowrap}
+.ipm-brand small i{font-style:normal;color:#c5a45e;padding:0 3px}
+.ipm-head-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;min-width:0}
+.ipm-local{white-space:nowrap;border:1px solid #dcebe1;background:#f3f8f4;border-radius:999px;padding:8px 11px;letter-spacing:.06em}
+@media(max-width:900px){
+ .ipm-head{min-height:0;height:auto;padding:13px 14px 12px;display:flex;flex-direction:column;align-items:stretch;gap:11px}
+ .ipm-brand{width:100%;justify-content:center;gap:9px}
+ .ipm-brand>span{width:31px;height:31px;border-radius:9px}
+ .ipm-brand small{font-size:9px;letter-spacing:.1em}
+ .ipm-head-actions{width:100%;justify-content:space-between;gap:8px}
+ .ipm-back{min-height:36px;padding:8px 11px;font-size:10px;white-space:nowrap}
+ .ipm-local{min-height:34px;padding:7px 10px;font-size:8px}
+}
+@media(max-width:360px){
+ .ipm-brand small{font-size:8px;letter-spacing:.07em}
+ .ipm-head-actions{gap:6px}
+ .ipm-back{padding:7px 8px;font-size:9px;gap:5px}
+ .ipm-local{padding:6px 8px;font-size:7px;gap:4px}
+}

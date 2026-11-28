@@ -76,3 +76,113 @@ html:has(.sbr-shell),body:has(.sbr-shell){overflow:hidden!important;height:100dv
  .sbr-downloads button{position:relative!important;display:flex!important;width:100%!important;min-height:44px!important;white-space:normal!important}
  .sbr-message{position:relative!important;margin:0!important}
 }
+
+
+/* Mobile scroll repair:
+   The scroll container is the full-height tool shell, not the locked document.
+   This overrides the earlier :has() fullscreen rule without changing tool logic. */
+@media (max-width:760px) {
+  html:has(.sbr-shell),
+  body:has(.sbr-shell) {
+    height:100%!important;
+    min-height:100%!important;
+    overflow:hidden!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) {
+    position:fixed!important;
+    inset:0!important;
+    width:100vw!important;
+    height:100dvh!important;
+    max-width:none!important;
+    max-height:none!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    display:block!important;
+    overscroll-behavior:none!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) > .sbr-shell,
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-shell {
+    position:fixed!important;
+    inset:0!important;
+    z-index:10000!important;
+    display:flex!important;
+    flex-direction:column!important;
+    width:100vw!important;
+    height:100dvh!important;
+    min-height:0!important;
+    max-height:none!important;
+    margin:0!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+    overscroll-behavior-y:contain!important;
+    touch-action:pan-y!important;
+    padding-bottom:calc(16px + env(safe-area-inset-bottom))!important;
+    box-sizing:border-box!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-header {
+    position:sticky!important;
+    top:0!important;
+    z-index:30!important;
+    flex:0 0 auto!important;
+    min-height:60px!important;
+    height:auto!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-workspace {
+    display:flex!important;
+    flex:0 0 auto!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+    padding:10px 10px 20px!important;
+    gap:12px!important;
+    box-sizing:border-box!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-settings,
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-preview {
+    position:relative!important;
+    inset:auto!important;
+    flex:0 0 auto!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+    margin:0!important;
+    padding:14px!important;
+    box-sizing:border-box!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-settings { order:0!important; }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-preview {
+    order:1!important;
+    display:flex!important;
+    flex-direction:column!important;
+    gap:12px!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-pad {
+    position:relative!important;
+    flex:0 0 auto!important;
+    width:100%!important;
+    height:clamp(220px,42vh,360px)!important;
+    min-height:220px!important;
+    max-height:360px!important;
+    overflow:auto!important;
+    touch-action:pan-y!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-downloads {
+    width:100%!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:8px!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-downloads button {
+    width:100%!important;
+    min-height:44px!important;
+  }
+}

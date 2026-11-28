@@ -5,6 +5,7 @@ import AdminPortal from './AdminPortal';
 import AdminDashboard from './AdminDashboard';
 import './style.css';
 import './approved-design.css';
+import './mobile-home-nav-preview.css';
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
