@@ -758,3 +758,27 @@
  .ipm-photo.original{max-width:min(100%,320px)!important;}
  .ipm-crop-stage .ipm-photo.crop{width:var(--crop-frame-width,auto);max-width:min(100%,280px)!important;max-height:none!important;}
 }
+
+
+/* Premium, clearly visible crop boundary and raised studio surface. */
+.ipm-crop-stage{
+ background:linear-gradient(145deg,#e8ecef 0%,#f8f9fa 48%,#e4e8ec 100%)!important;
+ border:1px solid #d5dce2!important;
+ box-shadow:inset 0 2px 8px rgba(24,38,52,.08),0 8px 22px rgba(24,38,52,.07)!important;
+ border-radius:16px!important;
+ padding:30px!important;
+}
+.ipm-crop-stage .ipm-photo.crop{
+ position:relative!important;
+ outline:2px solid #8f2638!important;
+ outline-offset:-2px!important;
+ box-shadow:0 0 0 4px rgba(143,38,56,.13),0 14px 30px rgba(24,32,42,.24),0 3px 8px rgba(24,32,42,.14)!important;
+ background:#fff!important;
+}
+.ipm-crop-stage .ipm-photo.crop::after{
+ content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
+ border:2px solid #9b293c;box-shadow:inset 0 0 0 1px rgba(255,255,255,.7);
+}
+.ipm-crop-stage .ipm-photo.crop:active{
+ box-shadow:0 0 0 4px rgba(143,38,56,.2),0 18px 36px rgba(24,32,42,.28),0 4px 10px rgba(24,32,42,.16)!important;
+}
