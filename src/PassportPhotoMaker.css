@@ -735,3 +735,13 @@
 }
 .ipm-sheet-photo:not(.selected) .ipm-move-handle,
 .ipm-sheet-photo:not(.selected) .ipm-resize-handle{display:none!important}
+
+/* Allow both sheet-axis panning and pinch gestures to pass through the
+   workspace scroller; vertical motion must never be trapped by a photo. */
+@media(max-width:900px){
+  .ipm-wrap{touch-action:pan-x pan-y pinch-zoom!important}
+  .ipm-sheet-scroll{touch-action:pan-x pan-y pinch-zoom!important}
+  .ipm-sheet-photo{touch-action:pan-x pan-y pinch-zoom!important}
+  .ipm-sheet-photo .ipm-move-handle,
+  .ipm-sheet-photo .ipm-resize-handle{touch-action:none!important}
+}
