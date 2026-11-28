@@ -557,3 +557,43 @@
  .ipm-back{padding:7px 8px;font-size:9px;gap:5px}
  .ipm-local{padding:6px 8px;font-size:7px;gap:4px}
 }
+
+
+/* Focused usability patch: accurate touch crop preview, natural mobile page scroll,
+   sheet-only pinch zoom, and a larger desktop studio preview. */
+.ipm-crop-stage .ipm-photo.crop{position:relative;overflow:hidden;isolation:isolate}
+.ipm-crop-stage .ipm-photo.crop img{position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;transform-origin:center center;will-change:transform}
+.ipm{overscroll-behavior-y:auto}
+@media(min-width:901px){
+  .ipm-grid{grid-template-columns:minmax(360px,.92fr) minmax(0,1.08fr);gap:clamp(18px,2.2vw,32px)}
+  .ipm-sheet-grid{grid-template-columns:minmax(330px,.78fr) minmax(0,1.22fr);gap:clamp(18px,2vw,30px)}
+  .ipm-sheet-panel{min-width:0}
+  .ipm-sheet-scroll{max-height:calc(100vh - 250px);min-height:60vh}
+  .ipm-preview-panel>.ipm-preview-bg{min-height:clamp(360px,60vh,760px)}
+  .ipm-preview-panel .ipm-photo{max-width:min(100%,440px);max-height:min(68vh,620px)}
+}
+@media(max-width:900px){
+  .ipm,.ipm-wrap,.ipm-grid,.ipm-sheet-grid{overflow:visible!important}
+  .ipm-control-panel,.ipm-preview-panel,.ipm-sheet-grid>.ipm-controls,.ipm-sheet-grid>.ipm-sheet-panel{
+    max-height:none!important;min-height:0;overflow:visible!important;
+    overscroll-behavior: auto!important;scrollbar-gutter:auto!important;
+    -webkit-overflow-scrolling:touch;touch-action:pan-y;
+  }
+  .ipm-wrap{padding-bottom:calc(34px + env(safe-area-inset-bottom))}
+  .ipm-step-actions{position:static!important}
+  .ipm-sheet-scroll{
+    max-height:none!important;min-height:0;overflow-x:auto!important;overflow-y:visible!important;
+    display:block!important;padding:12px!important;-webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;overscroll-behavior-y:auto;touch-action:pan-y;
+  }
+  .ipm-paper{margin-inline:auto}
+  .ipm-sheet-panel{overflow:visible!important}
+  .ipm-sheet-grid>.ipm-controls{order:1}
+  .ipm-sheet-grid>.ipm-sheet-panel{order:2}
+}
+@media(max-width:520px){
+  .ipm-wrap{padding-left:10px;padding-right:10px;padding-bottom:calc(42px + env(safe-area-inset-bottom))}
+  .ipm-panel{border-radius:13px}
+  .ipm-sheet-scroll{padding:8px!important}
+  .ipm-paper{width:min(100%,560px)}
+}
