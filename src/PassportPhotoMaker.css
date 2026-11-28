@@ -789,3 +789,27 @@
 .ipm-crop-tools select{max-width:150px;padding:6px 8px;border:1px solid #d8b7bf;border-radius:7px;background:#fff;color:#54212c;font:inherit}
 .ipm-crop-tools small{color:#76545b;text-align:right}
 @media(max-width:520px){.ipm-crop-tools{align-items:flex-start;flex-direction:column}.ipm-crop-tools small{text-align:left}}
+
+/* Mobile scroll fix: let the Passport Photo Maker workspace itself receive vertical swipes,
+   not only the step-navigation strip. Keep all other tools and desktop layout unchanged. */
+@media (max-width: 900px) {
+  .ipm {
+    position: relative !important;
+    inset: auto !important;
+    height: auto !important;
+    min-height: 100dvh !important;
+    max-height: none !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior-y: auto !important;
+    touch-action: pan-y !important;
+  }
+  .ipm-wrap {
+    flex: 0 0 auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    touch-action: pan-y !important;
+  }
+}
