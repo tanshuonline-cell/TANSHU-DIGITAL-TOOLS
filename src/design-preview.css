@@ -1,0 +1,261 @@
+/* Isolated, view-only visual redesign sample.
+   Every rule is scoped to .design-preview-shell. Existing app styles and
+   thumbnail rendering remain untouched outside /design-preview. */
+
+.design-preview-shell {
+  --dp-bg: #faf9f6;
+  --dp-surface: #ffffff;
+  --dp-soft: #f5f2ec;
+  --dp-border: #e9e4dc;
+  --dp-text: #302b2e;
+  --dp-muted: #756e70;
+  --dp-subtle: #a29a99;
+  --dp-wine: #5b1f2b;
+  --dp-rose: #e7b1bb;
+  --dp-sage: #6f8b75;
+  min-height: 100vh;
+  background: var(--dp-bg);
+  color: var(--dp-text);
+  font-family: 'DM Sans', 'Noto Sans Devanagari', sans-serif;
+}
+
+.design-preview-shell .app,
+.design-preview-shell .app.light,
+.design-preview-shell .app.dark {
+  --bg: var(--dp-bg);
+  --panel: var(--dp-surface);
+  --panel2: var(--dp-soft);
+  --border: var(--dp-border);
+  --text: var(--dp-text);
+  --muted: var(--dp-muted);
+  --subtle: var(--dp-subtle);
+  --accent: var(--dp-wine);
+  --accent2: var(--dp-sage);
+  background: var(--dp-bg) !important;
+  color: var(--dp-text) !important;
+}
+
+/* Brand rail and navigation */
+.design-preview-shell .sidebar {
+  background: #fff !important;
+  border-right: 1px solid var(--dp-border) !important;
+  box-shadow: 4px 0 18px rgba(45, 35, 32, .035) !important;
+}
+.design-preview-shell .brandmark,
+.design-preview-shell .brandmark-premium {
+  background: #f8f2e9 !important;
+  border: 1px solid #e7d5bc !important;
+  color: var(--dp-wine) !important;
+  box-shadow: none !important;
+}
+.design-preview-shell .brandmark span { color: var(--dp-wine) !important; }
+.design-preview-shell .brand b,
+.design-preview-shell .brand strong { color: var(--dp-text) !important; }
+.design-preview-shell .brand small { color: var(--dp-muted) !important; }
+.design-preview-shell .nav-item {
+  color: #625b5d !important;
+  border-radius: 10px !important;
+}
+.design-preview-shell .nav-item:hover,
+.design-preview-shell .nav-item.active {
+  color: var(--dp-wine) !important;
+  background: #f8eef0 !important;
+}
+.design-preview-shell .nav-item i { background: var(--dp-rose) !important; box-shadow: none !important; }
+.design-preview-shell .secure {
+  color: #55765f !important;
+  background: #f3f7f2 !important;
+  border-color: #e0e9df !important;
+}
+.design-preview-shell .secure b,
+.design-preview-shell .profile b { color: var(--dp-text) !important; }
+
+/* Top bar, search and headings */
+.design-preview-shell .topbar {
+  background: rgba(250, 249, 246, .94) !important;
+  border-bottom-color: var(--dp-border) !important;
+  box-shadow: none !important;
+}
+.design-preview-shell .crumb,
+.design-preview-shell .welcome-row p,
+.design-preview-shell .section-head p { color: var(--dp-muted) !important; }
+.design-preview-shell .crumb b,
+.design-preview-shell .welcome-row h1,
+.design-preview-shell .welcome-row h1 em,
+.design-preview-shell .section-head h2 { color: var(--dp-text) !important; }
+.design-preview-shell .eyebrow,
+.design-preview-shell .text-link { color: var(--dp-wine) !important; }
+.design-preview-shell .pulse { background: var(--dp-sage) !important; box-shadow: 0 0 0 4px #6f8b7518 !important; }
+.design-preview-shell .search-wrap {
+  background: #fff !important;
+  border-color: var(--dp-border) !important;
+  box-shadow: 0 3px 12px rgba(45, 35, 32, .035) !important;
+}
+.design-preview-shell .search-wrap:focus-within {
+  border-color: #c99aa3 !important;
+  box-shadow: 0 0 0 3px #e7b1bb25 !important;
+}
+.design-preview-shell .search-wrap input { color: var(--dp-text) !important; }
+.design-preview-shell .search-wrap input::placeholder { color: #a29a99 !important; }
+.design-preview-shell .language,
+.design-preview-shell .icon-btn {
+  background: #fff !important;
+  color: var(--dp-text) !important;
+  border-color: var(--dp-border) !important;
+}
+
+/* Clean white cards. Existing thumbnail elements and their image sources
+   are deliberately not restyled or replaced. */
+.design-preview-shell .maker-card,
+.design-preview-shell .app.light .maker-card,
+.design-preview-shell .app.dark .maker-card,
+.design-preview-shell .category-card,
+.design-preview-shell .app.light .category-card,
+.design-preview-shell .app.dark .category-card,
+.design-preview-shell .tool-row,
+.design-preview-shell .app.light .tool-row,
+.design-preview-shell .app.dark .tool-row {
+  background: #fff !important;
+  color: var(--dp-text) !important;
+  border: 1px solid var(--dp-border) !important;
+  border-radius: 13px !important;
+  box-shadow: 0 2px 9px rgba(45, 35, 32, .035) !important;
+  isolation: auto !important;
+  overflow: hidden !important;
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease !important;
+}
+.design-preview-shell .maker-card:before,
+.design-preview-shell .category-card:before,
+.design-preview-shell .tool-row:before,
+.design-preview-shell .maker-card:after {
+  content: none !important;
+  display: none !important;
+  animation: none !important;
+}
+.design-preview-shell .maker-card:hover,
+.design-preview-shell .category-card:hover {
+  border-color: #d6b2b7 !important;
+  box-shadow: 0 7px 18px rgba(91, 31, 43, .075) !important;
+  transform: translateY(-2px) !important;
+}
+.design-preview-shell .maker-card h3,
+.design-preview-shell .app.light .maker-card h3,
+.design-preview-shell .app.dark .maker-card h3,
+.design-preview-shell .category-copy b,
+.design-preview-shell .app.light .category-copy b,
+.design-preview-shell .app.dark .category-copy b,
+.design-preview-shell .tool-info b,
+.design-preview-shell .app.light .tool-info b,
+.design-preview-shell .app.dark .tool-info b {
+  color: var(--dp-text) !important;
+  background: none !important;
+  background-image: none !important;
+  background-clip: border-box !important;
+  -webkit-background-clip: border-box !important;
+  -webkit-text-fill-color: var(--dp-text) !important;
+  text-shadow: none !important;
+  text-transform: none !important;
+  animation: none !important;
+}
+.design-preview-shell .maker-card p,
+.design-preview-shell .category-copy small,
+.design-preview-shell .tool-info small,
+.design-preview-shell .card-foot { color: var(--dp-muted) !important; }
+.design-preview-shell .card-foot { border-color: #f0ece7 !important; }
+.design-preview-shell .arrow {
+  color: var(--dp-wine) !important;
+  background: #fbf5f5 !important;
+  border-color: #ecdde0 !important;
+  box-shadow: none !important;
+}
+
+/* Soft logo-derived accents for icons, badges and feature panels */
+.design-preview-shell .tool-icon,
+.design-preview-shell .category-icon,
+.design-preview-shell .feature-icon {
+  background: #f4f6f1 !important;
+  color: var(--dp-sage) !important;
+  border: 1px solid #e7ece4 !important;
+  box-shadow: none !important;
+}
+.design-preview-shell .category-icon.maker,
+.design-preview-shell .category-icon.pvc,
+.design-preview-shell .maker-card .tag {
+  background: #fbf0f2 !important;
+  color: var(--dp-wine) !important;
+  border-color: #f0dfe2 !important;
+}
+.design-preview-shell .category-count,
+.design-preview-shell .count,
+.design-preview-shell .muted-count {
+  background: #f8f4ee !important;
+  color: #786b5b !important;
+  border-color: #eee5d8 !important;
+  animation: none !important;
+}
+.design-preview-shell .fav,
+.design-preview-shell .maker-card .fav { color: #928788 !important; }
+.design-preview-shell .fav.saved,
+.design-preview-shell .maker-card .fav.saved { color: var(--dp-wine) !important; }
+.design-preview-shell .feature-panel,
+.design-preview-shell .app.light .feature-panel,
+.design-preview-shell .app.dark .feature-panel {
+  background: #fff !important;
+  border-color: var(--dp-border) !important;
+  box-shadow: 0 3px 12px rgba(45, 35, 32, .035) !important;
+}
+.design-preview-shell .feature-panel h3,
+.design-preview-shell .feature-panel b { color: var(--dp-text) !important; }
+.design-preview-shell .feature-panel span { color: var(--dp-sage) !important; }
+.design-preview-shell .panel-glow { display: none !important; }
+.design-preview-shell .tag {
+  background: #f6f1e8 !important;
+  color: #77664d !important;
+  border: 1px solid #ece3d5 !important;
+}
+
+/* Footer and bottom navigation */
+.design-preview-shell footer,
+.design-preview-shell .site-footer { border-color: var(--dp-border) !important; color: var(--dp-muted) !important; }
+.design-preview-shell footer b { color: var(--dp-text) !important; }
+.design-preview-shell .mobile-bottom {
+  background: rgba(255, 255, 255, .96) !important;
+  border-top-color: var(--dp-border) !important;
+}
+.design-preview-shell .mobile-bottom button { color: var(--dp-muted) !important; }
+.design-preview-shell .mobile-bottom button.selected { color: var(--dp-wine) !important; }
+
+/* Keep the install affordance consistent with the brand palette. */
+.design-preview-shell .pwa-install-pill {
+  background: linear-gradient(135deg, #5b1f2b, #7d3948) !important;
+  box-shadow: 0 7px 18px rgba(91, 31, 43, .2) !important;
+}
+.design-preview-shell .pwa-install-symbol { color: #f7e9dc !important; }
+
+/* The preview is strictly visual: scrolling is allowed, UI controls are not. */
+.design-preview-shell .app { pointer-events: none !important; }
+.design-preview-shell .intro-splash { display: none !important; }
+.design-preview-note {
+  position: fixed;
+  right: 14px;
+  bottom: 13px;
+  z-index: 3000;
+  padding: 7px 11px;
+  border: 1px solid #eadde0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .94);
+  color: var(--dp-wine);
+  font: 700 9px/1.2 'DM Sans', sans-serif;
+  letter-spacing: .08em;
+  box-shadow: 0 3px 12px rgba(45, 35, 32, .08);
+  pointer-events: none;
+}
+
+@media (max-width: 760px) {
+  .design-preview-note { right: 9px; bottom: 78px; font-size: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .design-preview-shell *,
+  .design-preview-shell *:before,
+  .design-preview-shell *:after { transition: none !important; animation: none !important; }
+}
