@@ -2,7 +2,7 @@
 
 /* Fullscreen two-pane layout, aligned with Signature Maker */
 html:has(.sbr-shell),body:has(.sbr-shell){overflow:hidden!important;height:100dvh!important}
-.signature-maker-tool-panel:has(.sbr-shell){position:fixed!important;inset:0!important;z-index:9999!important;width:100vw!important;height:100dvh!important;max-width:none!important;margin:0!important;padding:0!important;overflow:hidden!important;transform:none!important}
+.tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell){position:fixed!important;inset:0!important;z-index:9999!important;width:100vw!important;height:100dvh!important;max-width:none!important;margin:0!important;padding:0!important;overflow:hidden!important;transform:none!important}
 .sbr-shell{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;min-height:0!important;overflow:hidden!important;box-sizing:border-box!important}
 .sbr-workspace{height:calc(100dvh - 76px)!important;max-height:calc(100dvh - 76px)!important;min-height:0!important;width:100%!important;box-sizing:border-box!important;grid-template-columns:minmax(340px,.34fr) minmax(0,.66fr)!important;align-items:stretch!important;overflow:hidden!important}
 .sbr-settings,.sbr-preview{height:100%!important;max-height:100%!important;min-height:0!important;box-sizing:border-box!important}
@@ -27,3 +27,162 @@ html:has(.sbr-shell),body:has(.sbr-shell){overflow:hidden!important;height:100dv
 
 /* Actionable scan animation and optional shadow toggle */
 .sbr-shadow-heading{display:flex!important;align-items:center;gap:9px;margin-bottom:10px!important}.sbr-shadow-heading input[type=checkbox]{accent-color:#c50039;width:15px;height:15px;margin:0}.sbr-shadow-disabled{opacity:.42;pointer-events:none}.sbr-pad{position:relative}.sbr-shell.sbr-is-scanning .sbr-pad:after{content:"";position:absolute;left:0;right:0;height:3px;top:0;background:linear-gradient(90deg,transparent,#fff,#d0003d,#fff,transparent);box-shadow:0 0 14px #d0003d99;animation:sbr-scan-pass 1.6s ease-in-out forwards;pointer-events:none;z-index:5}@keyframes sbr-scan-pass{from{top:0}to{top:100%}}
+
+/* Mobile: settings first, preview after all controls, with one continuous page scroll. */
+@media(max-width:760px){
+ html:has(.sbr-shell),body:has(.sbr-shell){height:100%!important;min-height:100%!important;overflow:hidden!important}
+ .signature-maker-tool-panel:has(.sbr-shell){position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;overflow:hidden!important}
+ .sbr-shell{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important;padding-bottom:env(safe-area-inset-bottom)!important}
+ .sbr-header{position:sticky!important;top:0!important;z-index:40!important;min-height:60px!important;height:auto!important;background:linear-gradient(105deg,#bd0037,#a5002b 58%,#870022)!important;box-shadow:0 5px 18px #4c071b30!important}
+ .sbr-workspace{display:flex!important;flex-direction:column!important;align-items:stretch!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;padding:10px!important;gap:12px!important}
+ .sbr-settings,.sbr-preview{position:relative!important;inset:auto!important;width:100%!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;padding:14px!important;z-index:auto!important}
+ .sbr-settings{order:0!important}.sbr-preview{order:1!important;display:flex!important;min-height:340px!important}
+ .sbr-settings label{margin:14px 0 7px!important;line-height:1.4!important}
+ .sbr-pad{flex:none!important;min-height:260px!important;height:auto!important;max-height:48vh!important;overflow:auto!important}
+ .sbr-downloads{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important}
+ .sbr-downloads button{width:100%!important;min-height:42px!important;white-space:normal!important}
+ .sbr-shadow-controls{grid-template-columns:1fr 1fr!important}
+}
+
+
+/* Verified mobile flow: settings first, preview and export after settings. */
+@media(max-width:760px){
+ html:has(.sbr-shell),body:has(.sbr-shell){height:100dvh!important;min-height:100dvh!important;overflow:hidden!important}
+ .tool-page-panel.signature-background-remover-tool-panel{
+  position:fixed!important;inset:0!important;z-index:1400!important;display:block!important;
+  width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;
+  margin:0!important;padding:0!important;overflow-x:hidden!important;overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;overscroll-behavior-y:contain!important
+ }
+ .tool-page-panel.signature-background-remover-tool-panel>.sbr-shell,.sbr-shell{
+  position:relative!important;inset:auto!important;width:100%!important;height:auto!important;
+  min-height:100dvh!important;max-height:none!important;overflow:visible!important;
+  display:flex!important;flex-direction:column!important;padding-bottom:calc(16px + env(safe-area-inset-bottom))!important
+ }
+ .sbr-header{position:sticky!important;top:0!important;z-index:30!important;flex:0 0 auto!important;min-height:60px!important;height:auto!important}
+ .sbr-workspace{display:flex!important;flex:0 0 auto!important;flex-direction:column!important;align-items:stretch!important;
+  width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;
+  padding:10px 10px 20px!important;gap:12px!important}
+ .sbr-settings,.sbr-preview{position:relative!important;inset:auto!important;order:initial!important;
+  display:flex!important;flex-direction:column!important;flex:0 0 auto!important;width:100%!important;height:auto!important;
+  min-height:0!important;max-height:none!important;overflow:visible!important;padding:14px!important;margin:0!important;z-index:auto!important}
+ .sbr-settings{order:0!important}
+ .sbr-preview{order:1!important;gap:12px!important}
+ .sbr-settings label{position:static!important;display:block!important;float:none!important;clear:both!important;margin:14px 0 7px!important;line-height:1.45!important}
+ .sbr-settings input[type=range],.sbr-settings input[type=color]{position:relative!important;display:block!important;width:100%!important;max-width:100%!important}
+ .sbr-pad{position:relative!important;flex:0 0 auto!important;width:100%!important;height:clamp(220px,42vh,360px)!important;min-height:220px!important;max-height:360px!important;overflow:auto!important}
+ .sbr-compare-controls{position:relative!important;display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:10px!important}
+ .sbr-downloads{position:relative!important;display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:8px!important;width:100%!important;margin:0!important}
+ .sbr-downloads button{position:relative!important;display:flex!important;width:100%!important;min-height:44px!important;white-space:normal!important}
+ .sbr-message{position:relative!important;margin:0!important}
+}
+
+
+/* Mobile scroll repair:
+   The scroll container is the full-height tool shell, not the locked document.
+   This overrides the earlier :has() fullscreen rule without changing tool logic. */
+@media (max-width:760px) {
+  html:has(.sbr-shell),
+  body:has(.sbr-shell) {
+    height:100%!important;
+    min-height:100%!important;
+    overflow:hidden!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) {
+    position:fixed!important;
+    inset:0!important;
+    width:100vw!important;
+    height:100dvh!important;
+    max-width:none!important;
+    max-height:none!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    display:block!important;
+    overscroll-behavior:none!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) > .sbr-shell,
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-shell {
+    position:fixed!important;
+    inset:0!important;
+    z-index:10000!important;
+    display:flex!important;
+    flex-direction:column!important;
+    width:100vw!important;
+    height:100dvh!important;
+    min-height:0!important;
+    max-height:none!important;
+    margin:0!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+    overscroll-behavior-y:contain!important;
+    touch-action:pan-y!important;
+    padding-bottom:calc(16px + env(safe-area-inset-bottom))!important;
+    box-sizing:border-box!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-header {
+    position:sticky!important;
+    top:0!important;
+    z-index:30!important;
+    flex:0 0 auto!important;
+    min-height:60px!important;
+    height:auto!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-workspace {
+    display:flex!important;
+    flex:0 0 auto!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+    padding:10px 10px 20px!important;
+    gap:12px!important;
+    box-sizing:border-box!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-settings,
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-preview {
+    position:relative!important;
+    inset:auto!important;
+    flex:0 0 auto!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+    margin:0!important;
+    padding:14px!important;
+    box-sizing:border-box!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-settings { order:0!important; }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-preview {
+    order:1!important;
+    display:flex!important;
+    flex-direction:column!important;
+    gap:12px!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-pad {
+    position:relative!important;
+    flex:0 0 auto!important;
+    width:100%!important;
+    height:clamp(220px,42vh,360px)!important;
+    min-height:220px!important;
+    max-height:360px!important;
+    overflow:auto!important;
+    touch-action:pan-y!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-downloads {
+    width:100%!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:8px!important;
+  }
+  .tool-page-panel.signature-background-remover-tool-panel:has(.sbr-shell) .sbr-downloads button {
+    width:100%!important;
+    min-height:44px!important;
+  }
+}

@@ -1,0 +1,27 @@
+name: Mobile home navigation preview build
+
+on:
+  push:
+    branches:
+      - tanshu-mobile-home-nav-preview
+  pull_request:
+    branches:
+      - tanshu-mobile-home-nav-preview
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm install
+      - name: Build mobile preview
+        run: npm run build
