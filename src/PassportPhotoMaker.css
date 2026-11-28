@@ -563,7 +563,7 @@
    workspace one real vertical scroll container on mobile. Do not let the host
    home page become the scroll surface. */
 .ipm-crop-stage .ipm-photo.crop{position:relative;overflow:hidden;isolation:isolate}
-.ipm-crop-stage .ipm-photo.crop img{position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;transform-origin:center center;will-change:transform}
+.ipm-crop-stage .ipm-photo.crop img{position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;object-fit:fill!important;transform-origin:center center;will-change:transform}
 @media(min-width:901px){
   .ipm-grid{grid-template-columns:minmax(360px,.92fr) minmax(0,1.08fr);gap:clamp(18px,2.2vw,32px)}
   .ipm-sheet-grid{grid-template-columns:minmax(330px,.78fr) minmax(0,1.22fr);gap:clamp(18px,2vw,30px)}
