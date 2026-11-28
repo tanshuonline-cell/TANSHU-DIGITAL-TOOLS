@@ -494,3 +494,54 @@
   }
   .approved-app-design .app .top-actions .social-mini { gap: 2px !important; }
 }
+
+
+/* Smart two-step install affordance: click once to reveal the action, click again to install. */
+.pwa-install-wrap .pwa-install-pill {
+  cursor: pointer !important;
+  -webkit-tap-highlight-color: transparent;
+}
+.pwa-install-wrap .pwa-install-pill.is-expanded {
+  width: 166px !important;
+  min-width: 166px !important;
+  height: 48px !important;
+  padding: 0 14px !important;
+  gap: 10px !important;
+  justify-content: flex-start !important;
+  border-radius: 999px !important;
+}
+.pwa-install-wrap .pwa-install-pill.is-expanded .pwa-install-label {
+  display: inline-block !important;
+  max-width: 112px !important;
+  opacity: 1 !important;
+}
+.pwa-install-wrap .pwa-install-symbol {
+  flex: 0 0 23px !important;
+  transform-origin: center;
+}
+.pwa-install-wrap .pwa-install-symbol svg {
+  display: block;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.18));
+}
+@media (max-width: 760px) {
+  .approved-app-design .pwa-install-wrap .pwa-install-pill.is-expanded {
+    width: 158px !important;
+    min-width: 158px !important;
+    height: 44px !important;
+    padding: 0 12px !important;
+    gap: 8px !important;
+  }
+  .approved-app-design .pwa-install-wrap .pwa-install-pill.is-expanded .pwa-install-label {
+    max-width: 108px !important;
+  }
+}
+@keyframes pwa-install-download-cue {
+  0%, 100% { transform: translateY(-2px); }
+  50% { transform: translateY(3px); }
+}
+.pwa-install-wrap .pwa-install-symbol svg {
+  animation: pwa-install-download-cue 1.15s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pwa-install-wrap .pwa-install-symbol svg { animation: none !important; }
+}
